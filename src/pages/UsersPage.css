@@ -1,0 +1,97 @@
+/* src/pages/UsersPage.css */
+
+.users {
+  min-height: 100vh;
+  background-color: #e8e9fd;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+.users__main {
+  flex: 1;
+  padding: 2rem 4rem;
+}
+
+.users__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.users__header h1 {
+  color: #1e1e2d;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.users__btn {
+  background-color: #6b6ff5;
+  color: #fff;
+  border: none;
+  padding: 0.7rem 1.3rem;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(107, 111, 245, 0.3);
+}
+
+.users__btn:hover {
+  background-color: #5759d9;
+}
+
+.users__table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.users__table th,
+.users__table td {
+  padding: 1rem 1.5rem;
+  text-align: left;
+}
+
+.users__table th {
+  background-color: #f4f4ff;
+  color: #1e1e2d;
+  font-weight: 700;
+}
+
+.users__table tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.users__action {
+  border: none;
+  padding: 0.4rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.users__action--edit {
+  background-color: #6b6ff5;
+  color: #fff;
+}
+
+.users__action--edit:hover {
+  background-color: #5759d9;
+}
+
+.users__action--delete {
+  background-color: #f87171;
+  color: #fff;
+}
+
+.users__action--delete:hover {
+  background-color: #dc2626;
+}

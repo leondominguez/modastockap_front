@@ -1,0 +1,102 @@
+/* src/pages/LoginPage.css */
+
+.login {
+  min-height: 100vh;
+  background-color: #e8e9fd;
+  display: flex;
+  flex-direction: column;
+}
+
+.login__main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.login__card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  width: 380px;
+  padding: 2.5rem;
+  text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.login__title {
+  color: #1e1e2d;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+.login__group {
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+
+.login__group label {
+  display: block;
+  color: #1e1e2d;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.login__group input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.login__group input:focus {
+  outline: none;
+  border-color: #6b6ff5;
+  box-shadow: 0 0 0 3px rgba(107, 111, 245, 0.25);
+}
+
+.login__button {
+  background-color: #6b6ff5;
+  color: white;
+  font-weight: 600;
+  border: none;
+  width: 100%;
+  padding: 0.9rem 0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login__button:hover {
+  background-color: #5759d9;
+}
+
+.login__footer {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.login__footer a {
+  color: #6b6ff5;
+  text-decoration: none;
+}
+
+.login__footer a:hover {
+  text-decoration: underline;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
