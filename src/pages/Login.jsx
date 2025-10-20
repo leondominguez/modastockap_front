@@ -5,7 +5,7 @@ import Navbar from "../components/Navbar";
 import axios from "axios";
 
 function Login() {
-  const [form, setForm] = useState({ correo: "", password: "" });
+  const [form, setForm] = useState({ usuario: "", password: "" });
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -21,10 +21,13 @@ function Login() {
       .post(url, form)
       .then((response) => {
         console.log("Respuesta del servidor:", response.data);
-        // Manejar la respuesta, guardar token, redirigir, etc.
+        // Guardar token y usuario en sessionStorage
         sessionStorage.setItem("token", response.data.token);
         if (response.data.usuario) {
-          sessionStorage.setItem("usuario", JSON.stringify(response.data.usuario));
+          sessionStorage.setItem(
+            "usuario",
+            JSON.stringify(response.data.usuario)
+          );
         }
         // Redirigir
         window.location.href = "/";
@@ -43,14 +46,14 @@ function Login() {
           <h2 className="login__title">Iniciar sesión</h2>
 
           <div className="login__group">
-            <label htmlFor="correo">Correo electrónico</label>
+            <label htmlFor="usuario">Usuario</label>
             <input
-              id="correo"
-              type="email"
-              name="correo"
-              value={form.correo}
+              id="usuario"
+              type="text"
+              name="usuario"
+              value={form.usuario}
               onChange={handleChange}
-              placeholder="ejemplo@correo.com"
+              placeholder="usuario123"
               required
             />
           </div>
