@@ -62,6 +62,7 @@
 
 .landing__btn--primary:hover {
   background-color: #5759d9;
+  cursor: pointer;
 }
 
 .landing__btn--secondary {

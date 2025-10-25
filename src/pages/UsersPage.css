@@ -45,28 +45,77 @@
 .users__table {
   width: 100%;
   border-collapse: collapse;
-  background-color: #fff;
-  border-radius: 15px;
+  table-layout: fixed; /* fija las proporciones de las columnas */
+  margin-top: 1rem;
+  border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .users__table th,
 .users__table td {
-  padding: 1rem 1.5rem;
+  padding: 12px 14px;
   text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 1.05rem;
+  word-wrap: break-word; /* evita que los textos largos descuadren */
 }
 
-.users__table th {
-  background-color: #f4f4ff;
-  color: #1e1e2d;
-  font-weight: 700;
+/* Encabezado */
+.users__table thead th {
+  background-color: #f5f6fa;
+  color: #374151;
+  font-weight: 600;
 }
 
-.users__table tr:nth-child(even) {
-  background-color: #fafafa;
+/* Ajuste proporcional del ancho de columnas */
+.users__table th:nth-child(1),
+.users__table td:nth-child(1) {
+  width: 12%;
 }
 
+.users__table th:nth-child(2),
+.users__table td:nth-child(2) {
+  width: 15%;
+}
+
+.users__table th:nth-child(3),
+.users__table td:nth-child(3) {
+  width: 15%;
+}
+
+.users__table th:nth-child(4),
+.users__table td:nth-child(4) {
+  width: 15%;
+}
+
+.users__table th:nth-child(5),
+.users__table td:nth-child(5) {
+  width: 10%;
+}
+
+.users__table th:nth-child(6),
+.users__table td:nth-child(6) {
+  width: 20%;
+}
+
+.users__table th:nth-child(7),
+.users__table td:nth-child(7) {
+  width: 10%;
+}
+
+.users__table th:nth-child(8),
+.users__table td:nth-child(8) {
+  width: 15%;
+}
+
+/* Filas hover */
+.users__table tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+/* Botones de acción */
 .users__action {
   border: none;
   padding: 0.4rem 0.9rem;
@@ -91,7 +140,36 @@
   background-color: #f87171;
   color: #fff;
 }
+/* Activar (Estoy entre verde o un azul acorde al tema) */
+.users__action--activate {
+  background-color: #25d465;
+  color: #fff;
+}
+
+.users__action--activate:hover {
+  background-color: #1eb355;
+}
 
 .users__action--delete:hover {
   background-color: #dc2626;
+}
+
+/* Estados de error */
+.input-error {
+  border: 2px solid #f87171;
+  background-color: #fff5f5;
+}
+
+.error-text {
+  color: #dc2626;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+/* Botón deshabilitado */
+.login__button:disabled {
+  background-color: #bcbffb;
+  cursor: not-allowed;
+  opacity: 0.7;
 }

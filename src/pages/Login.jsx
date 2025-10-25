@@ -3,46 +3,107 @@ import { useState } from "react";
 import "./Login.css";
 import Navbar from "../components/Navbar";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 function Login() {
   const [form, setForm] = useState({ usuario: "", password: "" });
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const validate = (field, value) => {
+    let message = "";
+
+    if (field === "usuario") {
+      if (!value.trim()) message = "El usuario es obligatorio";
+      else if (value.length < 3) message = "Debe tener al menos 3 caracteres";
+    }
+
+    if (field === "password") {
+      if (!value.trim()) message = "La contraseña es obligatoria";
+      else if (value.length < 6) message = "Debe tener al menos 6 caracteres";
+    }
+
+    setErrors((prev) => ({ ...prev, [field]: message }));
+  };
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+    validate(name, value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = process.env.REACT_APP_API_URL + "auth/login";
-    console.log("Enviando:", form);
-    console.log("URL API:", process.env.REACT_APP_API_URL);
 
-    axios
-      .post(url, form)
-      .then((response) => {
-        console.log("Respuesta del servidor:", response.data);
-        // Guardar token y usuario en sessionStorage
-        sessionStorage.setItem("token", response.data.token);
-        if (response.data.usuario) {
-          sessionStorage.setItem(
-            "usuario",
-            JSON.stringify(response.data.usuario)
-          );
-        }
-        // Redirigir
-        window.location.href = "/";
-      })
-      .catch((error) => {
-        console.error("Error al iniciar sesión:", error);
-        // Manejar errores
+    // Validar antes de enviar
+    validate("usuario", form.usuario);
+    validate("password", form.password);
+
+    const hasErrors = Object.values(errors).some((err) => err);
+    if (hasErrors || !form.usuario || !form.password) {
+      // Swal.fire({
+      //   confirmButtonColor: "#4F46E5",
+      // });
+      Swal.mixin({
+        icon: "warning",
+        title: "Campos incompletos",
+        text: "Por favor corrige los errores antes de continuar.",
+        confirmButtonColor: "#4F46E5",
+        cancelButtonColor: "#A5B4FC",
       });
+
+      return;
+    }
+
+    setIsSubmitting(true);
+    const url = process.env.REACT_APP_API_URL + "auth/login";
+
+    try {
+      const response = await axios.post(url, form);
+      console.log("Respuesta del servidor:", response.data);
+
+      sessionStorage.setItem("token", response.data.token);
+      if (response.data.usuario) {
+        sessionStorage.setItem(
+          "usuario",
+          JSON.stringify(response.data.usuario)
+        );
+      }
+
+      await Swal.fire({
+        icon: "success",
+        title: "Inicio de sesión exitoso",
+        text: "Bienvenido al sistema 👋",
+        confirmButtonColor: "#4F46E5",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+
+      window.location.href = "/"; // Redirección tras éxito
+    } catch (error) {
+      console.error("Error al iniciar sesión:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error de autenticación",
+        text:
+          error.response?.data?.message || "Usuario o contraseña incorrectos.",
+        confirmButtonColor: "#EF4444",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  const isFormInvalid =
+    !form.usuario ||
+    !form.password ||
+    Object.values(errors).some((msg) => msg !== "");
 
   return (
     <div className="login">
       <Navbar />
       <main className="login__main">
-        <form className="login__card" onSubmit={handleSubmit}>
+        <form className="login__card" onSubmit={handleSubmit} noValidate>
           <h2 className="login__title">Iniciar sesión</h2>
 
           <div className="login__group">
@@ -55,7 +116,11 @@ function Login() {
               onChange={handleChange}
               placeholder="usuario123"
               required
+              className={errors.usuario ? "input-error" : ""}
             />
+            {errors.usuario && (
+              <span className="error-text">{errors.usuario}</span>
+            )}
           </div>
 
           <div className="login__group">
@@ -68,11 +133,19 @@ function Login() {
               onChange={handleChange}
               placeholder="••••••••"
               required
+              className={errors.password ? "input-error" : ""}
             />
+            {errors.password && (
+              <span className="error-text">{errors.password}</span>
+            )}
           </div>
 
-          <button type="submit" className="login__button">
-            Entrar
+          <button
+            type="submit"
+            className="login__button"
+            disabled={isFormInvalid || isSubmitting}
+          >
+            {isSubmitting ? "Entrando..." : "Entrar"}
           </button>
 
           <p className="login__footer">
