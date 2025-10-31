@@ -1,4 +1,5 @@
 // /client/src/pages/UsersPage.jsx
+
 import React, { useEffect, useState } from "react";
 import "./UsersPage.css";
 import Navbar from "../components/Navbar";
@@ -15,50 +16,148 @@ function UsersPage() {
   const [showModal, setShowModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
 
-  const fetchUsers = async () => {
+  // --- ESTADOS PARA LA BÚSQUEDA ---
+  const [searchCriteria, setSearchCriteria] = useState("documento"); // 'documento' o 'nombre'
+  const [documentType, setDocumentType] = useState("");
+  const [documentNumber, setDocumentNumber] = useState("");
+  const [name, setName] = useState("");
+  // ---------------------------------
+
+  const fetchUsers = async (searchParams = {}) => {
+    setLoading(true);
+    setError(null);
     try {
       const token = sessionStorage.getItem("token");
       const storedUser = sessionStorage.getItem("usuario");
 
       if (!token || !storedUser) {
-        navigate("/login"); // No hay sesión -> login
+        navigate("/login");
         return;
       }
 
       const usuario = JSON.parse(storedUser);
 
-      // Verifica rol (solo admin)
-      if (usuario.id_rol !== 1) {
-        navigate("/"); // Rol no autorizado -> home
+      if (usuario.id_rol !== 1) { // Asumiendo rol 1 es administrador
+        navigate("/");
         return;
       }
 
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}usuarios`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      // --- LÓGICA DE URL CLAVE (Punto 2 de la corrección) ---
+      const isSearching = Object.keys(searchParams).length > 0;
 
-      setUsers(response.data.usuarios ?? response.data ?? []);
+      const params = new URLSearchParams(searchParams).toString();
+
+      // Si hay parámetros, usa /buscar, si no, usa / (listado completo)
+      const route = isSearching ? 'usuarios/buscar' : 'usuarios';
+
+      const url = `${process.env.REACT_APP_API_URL}${route}?${params}`;
+      // ----------------------------------------------------
+
+      const response = await axios.get(url, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      const fetchedUsers = response.data.usuarios ?? response.data ?? [];
+      setUsers(fetchedUsers);
+
+      // Manejo de mensaje si no se encuentra nada
+      if (isSearching && fetchedUsers.length === 0) {
+        setError("No se encontraron usuarios con los criterios de búsqueda.");
+      } else {
+        setError(null);
+      }
+
     } catch (err) {
       console.error("Error al obtener usuarios:", err);
-      setError(err.response?.data?.message || err.message);
-      Swal.fire({
-        icon: "error",
-        title: "Error al cargar usuarios",
-        text: err.response?.data?.message || "Intenta más tarde.",
-        confirmButtonColor: "#4F46E5",
-      });
+
+      const status = err.response?.status;
+      const message = err.response?.data?.message || err.message;
+      const isSearching = Object.keys(searchParams).length > 0; // Se redeclara aquí para el 'catch'
+
+      // Manejo de error 404 (No Encontrado) durante la búsqueda
+      if (status === 404 && isSearching) {
+        setUsers([]);
+        setError("No se encontraron usuarios con los criterios de búsqueda.");
+      }
+      // Manejo de errores generales o al cargar la lista inicial
+      else {
+        setUsers([]);
+        setError(message || "Error al cargar/buscar usuarios.");
+        Swal.fire({
+          icon: "error",
+          title: "Error de conexión/búsqueda",
+          text: message || "Ocurrió un error inesperado. Intenta más tarde.",
+          confirmButtonColor: "#4F46E5",
+        });
+      }
+
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchUsers();
+    fetchUsers(); // Carga inicial de todos los usuarios (sin argumentos)
   }, [navigate]);
 
+  // --- LÓGICA DE BÚSQUEDA Y VALIDACIÓN ---
+  const handleSearch = (e) => {
+    e.preventDefault();
+    let searchParams = {};
+
+    if (searchCriteria === "documento") {
+      if (!documentType || !documentNumber || !documentNumber.trim()) {
+        Swal.fire({
+          icon: "warning",
+          title: "Campos Requeridos",
+          text: "Para buscar por documento, debe ingresar el Tipo y el Número.",
+          confirmButtonColor: "#F59E0B",
+        });
+        return;
+      }
+      searchParams = {
+        tipo_documento: documentType,
+        numero_documento: documentNumber.trim()
+      };
+    } else if (searchCriteria === "nombre") {
+      if (!name.trim()) {
+        Swal.fire({
+          icon: "warning",
+          title: "Campo Requerido",
+          text: "Debe ingresar el Nombre o Apellido para buscar.",
+          confirmButtonColor: "#F59E0B",
+        });
+        return;
+      }
+      searchParams = { nombre_apellido: name.trim() };
+    }
+
+    if (Object.keys(searchParams).length === 0) {
+      Swal.fire({
+        icon: "info",
+        title: "Búsqueda vacía",
+        text: "Ingrese un criterio para iniciar la búsqueda o use 'Limpiar'.",
+        confirmButtonColor: "#4F46E5",
+      });
+      return;
+    }
+
+    // Ejecutar la búsqueda filtrada
+    fetchUsers(searchParams);
+  };
+
+  const handleClearSearch = () => {
+    // Limpiar campos
+    setSearchCriteria("documento");
+    setDocumentType("");
+    setDocumentNumber("");
+    setName("");
+    // Recargar todos los usuarios (sin filtros)
+    fetchUsers();
+  };
+  // ----------------------------------------
+
+  // --- Resto de las funciones CRUD (handleAddUser, handleEditUser, handleDeleteUser) ---
   const handleAddUser = () => {
     setSelectedUser(null);
     setShowModal(true);
@@ -69,13 +168,10 @@ function UsersPage() {
     setShowModal(true);
   };
 
-  // Desactivar usuario
   const handleDeleteUser = async (user) => {
     const confirm = await Swal.fire({
       title: `¿${user.estado == 1 ? "Desactivar" : "Activar"} usuario?`,
-      text: `El usuario "${user.usuario}" será ${
-        user.estado == 1 ? "desactivado" : "activado"
-      }.`,
+      text: `El usuario "${user.usuario}" será ${user.estado == 1 ? "desactivado" : "activado"}.`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: `Sí, ${user.estado == 1 ? "desactivar" : "activar"}`,
@@ -91,19 +187,16 @@ function UsersPage() {
       const estadoActual = user.estado == 1 ? "0" : "1";
       const url = `${process.env.REACT_APP_API_URL}usuarios/${user.id_usuario}/estado?estado=${estadoActual}`;
 
-      await axios.patch(url, { headers: { Authorization: `Bearer ${token}` } });
+      await axios.patch(url, {}, { headers: { Authorization: `Bearer ${token}` } });
 
       Swal.fire({
         icon: "success",
         title: "Usuario " + (estadoActual === "1" ? "activado" : "desactivado"),
-        text: `El usuario "${user.usuario}" fue ${
-          estadoActual === "1" ? "activado" : "desactivado"
-        } correctamente.`,
+        text: `El usuario "${user.usuario}" fue ${estadoActual === "1" ? "activado" : "desactivado"} correctamente.`,
         confirmButtonColor: "#4F46E5",
         timer: 2000,
       });
 
-      // Recargar lista
       fetchUsers();
     } catch (error) {
       console.error("Error al cambiar estado del usuario:", error);
@@ -116,8 +209,8 @@ function UsersPage() {
     }
   };
 
+
   if (loading) return <p className="users__loading">Cargando usuarios...</p>;
-  if (error) return <p className="users__error">Error: {error}</p>;
 
   return (
     <div className="users">
@@ -132,6 +225,88 @@ function UsersPage() {
             + Nuevo Usuario
           </button>
         </div>
+
+        {/* --- FORMULARIO DE BÚSQUEDA --- */}
+        <form className="users__search-form" onSubmit={handleSearch}>
+          <h2>Buscar Usuario</h2>
+          <div className="users__search-controls">
+            <div className="users__search-radio">
+              <label>
+                <input
+                  type="radio"
+                  value="documento"
+                  checked={searchCriteria === "documento"}
+                  onChange={() => {
+                    setSearchCriteria("documento");
+                    setName("");
+                  }}
+                />
+                Por Documento (CC, NIT, PAS)
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="nombre"
+                  checked={searchCriteria === "nombre"}
+                  onChange={() => {
+                    setSearchCriteria("nombre");
+                    setDocumentType("");
+                    setDocumentNumber("");
+                  }}
+                />
+                Por Nombre o Apellido
+              </label>
+            </div>
+
+            {searchCriteria === "documento" && (
+              <div className="users__search-group">
+                <select
+                  className={`users__search-input ${!documentType ? 'input--required' : ''}`}
+                  value={documentType}
+                  onChange={(e) => setDocumentType(e.target.value)}
+                >
+                  <option value="">Tipo Documento</option>
+                  <option value="CC">CC</option>
+                  <option value="NIT">NIT</option>
+                  <option value="PAS">PAS</option>
+                </select>
+                <input
+                  type="text"
+                  className={`users__search-input ${!documentNumber ? 'input--required' : ''}`}
+                  placeholder="Número de Documento"
+                  value={documentNumber}
+                  onChange={(e) => setDocumentNumber(e.target.value)}
+                />
+              </div>
+            )}
+
+            {searchCriteria === "nombre" && (
+              <div className="users__search-group users__search-group--name">
+                <input
+                  type="text"
+                  className={`users__search-input ${!name ? 'input--required' : ''}`}
+                  placeholder="Nombre o Apellido (ej: Juan Pérez)"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+            )}
+
+            <button type="submit" className="users__btn users__btn--search">
+              Buscar
+            </button>
+            <button
+              type="button"
+              className="users__btn users__btn--clear"
+              onClick={handleClearSearch}
+            >
+              Limpiar
+            </button>
+          </div>
+        </form>
+        {/* ------------------------------------- */}
+
+        {/* --- TABLA DE RESULTADOS --- */}
         {users.length > 0 ? (
           <table className="users__table">
             <thead>
@@ -166,11 +341,10 @@ function UsersPage() {
                       Editar
                     </button>
                     <button
-                      className={`users__action ${
-                        u.estado === 1
+                      className={`users__action ${u.estado === 1
                           ? "users__action--delete"
                           : "users__action--activate"
-                      }`}
+                        }`}
                       onClick={() => handleDeleteUser(u)}
                     >
                       {u.estado == 1 ? "Desactivar" : "Activar"}
@@ -181,14 +355,19 @@ function UsersPage() {
             </tbody>
           </table>
         ) : (
-          <p className="users__empty">No hay usuarios registrados.</p>
+          <p className="users__empty">
+            {error || "No hay usuarios registrados que coincidan con la búsqueda."}
+          </p>
         )}
-        {/* {console.log("showModal:", showModal, "selectedUser:", selectedUser)} */}
         {showModal && (
           <UserModal
             show={showModal}
             onClose={() => setShowModal(false)}
-            onUserCreated={fetchUsers}
+            // CLAVE (Punto 3 de la corrección): Llama a fetchUsers() sin argumentos
+            onUserCreated={() => {
+              setShowModal(false);
+              fetchUsers(); // Esto recarga la lista COMPLETA
+            }}
             selectedUser={selectedUser}
           />
         )}
