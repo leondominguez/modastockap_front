@@ -1,4 +1,3 @@
-// /client/src/pages/LandingPage.jsx
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./LandingPage.css";
@@ -9,19 +8,14 @@ function LandingPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Cargar usuario desde sessionStorage
     const storedUser = sessionStorage.getItem("usuario");
-    if (storedUser) {
-      setUsuario(JSON.parse(storedUser));
-    }
+    if (storedUser) setUsuario(JSON.parse(storedUser));
   }, []);
 
-  const handleClick = () => {
-    if (!usuario) return;
-    if (usuario.id_rol === 1) navigate("/usuarios"); // Admin
-    else if (usuario.id_rol === 2) navigate("/operaciones"); // Operaciones
-    else navigate("/"); // Otros roles
-  };
+  const handleAdminUsuarios = () => navigate("/usuarios");
+  const handleAdminClientes = () => navigate("/clientes");
+  const handleAdminProveedores = () => navigate("/proveedores");
+  const handleOperaciones = () => navigate("/operaciones");
 
   return (
     <div className="landing">
@@ -40,18 +34,34 @@ function LandingPage() {
             )}
 
             {usuario && usuario.id_rol === 1 && (
-              <button
-                className="landing__btn landing__btn--primary"
-                onClick={handleClick}
-              >
-                Ir a Usuarios
-              </button>
+              <>
+                <button
+                  className="landing__btn landing__btn--primary"
+                  onClick={handleAdminUsuarios}
+                >
+                  Gestión de Usuarios
+                </button>
+
+                <button
+                  className="landing__btn landing__btn--primary"
+                  onClick={handleAdminClientes}
+                >
+                  Gestión Clientes
+                </button>
+
+                <button
+                  className="landing__btn landing__btn--primary"
+                  onClick={handleAdminProveedores}
+                >
+                  Gestión Proveedores
+                </button>
+              </>
             )}
 
             {usuario && usuario.id_rol === 2 && (
               <button
                 className="landing__btn landing__btn--primary"
-                onClick={handleClick}
+                onClick={handleOperaciones}
               >
                 Ir a Operaciones
               </button>
