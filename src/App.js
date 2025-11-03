@@ -3,6 +3,7 @@ import LandingPage from "./pages/LandingPage";
 import Login from "./pages/Login";
 import UsersPage from "./pages/UsersPage";
 import Clientes from "./pages/Clientes";
+import Proveedores from "./pages/Proveedores";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/usuarios" element={<UsersPage />} />
         <Route path="/clientes" element={<Clientes />} />
+        <Route path="/proveedores" element={<Proveedores />} />
       </Routes>
     </Router>
   );

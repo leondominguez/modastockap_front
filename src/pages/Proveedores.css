@@ -1,0 +1,162 @@
+/* Estilos para la página Clientes (prefijo: clientes__) */
+
+.clientes {
+  min-height: 100vh;
+  background-color: #e8e9fd;
+  display: flex;
+  flex-direction: column;
+}
+
+.clientes__main {
+  flex: 1;
+  padding: 2rem 2rem;
+  overflow-x: auto;
+}
+
+.clientes__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.clientes__header h1 {
+  color: #1e1e2d;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.clientes__btn {
+  background-color: #6b6ff5;
+  color: #fff;
+  border: none;
+  padding: 0.65rem 1.1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.clientes__btn:hover { background-color: #5759d9; }
+
+/* Tabla */
+.clientes__table {
+  width: 100%;
+  border-collapse: separate;
+  table-layout: auto;
+  margin-top: 1rem;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  overflow: visible;
+}
+
+.clientes__table thead th {
+  background-color: #f5f6fa;
+  color: #374151;
+  font-weight: 600;
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.95rem;
+}
+
+.clientes__table th,
+.clientes__table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.95rem;
+  vertical-align: middle;
+  white-space: normal;
+}
+
+/* Notas: truncado visual si es largo */
+.clientes__notas {
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Acciones: espacio y manejo responsivo */
+.clientes__table td:last-child {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 160px;
+  white-space: nowrap;
+  flex-wrap: wrap;
+}
+
+/* Botones de acción */
+.clientes__action {
+  border: none;
+  padding: 0.36rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Colores */
+.clientes__action--edit { background-color: #6b6ff5; }
+.clientes__action--edit:hover { background-color: #5759d9; }
+.clientes__action--delete { background-color: #f87171; }
+.clientes__action--delete:hover { background-color: #dc2626; }
+.clientes__action--activate { background-color: #25d465; }
+.clientes__action--activate:hover { background-color: #1eb355; }
+
+/* Formulario de búsqueda */
+.clientes__search-form {
+  background-color: #f9fafb;
+  padding: 18px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.06);
+  margin-bottom: 22px;
+}
+
+.clientes__search-form h2 {
+  margin: 0 0 12px 0;
+  font-size: 1.1rem;
+  color: #1f2937;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 8px;
+}
+
+.clientes__search-controls { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+.clientes__search-radio { display:flex; gap:16px; }
+.clientes__search-radio label { font-weight:500; color:#4b5563; }
+.clientes__search-group { display:flex; gap:10px; flex-grow:1; min-width:220px; }
+.clientes__search-group--name { min-width:260px; }
+.clientes__search-input { padding:9px; border:1px solid #d1d5db; border-radius:6px; font-size:0.98rem; flex-grow:1; }
+.clientes__search-input:focus { outline:none; border-color:#4f46e5; box-shadow:0 0 0 3px rgba(79,70,229,0.12); }
+
+/* Required visual */
+.clientes__search-input.input--required:not(:focus):empty,
+.clientes__search-input.input--required:not(:focus):placeholder-shown {
+  border-color:#ef4444;
+  box-shadow:0 0 0 2px rgba(239,68,68,0.12);
+}
+
+/* Botones búsqueda */
+.clientes__btn--search { background-color:#4f46e5; color:white; padding:9px 14px; border-radius:6px; border:none; }
+.clientes__btn--search:hover { background-color:#4338ca; }
+.clientes__btn--clear { background-color:#9ca3af; color:white; padding:9px 14px; border-radius:6px; border:none; }
+.clientes__btn--clear:hover { background-color:#6b7280; }
+
+/* Mensajes */
+.clientes__empty, .clientes__loading { margin-top:1rem; color:#6b7280; font-size:0.95rem; }
+
+/* Responsive: permitir scroll horizontal y mejorar legibilidad en móvil */
+@media (max-width: 900px) {
+  .clientes__main { padding: 1rem; }
+  .clientes__table th, .clientes__table td { font-size: 0.9rem; padding: 8px 10px; }
+  .clientes__notas { max-width: 140px; }
+  .clientes__table td:last-child { gap:6px; }
+}
