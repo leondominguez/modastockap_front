@@ -45,7 +45,8 @@
 .users__table {
   width: 100%;
   border-collapse: collapse;
-  table-layout: fixed; /* fija las proporciones de las columnas */
+  table-layout: fixed;
+  /* fija las proporciones de las columnas */
   margin-top: 1rem;
   border-radius: 10px;
   overflow: hidden;
@@ -59,7 +60,8 @@
   text-align: left;
   border-bottom: 1px solid #e5e7eb;
   font-size: 1.05rem;
-  word-wrap: break-word; /* evita que los textos largos descuadren */
+  word-wrap: break-word;
+  /* evita que los textos largos descuadren */
 }
 
 /* Encabezado */
@@ -140,6 +142,7 @@
   background-color: #f87171;
   color: #fff;
 }
+
 /* Activar (Estoy entre verde o un azul acorde al tema) */
 .users__action--activate {
   background-color: #25d465;
@@ -172,4 +175,110 @@
   background-color: #bcbffb;
   cursor: not-allowed;
   opacity: 0.7;
+}
+
+/* /client/src/pages/UsersPage.css */
+
+/* --- Contenedor del formulario de búsqueda --- */
+.users__search-form {
+  background-color: #f9fafb;
+  /* Color de fondo claro */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.users__search-form h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.25rem;
+  color: #1f2937;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 10px;
+}
+
+.users__search-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+  /* Para pantallas pequeñas */
+}
+
+/* --- Radio Buttons (Criterio de Búsqueda) --- */
+.users__search-radio {
+  display: flex;
+  gap: 20px;
+}
+
+.users__search-radio label {
+  font-weight: 500;
+  color: #4b5563;
+}
+
+/* --- Grupos de Input (Documento y Nombre) --- */
+.users__search-group {
+  display: flex;
+  gap: 10px;
+  flex-grow: 1;
+  min-width: 250px;
+}
+
+.users__search-group--name {
+  min-width: 300px;
+}
+
+.users__search-input {
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 1rem;
+  flex-grow: 1;
+  transition: all 0.2s ease-in-out;
+}
+
+.users__search-input:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+}
+
+/* --- REQUERIMIENTO: Efecto de sombreado para campos vacíos --- */
+.users__search-input.input--required:not(:focus):empty,
+.users__search-input.input--required:not(:focus):placeholder-shown {
+  /* Aplica un borde rojo tenue si el campo es requerido y está vacío */
+  border-color: #ef4444;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.4);
+}
+
+/* --- Botones --- */
+.users__btn--search {
+  background-color: #4f46e5;
+  /* Índigo */
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.users__btn--search:hover {
+  background-color: #4338ca;
+}
+
+.users__btn--clear {
+  background-color: #9ca3af;
+  /* Gris */
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.users__btn--clear:hover {
+  background-color: #6b7280;
 }
