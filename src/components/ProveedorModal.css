@@ -1,0 +1,80 @@
+/* ...existing code... */
+
+/* Mejor soporte para tablas anchas y responsividad */
+.users__main {
+  /* ...existing code... */
+  /* aseguro que el contenedor permita scroll si la tabla es más ancha */
+  overflow-x: auto;
+}
+
+/* Forzar mínimo ancho para la tabla cuando hay muchas columnas */
+.users__table {
+  min-width: 1100px; /* ajusta según necesidad */
+  display: table;
+}
+
+/* Evitar que textos críticos se rompan en columnas pequeñas */
+.users__table th,
+.users__table td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Mensajes vacíos / carga */
+.users__empty,
+.users__loading {
+  margin-top: 1.2rem;
+  color: #6b7280;
+  font-size: 0.98rem;
+}
+
+/* Acciones: tamaño más compacto en pantallas pequeñas */
+.users__action {
+  padding: 0.35rem 0.6rem;
+  font-size: 0.85rem;
+}
+
+/* Reglas responsivas: ocultar columnas menos importantes en móviles */
+@media (max-width: 900px) {
+  .users__table {
+    min-width: 800px;
+    font-size: 0.95rem;
+  }
+
+  /* ocultar columnas: Email(4), Ciudad(6), Departamento(7), País(8), Fecha(10) */
+  .users__table th:nth-child(4),
+  .users__table td:nth-child(4),
+  .users__table th:nth-child(6),
+  .users__table td:nth-child(6),
+  .users__table th:nth-child(7),
+  .users__table td:nth-child(7),
+  .users__table th:nth-child(8),
+  .users__table td:nth-child(8),
+  .users__table th:nth-child(10),
+  .users__table td:nth-child(10) {
+    display: none;
+  }
+
+  .users__table th,
+  .users__table td {
+    padding: 10px 8px;
+  }
+
+  .users__header h1 {
+    font-size: 1.25rem;
+  }
+
+  .users__btn {
+    padding: 0.55rem 0.9rem;
+    font-size: 0.95rem;
+  }
+}
+
+/* Pequeños ajustes de accesibilidad / foco */
+.users__search-input:focus,
+.modal__group input:focus,
+.modal__group select:focus {
+  outline: 3px solid rgba(79,70,229,0.12);
+  outline-offset: 2px;
+}
