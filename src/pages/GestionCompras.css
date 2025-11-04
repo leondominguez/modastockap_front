@@ -1,0 +1,42 @@
+.gestion-compras {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #f3f4ff;
+}
+
+.gc__content {
+  display: flex;
+  flex: 1;
+}
+
+.gestion-compras__sidebar {
+  width: 260px;
+  background: #ffffff;
+  border-right: 1px solid #e6e7f2;
+  padding: 24px;
+}
+
+.gc__title { font-size: 1.1rem; font-weight:700; margin-bottom: 12px; }
+.gc__nav { display:flex; flex-direction: column; gap:8px; }
+.gc__nav-btn {
+  text-align: left;
+  background: transparent;
+  border: none;
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #374151;
+}
+.gc__nav-btn.is-active { background: #6b6ff5; color: #fff; }
+
+.gestion-compras__main {
+  flex: 1;
+  padding: 20px 28px;
+}
+
+/* responsive */
+@media (max-width: 900px) {
+  .gestion-compras { flex-direction: column; }
+  .gestion-compras__sidebar { width: 100%; display:flex; gap:12px; }
+}

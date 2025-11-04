@@ -15,6 +15,7 @@ function LandingPage() {
   const handleAdminUsuarios = () => navigate("/usuarios");
   const handleAdminClientes = () => navigate("/clientes");
   const handleAdminProveedores = () => navigate("/proveedores");
+  const handleAdminGestionCompras = () => navigate("/gestion-compras");
   const handleOperaciones = () => navigate("/operaciones");
 
   return (
@@ -55,16 +56,33 @@ function LandingPage() {
                 >
                   Gestión Proveedores
                 </button>
+                                <button
+                  className="landing__btn landing__btn--primary"
+                  onClick={handleAdminGestionCompras}
+                >
+                  Gestión Compras
+                </button>
               </>
             )}
 
             {usuario && usuario.id_rol === 2 && (
+              <>
+              <button
+              className="landing__btn landing__btn--primary"
+              onClick={handleAdminClientes}
+              >
+                Gestión Clientes
+                </button>
+              
               <button
                 className="landing__btn landing__btn--primary"
                 onClick={handleOperaciones}
               >
                 Ir a Operaciones
               </button>
+
+              </>
+
             )}
 
             <a
