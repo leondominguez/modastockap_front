@@ -348,11 +348,11 @@ function ClientesPage() {
                     </button>
                     <button
                       type="button"
-                      className={`clientes__action ${c.estado === 1 ? "clientes__action--delete" : "clientes__action--activate"}`}
+                      className={`clientes__action ${Number(c.estado) === 1 ? "clientes__action--delete" : "clientes__action--activate"}`}
                       onClick={() => handleToggleEstado(c)}
-                      aria-label={`${c.estado === 1 ? "Desactivar" : "Activar"} cliente ${c.nombre}`}
+                      aria-label={`${Number(c.estado) === 1 ? "Desactivar" : "Activar"} cliente ${c.nombre}`}
                     >
-                      {c.estado == 1 ? "Desactivar" : "Activar"}
+                      {Number(c.estado) === 1 ? "Desactivar" : "Activar"}
                     </button>
                   </td>
                 </tr>

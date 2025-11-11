@@ -63,8 +63,8 @@ function InsumosProveedor(){
   const filtered = vinculos.filter(it => {
     if (!q) return true;
     const s = q.toLowerCase();
-  const prov = proveedores.find(p => (p.id_proveedor || p.id) === it.id_proveedor);
-  const provText = prov ? ((prov.numero_documento ? prov.numero_documento + ' ' : '') + (prov.razon_social || prov.nombre_contacto || '')) : (''+ (it.id_proveedor || ''));
+    const prov = proveedores.find(p => (p.id_proveedor || p.id) === it.id_proveedor);
+    const provText = prov ? ((prov.numero_documento ? prov.numero_documento + ' ' : '') + (prov.razon_social || prov.nombre_contacto || '')) : (''+ (it.id_proveedor || ''));
     const ins = insumos.find(i => (i.id_insumo || i.id) === it.id_insumo);
     const insText = ins ? (((ins.codigo_insumo||'') + ' ' + (ins.nombre_insumo||'')).toLowerCase()) : (''+ (it.id_insumo || '') );
     return (''+it.id_insumo).includes(s) || insText.includes(s) || (''+it.id_proveedor).includes(s) || provText.toLowerCase().includes(s) || (it.notas||'').toLowerCase().includes(s);
