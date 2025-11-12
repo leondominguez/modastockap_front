@@ -244,8 +244,8 @@ function ProveedoresPage() {
                   <td>{p.direccion || "-"}</td>
                   <td>
                     <button type="button" className="clientes__action clientes__action--edit" onClick={() => handleEditProveedor(p)}>Editar</button>
-                    <button type="button" className={`clientes__action ${p.estado === 1 ? "clientes__action--delete" : "clientes__action--activate"}`} onClick={() => handleToggleEstado(p)}>
-                      {p.estado == 1 ? "Desactivar" : "Activar"}
+                    <button type="button" className={`clientes__action ${Number(p.estado) === 1 ? "clientes__action--delete" : "clientes__action--activate"}`} onClick={() => handleToggleEstado(p)}>
+                      {Number(p.estado) === 1 ? "Desactivar" : "Activar"}
                     </button>
                   </td>
                 </tr>

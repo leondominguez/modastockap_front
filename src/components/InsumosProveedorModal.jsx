@@ -22,7 +22,7 @@ function InsumosProveedorModal({ show, onClose, onSaved, selected }) {
 				} catch (err) { console.error(err); }
 			};
 		if (show) load();
-	}, [show]);
+	}, [show, apiBase, token]);
 
 	useEffect(()=>{
 		if (selected) setForm({ id_insumo:selected.id_insumo, id_proveedor:selected.id_proveedor, precio_unitario:selected.precio_unitario, condiciones_pago:selected.condiciones_pago, estado:selected.estado||'activo', notas:selected.notas||'' });

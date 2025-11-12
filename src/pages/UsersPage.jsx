@@ -1,6 +1,6 @@
 // /client/src/pages/UsersPage.jsx
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import "./UsersPage.css";
 import Navbar from "../components/Navbar";
 import axios from "axios";
@@ -23,7 +23,7 @@ function UsersPage() {
   const [name, setName] = useState("");
   // ---------------------------------
 
-  const fetchUsers = async (searchParams = {}) => {
+  const fetchUsers = useCallback(async (searchParams = {}) => {
     setLoading(true);
     setError(null);
     try {
@@ -45,16 +45,15 @@ function UsersPage() {
       // --- LÓGICA DE URL CLAVE (Punto 2 de la corrección) ---
       const isSearching = Object.keys(searchParams).length > 0;
 
-      const params = new URLSearchParams(searchParams).toString();
-
-      // Si hay parámetros, usa /buscar, si no, usa / (listado completo)
-      const route = isSearching ? 'usuarios/buscar' : 'usuarios';
-
-      const url = `${process.env.REACT_APP_API_URL}${route}?${params}`;
+  // Normalizar baseUrl y usar axios params (evita errores concatenando strings)
+  const baseUrl = (process.env.REACT_APP_API_URL || '').replace(/\/+$/, '') + '/';
+  const route = isSearching ? 'usuarios/buscar' : 'usuarios';
+  const url = `${baseUrl}${route}`;
       // ----------------------------------------------------
 
       const response = await axios.get(url, {
         headers: { Authorization: `Bearer ${token}` },
+        params: isSearching ? searchParams : undefined
       });
 
       const fetchedUsers = response.data.usuarios ?? response.data ?? [];
@@ -94,11 +93,11 @@ function UsersPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [navigate]);
 
   useEffect(() => {
     fetchUsers(); // Carga inicial de todos los usuarios (sin argumentos)
-  }, [navigate]);
+  }, [fetchUsers]);
 
   // --- LÓGICA DE BÚSQUEDA Y VALIDACIÓN ---
   const handleSearch = (e) => {
@@ -129,7 +128,8 @@ function UsersPage() {
         });
         return;
       }
-      searchParams = { nombre_apellido: name.trim() };
+      // backend buscarUsuarios espera el parámetro 'nombre'
+      searchParams = { nombre: name.trim() };
     }
 
     if (Object.keys(searchParams).length === 0) {
@@ -170,11 +170,11 @@ function UsersPage() {
 
   const handleDeleteUser = async (user) => {
     const confirm = await Swal.fire({
-      title: `¿${user.estado == 1 ? "Desactivar" : "Activar"} usuario?`,
-      text: `El usuario "${user.usuario}" será ${user.estado == 1 ? "desactivado" : "activado"}.`,
+      title: `¿${Number(user.estado) === 1 ? "Desactivar" : "Activar"} usuario?`,
+      text: `El usuario "${user.usuario}" será ${Number(user.estado) === 1 ? "desactivado" : "activado"}.`,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonText: `Sí, ${user.estado == 1 ? "desactivar" : "activar"}`,
+  confirmButtonText: `Sí, ${Number(user.estado) === 1 ? "desactivar" : "activar"}`,
       cancelButtonText: "Cancelar",
       confirmButtonColor: "#EF4444",
       cancelButtonColor: "#6B7280",
@@ -184,7 +184,7 @@ function UsersPage() {
 
     try {
       const token = sessionStorage.getItem("token");
-      const estadoActual = user.estado == 1 ? "0" : "1";
+  const estadoActual = Number(user.estado) === 1 ? "0" : "1";
       const url = `${process.env.REACT_APP_API_URL}usuarios/${user.id_usuario}/estado?estado=${estadoActual}`;
 
       await axios.patch(url, {}, { headers: { Authorization: `Bearer ${token}` } });
@@ -332,7 +332,7 @@ function UsersPage() {
                   <td>{u.correo}</td>
                   <td>{u.rol?.nombre || "-"}</td>
                   <td>{u.rol?.descripcion || "-"}</td>
-                  <td>{u.estado == 0 ? "Inactivo" : "Activo"}</td>
+                              <td>{Number(u.estado) === 0 ? "Inactivo" : "Activo"}</td>
                   <td>
                     <button
                       className="users__action users__action--edit"
@@ -341,13 +341,13 @@ function UsersPage() {
                       Editar
                     </button>
                     <button
-                      className={`users__action ${u.estado === 1
+                      className={`users__action ${Number(u.estado) === 1
                           ? "users__action--delete"
                           : "users__action--activate"
                         }`}
                       onClick={() => handleDeleteUser(u)}
                     >
-                      {u.estado == 1 ? "Desactivar" : "Activar"}
+                      {Number(u.estado) === 1 ? "Desactivar" : "Activar"}
                     </button>
                   </td>
                 </tr>

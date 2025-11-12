@@ -149,7 +149,7 @@ function Login() {
           </button>
 
           <p className="login__footer">
-            ¿No tienes cuenta? <a href="#">Contáctanos</a>
+            ¿No tienes cuenta? <a href="/contacto">Contáctanos</a>
           </p>
         </form>
       </main>
