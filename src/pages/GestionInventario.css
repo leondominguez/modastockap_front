@@ -1,8 +1,8 @@
 .gestion-inventario-page {
-	display: flex;
-	flex-direction: column;
-	min-height: 100vh;
-	background: #f3f4ff;
+ 	display: flex;
+ 	flex-direction: column;
+ 	min-height: 100vh;
+ 	background: var(--color-bg-page);
 }
 
 .gi__content {
@@ -11,10 +11,10 @@
 }
 
 .gi__sidebar {
-	width: 260px;
-	background: #ffffff;
-	border-right: 1px solid #e6e7f2;
-	padding: 24px;
+ 	width: 260px;
+ 	background: var(--color-card-bg);
+ 	border-right: 1px solid #e6e7f2;
+ 	padding: 24px;
 }
 
 .gi__nav { display:flex; flex-direction: column; gap:8px; }
@@ -27,7 +27,7 @@
 	cursor: pointer;
 	color: #374151;
 }
-.gi__nav-btn.is-active { background: #6b6ff5; color: #fff; }
+.gi__nav-btn.is-active { background: var(--color-primary); color: #fff; }
 
 .gi__main {
 	flex: 1;

@@ -13,8 +13,18 @@ function GestionVentas() {
         <aside className="ventas__sidebar">
           <h2 className="ventas__title">Gestión de Ventas</h2>
           <nav className="ventas__nav">
-            <button className={"ventas__nav-btn " + (active === 'pedidos' ? 'is-active' : '')} onClick={() => setActive('pedidos')}>Pedidos</button>
-            <button className={"ventas__nav-btn " + (active === 'reportes' ? 'is-active' : '')} onClick={() => setActive('reportes')}>Reportes</button>
+            <button
+              className={`btn ventas__nav-btn ${active === 'pedidos' ? 'btn--primary is-active' : ''}`}
+              onClick={() => setActive('pedidos')}
+            >
+              Pedidos
+            </button>
+            <button
+              className={`btn ventas__nav-btn ${active === 'reportes' ? 'btn--primary is-active' : ''}`}
+              onClick={() => setActive('reportes')}
+            >
+              Reportes
+            </button>
           </nav>
         </aside>
 

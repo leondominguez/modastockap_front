@@ -72,8 +72,8 @@ function InsumosCatalogo() {
       <header className="insumos-catalogo__header">
         <h1>Catálogo de insumos</h1>
         <div className="insumos-catalogo__controls">
-          <input placeholder="Buscar por código o nombre" value={q} onChange={e => setQ(e.target.value)} />
-          <button onClick={openNew} className="insumos-catalogo__btn">Nuevo insumo</button>
+          <input aria-label="Buscar insumos" placeholder="Buscar por código o nombre" value={q} onChange={e => setQ(e.target.value)} />
+          <button onClick={openNew} className="btn btn--primary insumos-catalogo__btn">Nuevo insumo</button>
         </div>
       </header>
 
@@ -103,8 +103,8 @@ function InsumosCatalogo() {
                     <td>{it.unidad_medida}</td>
                     <td>{it.estado}</td>
                   <td>
-                    <button onClick={() => openEdit(it)} className="insumos__action clientes__action clientes__action--edit">Editar</button>
-                    <button onClick={() => handleToggleEstado(it)} className={`insumos__action clientes__action ${it.estado === 'activo' ? 'clientes__action--delete' : 'clientes__action--activate'}`}>
+                    <button aria-label={`Editar insumo ${it.id_insumo || it.id}`} onClick={() => openEdit(it)} className="btn insumos__action clientes__action clientes__action--edit">Editar</button>
+                    <button aria-label={`${it.estado === 'activo' ? 'Desactivar' : 'Activar'} insumo ${it.id_insumo || it.id}`} onClick={() => handleToggleEstado(it)} className={`btn insumos__action clientes__action ${it.estado === 'activo' ? 'clientes__action--delete' : 'clientes__action--activate'}`}>
                       {it.estado === 'activo' ? 'Desactivar' : 'Activar'}
                     </button>
                   </td>

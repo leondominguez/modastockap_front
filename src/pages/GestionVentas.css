@@ -1,8 +1,22 @@
-.ventas-page { min-height: 100vh; }
+.ventas-page { min-height: 100vh; background: var(--color-bg-page); }
 .ventas__content { display:flex; gap:16px; padding:20px; }
-.ventas__sidebar { width:260px; border-right:1px solid #eee; padding-right:16px; }
-.ventas__title { font-size:1.4rem; margin-bottom:12px; }
+.ventas__sidebar { width:260px; border-right:1px solid var(--color-surface-1); padding-right:16px; background: var(--color-card-bg); }
+.ventas__title { font-size:1.4rem; margin-bottom:12px; color: var(--color-text); }
 .ventas__nav { display:flex; flex-direction:column; gap:8px; }
-.ventas__nav-btn { padding:10px 12px; background:#fff; border:1px solid #e6e6e6; border-radius:6px; cursor:pointer; text-align:left; }
-.ventas__nav-btn.is-active { background:#0b63ff; color:#fff; }
+.ventas__nav-btn {
+	padding: var(--btn-padding-y) var(--btn-padding-x);
+	background: var(--color-card-bg);
+	border: 1px solid var(--color-surface-1);
+	border-radius: var(--radius-base);
+	cursor: pointer;
+	text-align: left;
+	color: var(--color-muted);
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	transition: background-color 0.18s, color 0.18s, box-shadow 0.18s;
+}
+.ventas__nav-btn:hover { background: var(--color-surface-1); }
+.ventas__nav-btn.is-active { background: var(--color-primary); color:#fff; }
+.ventas__nav-btn:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(79,70,229,0.12); }
 .ventas__main { flex:1; padding:12px; }

@@ -94,7 +94,7 @@ function InventariosProductos(){
         <h1>Inventario de productos terminados</h1>
         <div className="insumos-catalogo__controls">
           <input placeholder="Buscar por código o ubicación" value={q} onChange={e=>setQ(e.target.value)} />
-          <button onClick={openNew} className="insumos-catalogo__btn">Nuevo registro</button>
+          <button onClick={openNew} className="insumos-catalogo__btn btn btn--primary">Nuevo registro</button>
         </div>
       </header>
 
@@ -126,8 +126,8 @@ function InventariosProductos(){
                   <td>{inv.estado}</td>
                   <td className="insumos__desc">{inv.notas || '-'}</td>
                   <td>
-                    <button onClick={() => openEdit(inv)} className="insumos__action insumos__action--edit">Editar</button>
-                    <button onClick={() => handleToggleEstado(inv)} className={`insumos__action ${inv.estado === 'activo' ? 'insumos__action--delete' : 'insumos__action--activate'}`} style={{ marginLeft: 8 }}>
+                    <button onClick={() => openEdit(inv)} className="insumos__action insumos__action--edit btn">Editar</button>
+                    <button onClick={() => handleToggleEstado(inv)} className={`btn insumos__action ${inv.estado === 'activo' ? 'insumos__action--delete' : 'insumos__action--activate'}`} style={{ marginLeft: 8 }}>
                       {inv.estado === 'activo' ? 'Desactivar' : 'Activar'}
                     </button>
                   </td>

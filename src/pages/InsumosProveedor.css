@@ -2,27 +2,28 @@
 .insumos-proveedor__header h1 { margin:0; }
 .insumos-proveedor__controls { display:flex; gap:8px; align-items:center; }
 .insumos-proveedor__controls input { padding:8px 10px; border:1px solid #e5e7eb; border-radius:6px; }
-.insumos-proveedor__btn { padding:8px 12px; background:#4f46e5; color:#fff; border:none; border-radius:8px; cursor:pointer; }
+/* layout-only: visual appearance comes from global .btn */
+.insumos-proveedor__btn { margin:0; }
 
 /* same table styles as catalog */
-.insumos__table { width: 100%; border-collapse: separate; table-layout: auto; margin-top: 1rem; border-radius: 8px; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.06); overflow: visible; }
+.insumos__table { width: 100%; border-collapse: separate; table-layout: auto; margin-top: 1rem; border-radius: 8px; background: var(--color-card-bg); box-shadow: var(--card-shadow); overflow: visible; }
 
-.insumos__table thead th { background-color: #f5f6fa; color: #374151; font-weight: 600; padding: 10px 12px; text-align: left; border-bottom: 1px solid #e5e7eb; font-size: 0.95rem; }
-.insumos__table th, .insumos__table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #e5e7eb; font-size: 0.95rem; vertical-align: middle; white-space: normal; }
-.insumos__action { border: none; padding: 0.36rem 0.75rem; border-radius: 8px; font-size: 0.88rem; font-weight: 600; cursor: pointer; color: #fff; display: inline-flex; align-items: center; justify-content: center; }
+.insumos__table thead th { background-color: var(--color-surface-1); color: var(--color-text); font-weight: 600; padding: 10px 12px; text-align: left; border-bottom: 1px solid #e5e7eb; font-size: 0.95rem; }
+.insumos__table th, .insumos__table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #e5e7eb; font-size: 0.95rem; vertical-align: middle; white-space: normal; color: var(--color-text); }
+.insumos__action { border: none; padding: 0.36rem 0.75rem; border-radius: 8px; font-size: 0.88rem; font-weight: 600; cursor: pointer; color: var(--color-on-primary, #fff); display: inline-flex; align-items: center; justify-content: center; }
 
 /* Acciones: espacio y manejo responsivo (similares a clientes) */
 .insumos__table td:last-child { display:flex; gap:8px; align-items:center; justify-content:flex-start; min-width:160px; white-space:nowrap; flex-wrap:wrap; }
 
 /* Variantes */
-.insumos__action--edit { background-color: #6b6ff5; }
-.insumos__action--edit:hover { background-color: #5759d9; }
-.insumos__action--delete { background-color: #f87171; }
-.insumos__action--delete:hover { background-color: #dc2626; }
-.insumos__action--activate { background-color: #25d465; }
-.insumos__action--activate:hover { background-color: #1eb355; }
+.insumos__action--edit { background-color: var(--color-primary); }
+.insumos__action--edit:hover { background-color: var(--color-primary-dark); }
+.insumos__action--delete { background-color: var(--color-danger); }
+.insumos__action--delete:hover { background-color: var(--color-danger-dark, #dc2626); }
+.insumos__action--activate { background-color: var(--color-success); }
+.insumos__action--activate:hover { background-color: var(--color-success-dark, #1eb355); }
 
-/* spacing between action buttons when both present */
+/* espacio entre botones de acción cuando hay más de uno */
 .insumos__action + .insumos__action { margin-left: 8px; }
 
 /* also include catalog classes so pages can share styles independently */
@@ -30,4 +31,5 @@
 .insumos-catalogo__header h1 { margin:0; }
 .insumos-catalogo__controls { display:flex; gap:8px; align-items:center; }
 .insumos-catalogo__controls input { padding:8px 10px; border:1px solid #e5e7eb; border-radius:6px; }
-.insumos-catalogo__btn { padding:8px 12px; background:#4f46e5; color:#fff; border:none; border-radius:8px; cursor:pointer; }
+/* layout-only: visual appearance comes from global .btn */
+.insumos-catalogo__btn { margin:0; }

@@ -311,8 +311,8 @@ function UsersPage() {
           <table className="users__table">
             <thead>
               <tr>
-                <th>Tipo de Documento</th>
-                <th>Número de Documento</th>
+                <th>Tipo Id</th>
+                <th>Documento</th>
                 <th>Nombre</th>
                 <th>Correo</th>
                 <th>Rol</th>

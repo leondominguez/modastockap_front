@@ -66,8 +66,8 @@ function CodificacionProductos(){
       <header className="insumos-catalogo__header">
         <h1>Codificación de productos</h1>
         <div className="insumos-catalogo__controls">
-          <input placeholder="Buscar por código o descripción" value={q} onChange={e=>setQ(e.target.value)} />
-          <button onClick={openNew} className="insumos-catalogo__btn">Nuevo producto</button>
+          <input aria-label="Buscar productos" placeholder="Buscar por código o descripción" value={q} onChange={e=>setQ(e.target.value)} />
+          <button onClick={openNew} className="btn btn--primary insumos-catalogo__btn">Nuevo producto</button>
         </div>
       </header>
 
@@ -103,8 +103,8 @@ function CodificacionProductos(){
                   <td>{p.precio_unitario}</td>
                   <td>{p.estado}</td>
                   <td>
-                    <button onClick={() => openEdit(p)} className="insumos__action insumos__action--edit">Editar</button>
-                    <button onClick={() => handleToggleEstado(p)} className={`insumos__action ${p.estado === 'activo' ? 'insumos__action--delete' : 'insumos__action--activate'}`}>
+                    <button aria-label={`Editar producto ${p.id_producto || p.id}`} onClick={() => openEdit(p)} className="btn insumos__action insumos__action--edit">Editar</button>
+                    <button aria-label={`${p.estado === 'activo' ? 'Desactivar' : 'Activar'} producto ${p.id_producto || p.id}`} onClick={() => handleToggleEstado(p)} className={`btn insumos__action ${p.estado === 'activo' ? 'insumos__action--delete' : 'insumos__action--activate'}`}>
                       {p.estado === 'activo' ? 'Desactivar' : 'Activar'}
                     </button>
                   </td>

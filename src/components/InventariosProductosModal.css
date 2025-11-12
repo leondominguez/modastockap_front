@@ -8,5 +8,5 @@
 .inventario-modal-card textarea { min-height:80px }
 .inventario-modal-actions { display:flex; gap:8px; justify-content:flex-end; margin-top:8px }
 .btn { padding:8px 12px; border-radius:6px; border:none; cursor:pointer }
-.btn--primary { background:#4f46e5; color:white }
+.btn--primary { background: var(--color-primary); color:white }
 .btn--secondary { background:#efefef; color:#111 }

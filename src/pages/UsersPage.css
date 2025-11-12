@@ -1,8 +1,8 @@
-/* src/pages/UsersPage.css */
+/* src/pages/UsersPage.css - ahora usa variables del tema para colores y fondos */
 
 .users {
   min-height: 100vh;
-  background-color: #e8e9fd;
+  background-color: var(--color-bg-page);
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
@@ -21,13 +21,13 @@
 }
 
 .users__header h1 {
-  color: #1e1e2d;
+  color: var(--color-text);
   font-size: 1.8rem;
   font-weight: 700;
 }
 
 .users__btn {
-  background-color: #6b6ff5;
+  background-color: var(--color-primary);
   color: #fff;
   border: none;
   padding: 0.7rem 1.3rem;
@@ -35,23 +35,22 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(107, 111, 245, 0.3);
+  box-shadow: 0 4px 10px rgba(107, 111, 245, 0.18);
 }
 
 .users__btn:hover {
-  background-color: #5759d9;
+  background-color: var(--color-primary-dark);
 }
 
 .users__table {
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
-  /* fija las proporciones de las columnas */
   margin-top: 1rem;
   border-radius: 10px;
   overflow: hidden;
-  background: #fff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  background: var(--color-card-bg);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
 }
 
 .users__table th,
@@ -61,61 +60,36 @@
   border-bottom: 1px solid #e5e7eb;
   font-size: 1.05rem;
   word-wrap: break-word;
-  /* evita que los textos largos descuadren */
+  color: var(--color-text);
 }
 
 /* Encabezado */
 .users__table thead th {
-  background-color: #f5f6fa;
-  color: #374151;
+  background-color: var(--color-surface-1);
+  color: var(--color-text);
   font-weight: 600;
 }
 
 /* Ajuste proporcional del ancho de columnas */
 .users__table th:nth-child(1),
-.users__table td:nth-child(1) {
-  width: 12%;
-}
-
+.users__table td:nth-child(1) { width: 12%; }
 .users__table th:nth-child(2),
-.users__table td:nth-child(2) {
-  width: 15%;
-}
-
+.users__table td:nth-child(2) { width: 15%; }
 .users__table th:nth-child(3),
-.users__table td:nth-child(3) {
-  width: 15%;
-}
-
+.users__table td:nth-child(3) { width: 15%; }
 .users__table th:nth-child(4),
-.users__table td:nth-child(4) {
-  width: 15%;
-}
-
+.users__table td:nth-child(4) { width: 15%; }
 .users__table th:nth-child(5),
-.users__table td:nth-child(5) {
-  width: 10%;
-}
-
+.users__table td:nth-child(5) { width: 10%; }
 .users__table th:nth-child(6),
-.users__table td:nth-child(6) {
-  width: 20%;
-}
-
+.users__table td:nth-child(6) { width: 20%; }
 .users__table th:nth-child(7),
-.users__table td:nth-child(7) {
-  width: 10%;
-}
-
+.users__table td:nth-child(7) { width: 10%; }
 .users__table th:nth-child(8),
-.users__table td:nth-child(8) {
-  width: 15%;
-}
+.users__table td:nth-child(8) { width: 15%; }
 
 /* Filas hover */
-.users__table tbody tr:hover {
-  background-color: #f9fafb;
-}
+.users__table tbody tr:hover { background-color: var(--color-surface-1); }
 
 /* Botones de acción */
 .users__action {
@@ -129,156 +103,44 @@
   transition: background-color 0.3s ease;
 }
 
-.users__action--edit {
-  background-color: #6b6ff5;
-  color: #fff;
-}
-
-.users__action--edit:hover {
-  background-color: #5759d9;
-}
-
-.users__action--delete {
-  background-color: #f87171;
-  color: #fff;
-}
-
-/* Activar (Estoy entre verde o un azul acorde al tema) */
-.users__action--activate {
-  background-color: #25d465;
-  color: #fff;
-}
-
-.users__action--activate:hover {
-  background-color: #1eb355;
-}
-
-.users__action--delete:hover {
-  background-color: #dc2626;
-}
+.users__action--edit { background-color: var(--color-primary); color: #fff; }
+.users__action--edit:hover { background-color: var(--color-primary-dark); }
+.users__action--delete { background-color: var(--color-danger); color: #fff; }
+.users__action--delete:hover { background-color: #dc2626; }
+.users__action--activate { background-color: var(--color-success); color: #fff; }
+.users__action--activate:hover { background-color: #1eb355; }
 
 /* Estados de error */
-.input-error {
-  border: 2px solid #f87171;
-  background-color: #fff5f5;
-}
-
-.error-text {
-  color: #dc2626;
-  font-size: 0.85rem;
-  margin-top: 0.25rem;
-  display: block;
-}
+.input-error { border: 2px solid var(--color-danger); background-color: #fff5f5; }
+.error-text { color: #dc2626; font-size: 0.85rem; margin-top: 0.25rem; display: block; }
 
 /* Botón deshabilitado */
-.login__button:disabled {
-  background-color: #bcbffb;
-  cursor: not-allowed;
-  opacity: 0.7;
-}
-
-/* /client/src/pages/UsersPage.css */
+.login__button:disabled { background-color: rgba(107,111,245,0.35); cursor: not-allowed; opacity: 0.7; }
 
 /* --- Contenedor del formulario de búsqueda --- */
-.users__search-form {
-  background-color: #f9fafb;
-  /* Color de fondo claro */
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-bottom: 30px;
-}
+.users__search-form { background-color: var(--color-surface-1); padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.06); margin-bottom: 30px; }
+.users__search-form h2 { margin-top: 0; margin-bottom: 15px; font-size: 1.25rem; color: var(--color-text); border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; }
 
-.users__search-form h2 {
-  margin-top: 0;
-  margin-bottom: 15px;
-  font-size: 1.25rem;
-  color: #1f2937;
-  border-bottom: 1px solid #e5e7eb;
-  padding-bottom: 10px;
-}
+.users__search-controls { display: flex; gap: 15px; align-items: center; flex-wrap: wrap; }
+.users__search-radio { display: flex; gap: 20px; }
+.users__search-radio label { font-weight: 500; color: var(--color-muted); }
 
-.users__search-controls {
-  display: flex;
-  gap: 15px;
-  align-items: center;
-  flex-wrap: wrap;
-  /* Para pantallas pequeñas */
-}
+.users__search-group { display: flex; gap: 10px; flex-grow: 1; min-width: 250px; }
+.users__search-group--name { min-width: 300px; }
 
-/* --- Radio Buttons (Criterio de Búsqueda) --- */
-.users__search-radio {
-  display: flex;
-  gap: 20px;
-}
-
-.users__search-radio label {
-  font-weight: 500;
-  color: #4b5563;
-}
-
-/* --- Grupos de Input (Documento y Nombre) --- */
-.users__search-group {
-  display: flex;
-  gap: 10px;
-  flex-grow: 1;
-  min-width: 250px;
-}
-
-.users__search-group--name {
-  min-width: 300px;
-}
-
-.users__search-input {
-  padding: 10px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  font-size: 1rem;
-  flex-grow: 1;
-  transition: all 0.2s ease-in-out;
-}
-
-.users__search-input:focus {
-  outline: none;
-  border-color: #4f46e5;
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
-}
+.users__search-input { padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 1rem; flex-grow: 1; transition: all 0.2s ease-in-out; }
+.users__search-input:focus { outline: none; border-color: var(--ColorPrimary, var(--color-primary)); box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12); }
 
 /* --- REQUERIMIENTO: Efecto de sombreado para campos vacíos --- */
 .users__search-input.input--required:not(:focus):empty,
 .users__search-input.input--required:not(:focus):placeholder-shown {
-  /* Aplica un borde rojo tenue si el campo es requerido y está vacío */
-  border-color: #ef4444;
-  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.4);
+  border-color: var(--color-danger);
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.12);
 }
 
 /* --- Botones --- */
-.users__btn--search {
-  background-color: #4f46e5;
-  /* Índigo */
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
+.users__btn--search { background-color: var(--color-primary); color: white; padding: 10px 15px; border: none; border-radius: 6px; cursor: pointer; transition: background-color 0.2s; }
+.users__btn--search:hover { background-color: var(--color-primary-dark); }
 
-.users__btn--search:hover {
-  background-color: #4338ca;
-}
-
-.users__btn--clear {
-  background-color: #9ca3af;
-  /* Gris */
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.users__btn--clear:hover {
-  background-color: #6b7280;
-}
+.users__btn--clear { background-color: var(--color-muted); color: white; padding: 10px 15px; border: none; border-radius: 6px; cursor: pointer; transition: background-color 0.2s; }
+.users__btn--clear:hover { background-color: #6b7280; }

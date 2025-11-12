@@ -134,13 +134,13 @@ function Pedidos() {
             ))}
 
             <div style={{marginTop:8}}>
-              <button type="button" onClick={addItem}>Agregar item</button>
+              <button type="button" className="btn btn--secondary" onClick={addItem} aria-label="Agregar item">Agregar item</button>
             </div>
 
             <div className="pedido-total">Total estimado: <strong>{totalEstimado}</strong></div>
 
             <div style={{marginTop:12}}>
-              <button className="btn-primary" type="submit" disabled={creating}>{creating ? 'Creando...' : 'Crear pedido'}</button>
+              <button className="btn btn--primary" type="submit" disabled={creating} aria-label="Crear pedido">{creating ? 'Creando...' : 'Crear pedido'}</button>
             </div>
             {error && <div className="error">{error}</div>}
           </form>

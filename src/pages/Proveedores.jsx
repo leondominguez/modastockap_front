@@ -159,7 +159,7 @@ function ProveedoresPage() {
       <main className="clientes__main">
         <div className="clientes__header">
           <h1>Gestión de Proveedores</h1>
-          <button className="clientes__btn clientes__btn--add" onClick={handleAddProveedor}>
+          <button aria-label="Agregar nuevo proveedor" className="btn btn--primary clientes__btn clientes__btn--add" onClick={handleAddProveedor}>
             + Nuevo Proveedor
           </button>
         </div>
@@ -182,28 +182,28 @@ function ProveedoresPage() {
               </label>
             </div>
 
-            {searchCriteria === "documento" && (
+                {searchCriteria === "documento" && (
               <div className="clientes__search-group">
-                <select className={`clientes__search-input ${!documentType ? "input--required" : ""}`} value={documentType} onChange={(e) => setDocumentType(e.target.value)}>
+                <select aria-label="Tipo de documento" className={`clientes__search-input ${!documentType ? "input--required" : ""}`} value={documentType} onChange={(e) => setDocumentType(e.target.value)}>
                   <option value="">Tipo Documento</option>
                   <option value="CC">CC</option>
                   <option value="NIT">NIT</option>
                   <option value="PAS">PAS</option>
                   <option value="CE">CE</option>
                 </select>
-                <input type="text" className={`clientes__search-input ${!documentNumber ? "input--required" : ""}`} placeholder="Número de Documento" value={documentNumber} onChange={(e) => setDocumentNumber(e.target.value)} />
+                <input aria-label="Número de documento" type="text" className={`clientes__search-input ${!documentNumber ? "input--required" : ""}`} placeholder="Número de Documento" value={documentNumber} onChange={(e) => setDocumentNumber(e.target.value)} />
               </div>
             )}
 
             {searchCriteria === "razon_social" && (
               <div className="clientes__search-group clientes__search-group--name">
-                <input type="text" className={`clientes__search-input ${!razonSocial ? "input--required" : ""}`} placeholder="Razon Social" value={razonSocial} onChange={(e) => setRazonSocial(e.target.value)} />
+                <input aria-label="Razón social" type="text" className={`clientes__search-input ${!razonSocial ? "input--required" : ""}`} placeholder="Razon Social" value={razonSocial} onChange={(e) => setRazonSocial(e.target.value)} />
               </div>
             )}
 
             {searchCriteria === "estado" && (
               <div className="clientes__search-group">
-                <select className={`clientes__search-input ${estadoFilter === "" ? "input--required" : ""}`} value={estadoFilter} onChange={(e) => setEstadoFilter(e.target.value)}>
+                <select aria-label="Filtrar por estado" className={`clientes__search-input ${estadoFilter === "" ? "input--required" : ""}`} value={estadoFilter} onChange={(e) => setEstadoFilter(e.target.value)}>
                   <option value="">Seleccione Estado</option>
                   <option value="1">Activo</option>
                   <option value="0">Inactivo</option>
@@ -211,8 +211,8 @@ function ProveedoresPage() {
               </div>
             )}
 
-            <button type="submit" className="clientes__btn--search clientes__btn">Buscar</button>
-            <button type="button" className="clientes__btn--clear clientes__btn" onClick={handleClearSearch}>Limpiar</button>
+            <button type="submit" aria-label="Buscar proveedores" className="btn btn--primary clientes__btn--search clientes__btn">Buscar</button>
+            <button type="button" aria-label="Limpiar búsqueda" className="btn clientes__btn--clear clientes__btn" onClick={handleClearSearch}>Limpiar</button>
           </div>
         </form>
 
