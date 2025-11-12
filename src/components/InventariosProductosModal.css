@@ -1,0 +1,12 @@
+.inventario-modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,0.35); display:flex; align-items:center; justify-content:center; z-index:1200 }
+.inventario-modal-card { width:520px; background:#fff; padding:18px; border-radius:8px; box-shadow:0 8px 30px rgba(0,0,0,0.12); position:relative }
+.inventario-modal-close { position:absolute; right:10px; top:8px; border:none; background:transparent; font-size:20px; cursor:pointer }
+.inventario-modal-card h3 { margin-top:0 }
+.inventario-modal-card form { display:flex; flex-direction:column; gap:8px }
+.inventario-modal-card label { font-size:0.9rem; color:#374151 }
+.inventario-modal-card input, .inventario-modal-card select, .inventario-modal-card textarea { padding:8px 10px; border:1px solid #e5e7eb; border-radius:6px }
+.inventario-modal-card textarea { min-height:80px }
+.inventario-modal-actions { display:flex; gap:8px; justify-content:flex-end; margin-top:8px }
+.btn { padding:8px 12px; border-radius:6px; border:none; cursor:pointer }
+.btn--primary { background: var(--color-primary); color:white }
+.btn--secondary { background:#efefef; color:#111 }

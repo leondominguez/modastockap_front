@@ -201,7 +201,7 @@ function ClientesPage() {
       <main className="clientes__main">
         <div className="clientes__header">
           <h1>Gestión de Clientes</h1>
-          <button className="clientes__btn clientes__btn--add" onClick={handleAddCliente}>
+          <button className="btn btn--primary clientes__btn" onClick={handleAddCliente}>
             + Nuevo Cliente
           </button>
         </div>
@@ -302,10 +302,10 @@ function ClientesPage() {
               </div>
             )}
 
-            <button type="submit" className="clientes__btn clientes__btn--search">
+            <button type="submit" className="btn btn--primary clientes__btn clientes__btn--search">
               Buscar
             </button>
-            <button type="button" className="clientes__btn clientes__btn--clear" onClick={handleClearSearch}>
+            <button type="button" className="btn btn--secondary clientes__btn clientes__btn--clear" onClick={handleClearSearch}>
               Limpiar
             </button>
           </div>

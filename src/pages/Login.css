@@ -1,8 +1,19 @@
 /* src/pages/LoginPage.css */
 
 .login {
+  /* Page-scoped theme overrides. Set --login-* at a higher level to customize only this page.
+     These values fall back to the global theme variables so the site keeps a single source of truth. */
+  --color-primary: var(--login-primary, #6b6ff5);
+  --color-primary-dark: var(--login-primary-dark, #5759d9);
+  --color-on-primary: var(--login-on-primary, #fff);
+  --color-card-bg: var(--login-card-bg, #ffffff);
+  --card-shadow: var(--login-card-shadow, 0 8px 25px rgba(0,0,0,0.1));
+  --color-bg-page: var(--login-bg, #e8e9fd);
+  --color-text: var(--login-text, #1e1e2d);
+  --login-link-color: var(--login-link-color, var(--color-primary));
+
   min-height: 100vh;
-  background-color: #e8e9fd;
+  background-color: var(--color-bg-page);
   display: flex;
   flex-direction: column;
 }
@@ -16,9 +27,9 @@
 }
 
 .login__card {
-  background-color: #ffffff;
+  background-color: var(--color-card-bg);
   border-radius: 20px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--card-shadow);
   width: 380px;
   padding: 2.5rem;
   text-align: center;
@@ -26,7 +37,7 @@
 }
 
 .login__title {
-  color: #1e1e2d;
+  color: var(--color-text);
   font-size: 1.8rem;
   font-weight: 700;
   margin-bottom: 2rem;
@@ -39,7 +50,7 @@
 
 .login__group label {
   display: block;
-  color: #1e1e2d;
+  color: var(--color-text);
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
@@ -55,13 +66,13 @@
 
 .login__group input:focus {
   outline: none;
-  border-color: #6b6ff5;
-  box-shadow: 0 0 0 3px rgba(107, 111, 245, 0.25);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
 }
 
 .login__button {
-  background-color: #6b6ff5;
-  color: white;
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
   font-weight: 600;
   border: none;
   width: 100%;
@@ -72,17 +83,17 @@
 }
 
 .login__button:hover {
-  background-color: #5759d9;
+  background-color: var(--color-primary-dark);
 }
 
 .login__footer {
   margin-top: 1.5rem;
   font-size: 0.9rem;
-  color: #6b7280;
+  color: var(--color-muted, #6b7280);
 }
 
 .login__footer a {
-  color: #6b6ff5;
+  color: var(--login-link-color);
   text-decoration: none;
 }
 

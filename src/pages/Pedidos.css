@@ -1,0 +1,18 @@
+.pedidos-page { padding: 8px; }
+/* Use global .btn utilities; keep legacy selector for backward compatibility */
+.pedidos-page .btn-primary, .pedidos-page .btn--primary { background: var(--color-primary); color: var(--color-on-primary, #fff); padding: 8px 12px; border-radius: 6px; border: none; cursor: pointer; }
+
+.pedidos-page .btn--secondary { background: var(--color-surface-1); color: var(--color-text); padding: 8px 12px; border-radius: 6px; border: none; cursor: pointer; }
+
+.pedidos-grid { display:flex; gap:20px; }
+.pedidos-form { flex:1; max-width:720px; }
+.pedidos-form label { display:block; margin-top:8px; font-weight:600; }
+.pedidos-form input, .pedidos-form select, .pedidos-form textarea { width:100%; padding:8px; margin-top:6px; box-sizing:border-box; }
+.pedido-item { display:flex; gap:8px; align-items:center; margin-top:8px; }
+.pedido-item select { flex:1; }
+.pedido-item input { width:100px; }
+.item-subtotal { width:90px; text-align:right; }
+.pedido-total { margin-top:12px; font-size:1.05rem; }
+.pedidos-current { width:360px; border-left:1px solid #eee; padding-left:16px; }
+.created-pedido { margin-top:12px; background: var(--color-surface-2, #f6f8ff); padding:8px; border-radius:6px; }
+.error { color: var(--color-danger); margin-top:8px; }

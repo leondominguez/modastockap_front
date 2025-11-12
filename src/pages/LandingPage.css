@@ -2,7 +2,7 @@
 
 .landing {
   min-height: 100vh;
-  background-color: #e8e9fd;
+  background-color: var(--landing-bg);
   display: flex;
   flex-direction: column;
 }
@@ -18,31 +18,34 @@
 .landing__content {
   text-align: center;
   max-width: 700px;
-  background-color: #ffffff;
+  height: auto;
+  background-color: var(--landing-content-bg);
   border-radius: 25px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   padding: 3rem 4rem;
   animation: fadeIn 0.6s ease-in-out;
+  
 }
 
 .landing__title {
-  color: #1e1e2d;
+  color: var(--landing-text);
   font-size: 2.5rem;
   font-weight: 800;
   margin-bottom: 1.5rem;
 }
 
 .landing__subtitle {
-  color: #4b5563;
+  color: var(--landing-subtext);
   font-size: 1.2rem;
   margin-bottom: 2.5rem;
   line-height: 1.6;
 }
 
 .landing__buttons {
-  display: flex;
-  justify-content: center;
-  gap: 1.2rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columnas iguales */
+  gap: 1.2rem; /* Espacio entre botones */
+  justify-items: center; /* Centra cada botón en su celda */
 }
 
 .landing__btn {
@@ -52,28 +55,30 @@
   border-radius: 10px;
   transition: all 0.3s ease;
   font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.landing__btn--primary {
-  background-color: #6b6ff5;
-  color: #ffffff;
-  box-shadow: 0 4px 10px rgba(107, 111, 245, 0.3);
+
+/* Las apariencias de los botones (color, shadow, padding) ahora se controlan
+   desde `theme.css` mediante las reglas globales `.btn` y las sobreescrituras
+   dentro de `.landing` (ver :root). Aquí mantenemos sólo comportamiento de
+   layout y foco. */
+
+/* Accesibilidad: foco visible para usuarios que navegan con teclado */
+.landing__btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--landing-btn-shadow-color);
 }
 
-.landing__btn--primary:hover {
-  background-color: #5759d9;
-  cursor: pointer;
-}
-
-.landing__btn--secondary {
-  background-color: #ffffff;
-  color: #6b6ff5;
-  border: 2px solid #6b6ff5;
-}
-
-.landing__btn--secondary:hover {
-  background-color: #6b6ff5;
-  color: #ffffff;
+/* Overrides de SweetAlert2 para la landing: puedes ajustar colores aquí y se aplicarán
+   a los popups ya que añadimos la clase 'landing-page' al <body> cuando esta página se monta. */
+.landing-page {
+  --swal-confirm-bg: #EF4444; /* color por defecto para confirmar en la landing */
+  --swal-confirm-color: #ffffff;
+  --swal-cancel-bg: #6B7280;
+  --swal-cancel-color: #ffffff;
 }
 
 @keyframes fadeIn {

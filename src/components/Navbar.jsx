@@ -55,16 +55,18 @@ function Navbar() {
 
         {usuario && (
           <div className="navbar__user">
-            <span
+            <button
+              type="button"
               className="navbar__username"
               onClick={() => setDropdownOpen(!dropdownOpen)}
+              aria-haspopup="true"
+              aria-expanded={dropdownOpen}
             >
-              {usuario.primer_nombre} {usuario.primer_apellido}{" "}
-              <FaChevronDown />
-            </span>
+              {usuario.primer_nombre} {usuario.primer_apellido} <FaChevronDown />
+            </button>
             {dropdownOpen && (
-              <div className="navbar__dropdown">
-                <button onClick={handleLogout}>Cerrar sesión</button>
+              <div className="navbar__dropdown" role="menu">
+                <button role="menuitem" onClick={handleLogout}>Cerrar sesión</button>
               </div>
             )}
           </div>

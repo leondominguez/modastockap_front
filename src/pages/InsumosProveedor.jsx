@@ -75,8 +75,8 @@ function InsumosProveedor(){
       <header className="insumos-proveedor__header">
         <h1>Insumos por proveedor</h1>
         <div className="insumos-proveedor__controls">
-          <input placeholder="Buscar" value={q} onChange={e=>setQ(e.target.value)} />
-          <button onClick={openNew} className="insumos-proveedor__btn">Nuevo vínculo</button>
+          <input aria-label="Buscar vínculos" placeholder="Buscar" value={q} onChange={e=>setQ(e.target.value)} />
+          <button onClick={openNew} className="btn btn--primary insumos-proveedor__btn">Nuevo vínculo</button>
         </div>
       </header>
 
@@ -112,8 +112,8 @@ function InsumosProveedor(){
                   <td>{v.notas || ''}</td>
                   <td>{v.estado}</td>
                   <td>
-                    <button className="insumos__action clientes__action clientes__action--edit" onClick={()=>openEdit(v)}>Editar</button>
-                    <button className={"insumos__action clientes__action " + (v.estado === 'activo' || v.estado === 1 ? 'clientes__action--delete' : 'clientes__action--activate')} onClick={()=> handleToggleEstado(v)}>{v.estado === 'activo' || v.estado === 1 ? 'Desactivar' : 'Activar'}</button>
+                    <button aria-label={`Editar vínculo ${v.id_insumo_proveedor || v.id}`} className="btn insumos__action clientes__action clientes__action--edit" onClick={()=>openEdit(v)}>Editar</button>
+                    <button aria-label={`${v.estado === 'activo' || v.estado === 1 ? 'Desactivar' : 'Activar'} vínculo ${v.id_insumo_proveedor || v.id}`} className={"btn insumos__action clientes__action " + (v.estado === 'activo' || v.estado === 1 ? 'clientes__action--delete' : 'clientes__action--activate')} onClick={()=> handleToggleEstado(v)}>{v.estado === 'activo' || v.estado === 1 ? 'Desactivar' : 'Activar'}</button>
                   </td>
                 </tr>
               ))}

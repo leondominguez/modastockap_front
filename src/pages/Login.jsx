@@ -144,6 +144,7 @@ function Login() {
             type="submit"
             className="login__button"
             disabled={isFormInvalid || isSubmitting}
+            aria-label="Iniciar sesión"
           >
             {isSubmitting ? "Entrando..." : "Entrar"}
           </button>
