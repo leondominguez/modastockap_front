@@ -1,0 +1,8 @@
+.ventas-page { min-height: 100vh; }
+.ventas__content { display:flex; gap:16px; padding:20px; }
+.ventas__sidebar { width:260px; border-right:1px solid #eee; padding-right:16px; }
+.ventas__title { font-size:1.4rem; margin-bottom:12px; }
+.ventas__nav { display:flex; flex-direction:column; gap:8px; }
+.ventas__nav-btn { padding:10px 12px; background:#fff; border:1px solid #e6e6e6; border-radius:6px; cursor:pointer; text-align:left; }
+.ventas__nav-btn.is-active { background:#0b63ff; color:#fff; }
+.ventas__main { flex:1; padding:12px; }

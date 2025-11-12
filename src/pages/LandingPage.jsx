@@ -57,11 +57,11 @@ function LandingPage() {
                   Gestión Proveedores
                 </button>
                                 <button
-                  className="landing__btn landing__btn--primary"
-                  onClick={handleAdminGestionCompras}
-                >
-                  Gestión Compras
-                </button>
+                                  className="landing__btn landing__btn--primary"
+                                  onClick={handleAdminGestionCompras}
+                                >
+                                  Gestión Compras
+                                </button>
               </>
             )}
 
@@ -84,6 +84,15 @@ function LandingPage() {
               </>
 
             )}
+
+            {/* Enlaces rápidos visibles en el landing */}
+            <Link to="/gestion-ventas" className="landing__btn landing__btn--primary">
+              Gestión Ventas
+            </Link>
+
+            <Link to="/gestion-inventario" className="landing__btn landing__btn--primary">
+              Gestión Inventario
+            </Link>
 
             <a
               href="#contacto"
