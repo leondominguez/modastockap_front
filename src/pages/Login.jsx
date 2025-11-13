@@ -3,7 +3,7 @@ import { useState } from "react";
 import "./Login.css";
 import Navbar from "../components/Navbar";
 import axios from "axios";
-import Swal from "sweetalert2";
+import swal from '../utils/swal';
 
 function Login() {
   const [form, setForm] = useState({ usuario: "", password: "" });
@@ -41,10 +41,7 @@ function Login() {
 
     const hasErrors = Object.values(errors).some((err) => err);
     if (hasErrors || !form.usuario || !form.password) {
-      // Swal.fire({
-      //   confirmButtonColor: "#4F46E5",
-      // });
-      Swal.mixin({
+      swal({
         icon: "warning",
         title: "Campos incompletos",
         text: "Por favor corrige los errores antes de continuar.",
@@ -70,7 +67,7 @@ function Login() {
         );
       }
 
-      await Swal.fire({
+      await swal({
         icon: "success",
         title: "Inicio de sesión exitoso",
         text: "Bienvenido al sistema 👋",
@@ -82,7 +79,7 @@ function Login() {
       window.location.href = "/"; // Redirección tras éxito
     } catch (error) {
       console.error("Error al iniciar sesión:", error);
-      Swal.fire({
+      swal({
         icon: "error",
         title: "Error de autenticación",
         text:

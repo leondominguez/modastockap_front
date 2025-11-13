@@ -1,7 +1,7 @@
 // /client/src/components/UserModal.jsx
 import React, { useEffect, useState } from "react";
 import "./UserModal.css";
-import Swal from "sweetalert2";
+import swal from '../utils/swal';
 import axios from "axios";
 
 function UserModal({ show, onClose, onUserCreated, selectedUser }) {
@@ -24,7 +24,7 @@ function UserModal({ show, onClose, onUserCreated, selectedUser }) {
         password: "", // por seguridad no se carga
       });
     } else {
-      //limpia formulario
+      // limpia formulario (nota: usar la misma clave `email` usada en el resto)
       setForm({
         usuario: "",
         primer_nombre: "",
@@ -33,7 +33,7 @@ function UserModal({ show, onClose, onUserCreated, selectedUser }) {
         segundo_apellido: "",
         tipo_documento: "",
         numero_documento: "",
-        correo: "",
+        email: "",
         id_rol: "",
         password: "",
       });
@@ -118,7 +118,7 @@ function UserModal({ show, onClose, onUserCreated, selectedUser }) {
 
     // Si está creando, también validar contraseña
     if (!selectedUser && !form.password.trim()) {
-      Swal.fire({
+      swal({
         icon: "warning",
         title: "Formulario incompleto",
         text: "Por favor ingresa una contraseña.",
@@ -128,7 +128,7 @@ function UserModal({ show, onClose, onUserCreated, selectedUser }) {
     }
 
     if (hasErrors || hasEmpty) {
-      Swal.fire({
+      swal({
         icon: "warning",
         title: "Formulario incompleto",
         text: "Por favor corrige los errores antes de continuar.",
@@ -151,7 +151,7 @@ function UserModal({ show, onClose, onUserCreated, selectedUser }) {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        Swal.fire({
+        swal({
           icon: "success",
           title: "Usuario actualizado",
           text: "Los datos del usuario se han modificado correctamente.",
@@ -164,7 +164,7 @@ function UserModal({ show, onClose, onUserCreated, selectedUser }) {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        Swal.fire({
+        swal({
           icon: "success",
           title: "Usuario creado",
           text: "El nuevo usuario fue agregado exitosamente.",
@@ -176,7 +176,7 @@ function UserModal({ show, onClose, onUserCreated, selectedUser }) {
       onClose();
     } catch (error) {
       console.error("Error al guardar usuario:", error);
-      Swal.fire({
+      swal({
         icon: "error",
         title: "Error al guardar usuario",
         text: error.response?.data?.message || "Ocurrió un error inesperado.",
@@ -185,13 +185,23 @@ function UserModal({ show, onClose, onUserCreated, selectedUser }) {
     }
   };
 
-  return (
-    <div className="modal__overlay">
-      <div className="modal__content">
-        <h2>Nuevo Usuario</h2>
+  if (!show) return null;
 
-        <form onSubmit={handleSubmit} className="modal__form" noValidate>
-          <div className="modal__grid">
+  return (
+    <div className="user-modal__overlay">
+      <div className="user-modal__content">
+        <button
+          type="button"
+          className="user-modal__close modal-close"
+          aria-label="Cerrar"
+          onClick={onClose}
+        >
+          ×
+        </button>
+        <h2>{selectedUser ? "Editar Usuario" : "Nuevo Usuario"}</h2>
+
+        <form onSubmit={handleSubmit} className="user-modal__form" noValidate>
+          <div className="user-modal__grid">
             {[
               { name: "usuario", label: "Usuario" },
               { name: "primer_nombre", label: "Primer Nombre" },
@@ -199,7 +209,7 @@ function UserModal({ show, onClose, onUserCreated, selectedUser }) {
               { name: "primer_apellido", label: "Primer Apellido" },
               { name: "segundo_apellido", label: "Segundo Apellido" },
             ].map(({ name, label }) => (
-              <div key={name} className="modal__group">
+              <div key={name} className="user-modal__group">
                 <label>{label}</label>
                 <input
                   name={name}
@@ -213,7 +223,7 @@ function UserModal({ show, onClose, onUserCreated, selectedUser }) {
               </div>
             ))}
 
-            <div className="modal__group">
+            <div className="user-modal__group">
               <label>Tipo de Documento</label>
               <select
                 name="tipo_documento"
@@ -231,7 +241,7 @@ function UserModal({ show, onClose, onUserCreated, selectedUser }) {
               )}
             </div>
 
-            <div className="modal__group">
+            <div className="user-modal__group">
               <label>Número de Documento</label>
               <input
                 name="numero_documento"
@@ -244,7 +254,7 @@ function UserModal({ show, onClose, onUserCreated, selectedUser }) {
               )}
             </div>
 
-            <div className="modal__group">
+            <div className="user-modal__group">
               <label>Correo Electrónico</label>
               <input
                 type="email"
@@ -258,7 +268,7 @@ function UserModal({ show, onClose, onUserCreated, selectedUser }) {
               )}
             </div>
 
-            <div className="modal__group">
+            <div className="user-modal__group">
               <label>Rol</label>
               <select
                 name="id_rol"
@@ -276,7 +286,7 @@ function UserModal({ show, onClose, onUserCreated, selectedUser }) {
               )}
             </div>
 
-            <div className="modal__group">
+            <div className="user-modal__group">
               <label>Contraseña</label>
               <input
                 type="password"
@@ -291,7 +301,7 @@ function UserModal({ show, onClose, onUserCreated, selectedUser }) {
             </div>
           </div>
 
-          <div className="modal__actions">
+          <div className="user-modal__actions">
             <button type="button" className="btn--cancel" onClick={onClose}>
               Cancelar
             </button>

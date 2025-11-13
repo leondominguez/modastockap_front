@@ -10,16 +10,16 @@ function GestionInventario(){
   return (
     <div className="gestion-inventario-page">
       <Navbar />
-      <div className="gi__content">
-        <aside className="gi__sidebar">
+      <div className="gestion-inventario__content">
+        <aside className="gestion-inventario__sidebar">
           <h2>Gestión de Inventario</h2>
-          <nav className="gi__nav">
-            <button className={"gi__nav-btn btn " + (active==='codificacion' ? 'is-active' : '')} onClick={()=>setActive('codificacion')}>Codificación de productos</button>
-            <button className={"gi__nav-btn btn " + (active==='inventario' ? 'is-active' : '')} onClick={()=>setActive('inventario')}>Inventario</button>
+          <nav className="gestion-inventario__nav">
+            <button className={"gestion-inventario__nav-btn btn " + (active==='codificacion' ? 'is-active' : '')} onClick={()=>setActive('codificacion')}>Codificación de productos</button>
+            <button className={"gestion-inventario__nav-btn btn " + (active==='inventario' ? 'is-active' : '')} onClick={()=>setActive('inventario')}>Inventario</button>
           </nav>
         </aside>
 
-        <main className="gi__main">
+        <main className="gestion-inventario__main">
           {active==='codificacion' && <CodificacionProductos />}
           {active==='inventario' && <InventariosProductos />}
         </main>

@@ -1,33 +1,131 @@
-.insumos-catalogo__header { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px; }
-.insumos-catalogo__header h1 { margin:0; }
-.insumos-catalogo__controls { display:flex; gap:8px; align-items:center; }
-.insumos-catalogo__controls input { padding:8px 10px; border:1px solid #e5e7eb; border-radius:6px; }
-.insumos-catalogo__btn { margin:0; }
-.insumos__table { width: 100%; border-collapse: separate; table-layout: auto; margin-top: 1rem; border-radius: 8px; background: var(--color-card-bg); box-shadow: var(--card-shadow); overflow: visible; }
+/* Import del tema: tokens y utilidades globales */
+@import "../styles/theme.css";
 
-.insumos__table thead th { background-color: var(--color-surface-1); color: var(--color-text); font-weight: 600; padding: 10px 12px; text-align: left; border-bottom: 1px solid #e5e7eb; font-size: 0.95rem; }
-.insumos__table th, .insumos__table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #e5e7eb; font-size: 0.95rem; vertical-align: middle; white-space: normal; color: var(--color-text); }
-.insumos__action { border: none; padding: 0.36rem 0.75rem; border-radius: 8px; font-size: 0.88rem; font-weight: 600; cursor: pointer; color: #fff; display: inline-flex; align-items: center; justify-content: center; }
-.insumos__action--edit { background-color: var(--color-primary); }
-.insumos__action--edit:hover { background-color: var(--color-primary-dark); }
-.insumos__action--delete { background-color: var(--color-danger); }
-.insumos__action--delete:hover { background-color: var(--color-danger-dark, #dc2626); }
-.insumos__action--activate { background-color: var(--color-success); }
-.insumos__action--activate:hover { background-color: var(--color-success-dark, #1eb355); }
+/* CONTENEDOR PRINCIPAL */
+.insumos-catalogo {
+  height: calc(100vh - var(--navbar-height));
+  overflow: hidden;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: transparent;
+}
 
-/* spacing between action buttons when both present */
-.insumos__action + .insumos__action { margin-left: 8px; }
+/* HEADER */
+.insumos-catalogo__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
 
-/* descripción truncada para columnas largas */
-.insumos__desc {
-	max-width: 360px;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+.insumos-catalogo__header h1 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #111827;
+  font-weight: 700;
+}
+
+.insumos-catalogo__controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.insumos-catalogo__controls input {
+  padding: 8px 10px;
+  border: 1px solid var(--table-border);
+  border-radius: 6px;
+}
+
+.insumos-catalogo__btn {
+  margin: 0;
+}
+
+/* CONTENEDOR DE TABLA */
+.insumos-catalogo__list {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+}
+
+.insumos-catalogo__table-wrapper {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  max-height: calc(100vh - var(--navbar-height) - 140px);
+  padding: 0;
+  margin: 0;
+}
+
+.insumos-catalogo__table {
+  margin: 0;
+  width: 100%;
+  padding: 0;
+}
+
+/* La tabla usa .cabecera_estatica del theme.css para el sticky header */
+/* Solo agregamos estilos específicos de esta página si es necesario */
+
+/* Botones de acción */
+.insumos-catalogo__action {
+  border: none;
+  padding: 0.36rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.insumos-catalogo__action--edit {
+  background-color: var(--color-primary);
+}
+
+.insumos-catalogo__action--edit:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.insumos-catalogo__action--delete {
+  background-color: var(--color-danger);
+}
+
+.insumos-catalogo__action--delete:hover {
+  background-color: #dc2626;
+}
+
+.insumos-catalogo__action--activate {
+  background-color: var(--color-success);
+}
+
+.insumos-catalogo__action--activate:hover {
+  background-color: #1eb355;
+}
+
+/* Espacio entre botones de acción */
+.insumos-catalogo__action + .insumos-catalogo__action {
+  margin-left: 8px;
+}
+
+/* Descripción truncada para columnas largas */
+.insumos-catalogo__desc {
+  max-width: 360px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 @media (max-width: 900px) {
-	.insumos__desc { max-width: 140px; }
-	.insumos__table th, .insumos__table td { font-size: 0.9rem; padding: 8px 10px; }
-	.insumos__table td:last-child { gap:6px; }
+  .insumos-catalogo__desc {
+    max-width: 140px;
+  }
 }

@@ -1,21 +1,106 @@
-.modal__backdrop {
+@import "../styles/theme.css";
+
+/* Modal CSS para CodificacionProductosModal con prefijo `codificacion-productos__*` */
+
+/* Modal: usar variables globales para ajustar desde theme.css */
+.codificacion-productos__backdrop {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.35);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--modal-padding, 24px);
+  z-index: var(--modal-z-index, 2000);
 }
-.modal__container { background: var(--color-card-bg); width:720px; max-width:95%; border-radius:10px; box-shadow: var(--card-shadow, 0 8px 24px rgba(10,10,40,0.12)); overflow:hidden; }
-.modal__header { display:flex; justify-content:space-between; align-items:center; padding:14px 18px; border-bottom:1px solid var(--color-surface-1); }
-.modal__body { padding:16px 18px; display:flex; flex-direction:column; gap:10px; }
-.modal__group { display:flex; flex-direction:column; }
-.modal__group input, .modal__group textarea { padding:8px 10px; border:1px solid var(--color-surface-1); border-radius:6px; }
-.modal__row { display:flex; gap:12px; }
-.modal__footer { display:flex; gap:10px; justify-content:flex-end; padding:12px 18px; border-top:1px solid var(--color-surface-2, #f3f4ff); }
-.modal__btn { padding:8px 12px; border-radius:8px; cursor:pointer; }
-.modal__btn--primary { background: var(--color-primary); color: var(--color-on-primary, #fff); border:none; }
-.modal__btn--muted { background: var(--color-card-bg); border:1px solid var(--color-surface-1); }
-.modal__close { background:transparent; border:none; font-size:20px; cursor:pointer; }
-.field-error { color: var(--color-danger); font-size:12px; }
+
+.codificacion-productos__container {
+  width: var(--modal-width, 680px);
+  max-width: var(--modal-max-width, 95%);
+  background: var(--color-card-bg);
+  border-radius: var(--modal-radius, 8px);
+  box-shadow: var(--card-shadow, 0 8px 24px rgba(10,10,40,0.12));
+  overflow: hidden;
+  position: relative;
+  padding: var(--modal-inner-padding, 0);
+  animation: fadeIn 160ms ease;
+}
+
+.codificacion-productos__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--color-surface-1);
+}
+
+
+.codificacion-productos__body {
+  padding: var(--modal-inner-padding, 16px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--modal-gap, 10px);
+}
+
+.codificacion-productos__group {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.codificacion-productos__group input,
+.codificacion-productos__group textarea {
+  padding: 8px 10px;
+  border: 1px solid var(--modal-input-border, var(--color-surface-1));
+  border-radius: var(--modal-input-radius, 6px);
+  background: var(--color-surface-0, transparent);
+  color: var(--color-foreground, inherit);
+}
+
+.codificacion-productos__row { display: flex; gap: 12px; }
+
+
+.codificacion-productos__footer {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  padding: 12px 18px;
+  border-top: 1px solid var(--color-surface-2, #f3f4ff);
+}
+
+.codificacion-productos__btn { padding: 8px 12px; border-radius: 8px; cursor: pointer; }
+.codificacion-productos__btn--primary { background: var(--color-primary); color: var(--color-on-primary, #fff); border: none; }
+.codificacion-productos__btn--muted { background: var(--color-card-bg); border: 1px solid var(--color-surface-1); }
+
+/* Close button uses theme variables and is positioned top-right */
+.codificacion-productos__close {
+  background: var(--modal-close-bg, transparent);
+  color: var(--modal-close-color, inherit);
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--modal-close-radius, 8px);
+  transition: background .12s ease, color .12s ease;
+}
+
+
+.codificacion-productos__close:hover {
+  background: var(--modal-close-hover-bg, rgba(0,0,0,0.06));
+  color: var(--modal-close-hover-color, var(--modal-close-color, inherit));
+}
+
+.codificacion-productos__field-error { color: var(--color-danger); font-size: 12px; }
+
+/* Responsive tweaks */
+@media (max-width: 900px) {
+  .codificacion-productos__container { width: 95%; }
+  .codificacion-productos__row { flex-direction: column; }
+}

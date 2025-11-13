@@ -47,19 +47,20 @@ function InsumosProveedorModal({ show, onClose, onSaved, selected }) {
 				console.debug('Respuesta fallida vínculo', { status: res.status, body: errBody });
 				throw new Error(`(${res.status}) ${errBody.message || errBody.error || errBody.text || JSON.stringify(errBody)}`);
 			}
-			onSaved();
+			onSaved && onSaved();
+			onClose && onClose();
 		} catch (err) { console.error(err); alert(err.message); }
 	};
 
 	return (
-		<div className="modal__backdrop">
-			<div className="modal__container">
-				<header className="modal__header">
-					<h3>{selected ? 'Editar vínculo' : 'Nuevo vínculo proveedor-insumo'}</h3>
-					<button onClick={onClose} className="modal__close">×</button>
+		<div className="insumos-proveedor__backdrop" role="dialog" aria-modal="true">
+			<div className="insumos-proveedor__container" aria-labelledby="insumos-proveedor-title">
+				<header className="insumos-proveedor__header">
+					<h3 id="insumos-proveedor-title">{selected ? 'Editar vínculo' : 'Nuevo vínculo proveedor-insumo'}</h3>
+					<button onClick={onClose} aria-label="Cerrar" className="insumos-proveedor__close modal-close">×</button>
 				</header>
-				<form className="modal__body" onSubmit={handleSubmit}>
-					<div className="modal__group">
+				<form className="insumos-proveedor__body" onSubmit={handleSubmit}>
+					<div className="insumos-proveedor__group">
 						<label>Insumo</label>
 						<select name="id_insumo" value={form.id_insumo} onChange={handleChange}>
 							<option value="">-- Seleccione --</option>
@@ -67,7 +68,7 @@ function InsumosProveedorModal({ show, onClose, onSaved, selected }) {
 						</select>
 					</div>
 
-					<div className="modal__group">
+					<div className="insumos-proveedor__group">
 						<label>Proveedor</label>
 						<select name="id_proveedor" value={form.id_proveedor} onChange={handleChange}>
 							<option value="">-- Seleccione --</option>
@@ -75,24 +76,24 @@ function InsumosProveedorModal({ show, onClose, onSaved, selected }) {
 						</select>
 					</div>
 
-					<div className="modal__group">
+					<div className="insumos-proveedor__group">
 						<label>Precio unitario</label>
 						<input name="precio_unitario" value={form.precio_unitario} onChange={handleChange} />
 					</div>
 
-					<div className="modal__group">
+					<div className="insumos-proveedor__group">
 						<label>Condiciones de pago</label>
 						<input name="condiciones_pago" value={form.condiciones_pago} onChange={handleChange} />
 					</div>
 
-					<div className="modal__group">
+					<div className="insumos-proveedor__group">
 						<label>Notas</label>
 						<textarea name="notas" value={form.notas} onChange={handleChange} />
 					</div>
 
-					<footer className="modal__footer">
-						<button type="button" onClick={onClose} className="modal__btn modal__btn--muted">Cancelar</button>
-						<button type="submit" className="modal__btn modal__btn--primary">Guardar</button>
+					<footer className="insumos-proveedor__footer">
+						<button type="button" onClick={onClose} className="insumos-proveedor__btn insumos-proveedor__btn--muted">Cancelar</button>
+						<button type="submit" className="insumos-proveedor__btn insumos-proveedor__btn--primary">Guardar</button>
 					</footer>
 				</form>
 			</div>

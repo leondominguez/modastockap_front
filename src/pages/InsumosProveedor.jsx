@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import InsumosProveedorModal from "../components/InsumosProveedorModal";
 import "./InsumosProveedor.css";
-import Swal from 'sweetalert2';
+import swal from '../utils/swal';
 
 function InsumosProveedor(){
   const [vinculos, setVinculos] = useState([]);
@@ -43,7 +43,7 @@ function InsumosProveedor(){
   const handleToggleEstado = async (v) => {
     try {
       const accion = v.estado === 'activo' || v.estado === 1 ? 'Desactivar' : 'Activar';
-      const confirm = await Swal.fire({
+      const confirm = await swal({
         title: `¿${accion} vínculo?`,
         text: `El vínculo del insumo ${v.id_insumo} con el proveedor será ${accion.toLowerCase()}.`,
         icon: 'warning',
@@ -55,9 +55,9 @@ function InsumosProveedor(){
       const url = `${apiBase}insumos/proveedor/cambiarEstado/${id}?estado=${nuevoEstado}`;
       const res = await fetch(url, { method: 'PATCH', headers: { Authorization: `Bearer ${token}` } });
       if (!res.ok) throw new Error('Error cambiando estado');
-      Swal.fire({ icon: 'success', title: `Vínculo ${nuevoEstado === '1' ? 'activado' : 'desactivado'}`, timer: 1200, showConfirmButton: false });
+      swal({ icon: 'success', title: `Vínculo ${nuevoEstado === '1' ? 'activado' : 'desactivado'}`, timer: 1200, showConfirmButton: false });
       fetchList();
-    } catch (err) { console.error('Error toggle estado vínculo:', err); Swal.fire({ icon: 'error', title: 'Error', text: err.message || '' }); }
+    } catch (err) { console.error('Error toggle estado vínculo:', err); swal({ icon: 'error', title: 'Error', text: err.message || '' }); }
   };
 
   const filtered = vinculos.filter(it => {
@@ -80,46 +80,48 @@ function InsumosProveedor(){
         </div>
       </header>
 
-      <section>
-        {loading && <div>Cargando...</div>}
-        {!loading && filtered.length === 0 && <div>No hay vínculos.</div>}
-        {!loading && filtered.length > 0 && (
-          <table className="insumos__table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Código Insumo</th>
-                <th>Nombre Insumo</th>
-                <th>Proveedor</th>
-                <th>NIT</th>
-                <th>Precio</th>
-                <th>Condiciones</th>
-                <th>Notas</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.map(v => (
-                <tr key={v.id_insumo_proveedor}>
-                  <td>{v.id_insumo}</td>
-                  <td>{(() => { const i = insumos.find(x => (x.id_insumo||x.id) === v.id_insumo); return i ? i.codigo_insumo : ''; })()}</td>
-                  <td>{(() => { const i = insumos.find(x => (x.id_insumo||x.id) === v.id_insumo); return i ? i.nombre_insumo : ''; })()}</td>
-                  <td>{(() => { const p = proveedores.find(x => (x.id_proveedor||x.id) === v.id_proveedor); return p ? (p.razon_social || p.nombre_contacto || '') : v.id_proveedor; })()}</td>
-                  <td>{(() => { const p = proveedores.find(x => (x.id_proveedor||x.id) === v.id_proveedor); return p ? (p.numero_documento || '') : ''; })()}</td>
-                  <td>{v.precio_unitario}</td>
-                  <td>{v.condiciones_pago || ''}</td>
-                  <td>{v.notas || ''}</td>
-                  <td>{v.estado}</td>
-                  <td>
-                    <button aria-label={`Editar vínculo ${v.id_insumo_proveedor || v.id}`} className="btn insumos__action clientes__action clientes__action--edit" onClick={()=>openEdit(v)}>Editar</button>
-                    <button aria-label={`${v.estado === 'activo' || v.estado === 1 ? 'Desactivar' : 'Activar'} vínculo ${v.id_insumo_proveedor || v.id}`} className={"btn insumos__action clientes__action " + (v.estado === 'activo' || v.estado === 1 ? 'clientes__action--delete' : 'clientes__action--activate')} onClick={()=> handleToggleEstado(v)}>{v.estado === 'activo' || v.estado === 1 ? 'Desactivar' : 'Activar'}</button>
-                  </td>
+      <section className="insumos-proveedor__list">
+        <div className="insumos-proveedor__table-wrapper">
+          {loading && <div>Cargando...</div>}
+          {!loading && filtered.length === 0 && <div>No hay vínculos.</div>}
+          {!loading && filtered.length > 0 && (
+            <table className="insumos-proveedor__table table cabecera_estatica">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Código Insumo</th>
+                  <th>Nombre Insumo</th>
+                  <th>Proveedor</th>
+                  <th>NIT</th>
+                  <th>Precio</th>
+                  <th>Condiciones</th>
+                  <th>Notas</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+              </thead>
+              <tbody>
+                {filtered.map(v => (
+                  <tr key={v.id_insumo_proveedor}>
+                    <td>{v.id_insumo}</td>
+                    <td>{(() => { const i = insumos.find(x => (x.id_insumo||x.id) === v.id_insumo); return i ? i.codigo_insumo : ''; })()}</td>
+                    <td>{(() => { const i = insumos.find(x => (x.id_insumo||x.id) === v.id_insumo); return i ? i.nombre_insumo : ''; })()}</td>
+                    <td>{(() => { const p = proveedores.find(x => (x.id_proveedor||x.id) === v.id_proveedor); return p ? (p.razon_social || p.nombre_contacto || '') : v.id_proveedor; })()}</td>
+                    <td>{(() => { const p = proveedores.find(x => (x.id_proveedor||x.id) === v.id_proveedor); return p ? (p.numero_documento || '') : ''; })()}</td>
+                    <td>{v.precio_unitario}</td>
+                    <td>{v.condiciones_pago || ''}</td>
+                    <td>{v.notas || ''}</td>
+                    <td>{v.estado}</td>
+                    <td>
+                      <button aria-label={`Editar vínculo ${v.id_insumo_proveedor || v.id}`} className="btn insumos-proveedor__action insumos-proveedor__action--edit" onClick={()=>openEdit(v)}>Editar</button>
+                      <button aria-label={`${v.estado === 'activo' || v.estado === 1 ? 'Desactivar' : 'Activar'} vínculo ${v.id_insumo_proveedor || v.id}`} className={`btn insumos-proveedor__action ${v.estado === 'activo' || v.estado === 1 ? 'insumos-proveedor__action--delete' : 'insumos-proveedor__action--activate'}`} onClick={()=> handleToggleEstado(v)}>{v.estado === 'activo' || v.estado === 1 ? 'Desactivar' : 'Activar'}</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
       </section>
 
       <InsumosProveedorModal show={showModal} onClose={() => setShowModal(false)} onSaved={handleSaved} selected={selected} />

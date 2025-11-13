@@ -71,68 +71,68 @@ function CodificacionProductosModal({ show, onClose, onSaved, selected }){
   };
 
   return (
-    <div className="modal__backdrop">
-      <div className="modal__container">
-        <header className="modal__header">
+    <div className="codificacion-productos__backdrop">
+      <div className="codificacion-productos__container">
+        <header className="codificacion-productos__header">
           <h3>{selected ? 'Editar producto' : 'Nuevo producto'}</h3>
-          <button onClick={onClose} className="modal__close">×</button>
+          <button onClick={onClose} className="codificacion-productos__close modal-close">×</button>
         </header>
 
-        <form className="modal__body" onSubmit={handleSubmit}>
-          <div className="modal__group">
+        <form className="codificacion-productos__body" onSubmit={handleSubmit}>
+          <div className="codificacion-productos__group">
             <label>Código</label>
             <input name="codigo_producto" value={form.codigo_producto} onChange={handleChange} />
-            {errors.codigo_producto && <small className="field-error">{errors.codigo_producto}</small>}
+            {errors.codigo_producto && <small className="codificacion-productos__field-error">{errors.codigo_producto}</small>}
           </div>
 
-          <div className="modal__group">
+          <div className="codificacion-productos__group">
             <label>Nombre</label>
             <input name="nombre_producto" value={form.nombre_producto} onChange={handleChange} />
-            {errors.nombre_producto && <small className="field-error">{errors.nombre_producto}</small>}
+            {errors.nombre_producto && <small className="codificacion-productos__field-error">{errors.nombre_producto}</small>}
           </div>
 
-          <div className="modal__row">
-            <div className="modal__group">
+          <div className="codificacion-productos__row">
+            <div className="codificacion-productos__group">
               <label>Tipo</label>
               <input name="tipo_producto" value={form.tipo_producto} onChange={handleChange} />
             </div>
-            <div className="modal__group">
+            <div className="codificacion-productos__group">
               <label>Talla</label>
               <input name="talla" value={form.talla} onChange={handleChange} />
             </div>
           </div>
 
-          <div className="modal__row">
-            <div className="modal__group">
+          <div className="codificacion-productos__row">
+            <div className="codificacion-productos__group">
               <label>Color</label>
               <input name="color" value={form.color} onChange={handleChange} />
             </div>
-            <div className="modal__group">
+            <div className="codificacion-productos__group">
               <label>Género</label>
               <input name="genero" value={form.genero} onChange={handleChange} />
             </div>
           </div>
 
-          <div className="modal__row">
-            <div className="modal__group">
+          <div className="codificacion-productos__row">
+            <div className="codificacion-productos__group">
               <label>Material</label>
               <input name="material" value={form.material} onChange={handleChange} />
             </div>
-            <div className="modal__group">
+            <div className="codificacion-productos__group">
               <label>Precio unitario</label>
               <input name="precio_unitario" type="number" step="0.01" value={form.precio_unitario} onChange={e=>setForm(f=>({...f, precio_unitario: Number(e.target.value)}))} />
-              {errors.precio_unitario && <small className="field-error">{errors.precio_unitario}</small>}
+              {errors.precio_unitario && <small className="codificacion-productos__field-error">{errors.precio_unitario}</small>}
             </div>
           </div>
 
-          <div className="modal__group">
+          <div className="codificacion-productos__group">
             <label>Notas</label>
             <textarea name="notas" value={form.notas} onChange={handleChange} />
           </div>
 
-          <footer className="modal__footer">
-            <button type="button" onClick={onClose} className="modal__btn modal__btn--muted">Cancelar</button>
-            <button type="submit" className="modal__btn modal__btn--primary">Guardar</button>
+          <footer className="codificacion-productos__footer">
+            <button type="button" onClick={onClose} className="codificacion-productos__btn codificacion-productos__btn--muted">Cancelar</button>
+            <button type="submit" className="codificacion-productos__btn codificacion-productos__btn--primary">Guardar</button>
           </footer>
         </form>
       </div>

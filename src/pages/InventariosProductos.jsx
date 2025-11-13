@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback, useMemo } from 'react';
 import './InventariosProductos.css';
 import './InsumosCatalogo.css';
 import InventariosProductosModal from '../components/InventariosProductosModal';
-import Swal from 'sweetalert2';
+import swal from '../utils/swal';
 
 function InventariosProductos(){
   const apiBase = process.env.REACT_APP_API_URL || '';
@@ -44,7 +44,7 @@ function InventariosProductos(){
 
   const handleToggleEstado = async (inv) => {
     const accion = inv.estado === 'activo' ? 'Desactivar' : 'Activar';
-    const confirmResult = await Swal.fire({
+    const confirmResult = await swal({
       title: `¿${accion} registro de inventario?`,
       text: `El inventario con código ${inv.codigo_producto} será ${accion.toLowerCase()}.`,
       icon: 'warning',
@@ -65,11 +65,11 @@ function InventariosProductos(){
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Error al actualizar estado');
-      Swal.fire({ icon: 'success', title: 'Actualizado', text: `Estado cambiado a ${nuevoEstado}`, timer: 1200, showConfirmButton: false });
+      swal({ icon: 'success', title: 'Actualizado', text: `Estado cambiado a ${nuevoEstado}`, timer: 1200, showConfirmButton: false });
       fetchList();
     } catch (err) {
       console.error('Error cambiando estado inventario', err);
-      Swal.fire({ icon: 'error', title: 'Error', text: err.message || 'No se pudo actualizar estado' });
+      swal({ icon: 'error', title: 'Error', text: err.message || 'No se pudo actualizar estado' });
     }
   };
 
@@ -88,21 +88,22 @@ function InventariosProductos(){
     return m;
   }, [productos]);
 
-  return (
-    <div className="insumos-catalogo">
-      <header className="insumos-catalogo__header">
+    return (
+    <div className="inventarios-productos">
+      <header className="inventarios-productos__header">
         <h1>Inventario de productos terminados</h1>
-        <div className="insumos-catalogo__controls">
+        <div className="inventarios-productos__controls">
           <input placeholder="Buscar por código o ubicación" value={q} onChange={e=>setQ(e.target.value)} />
-          <button onClick={openNew} className="insumos-catalogo__btn btn btn--primary">Nuevo registro</button>
+          <button onClick={openNew} className="inventarios-productos__btn btn btn--primary">Nuevo registro</button>
         </div>
       </header>
 
-      <section className="insumos-catalogo__list">
+      <section className="inventarios-productos__list">
         {loading && <div>Cargando...</div>}
         {!loading && filtered.length === 0 && <div>No hay registros de inventario.</div>}
         {!loading && filtered.length > 0 && (
-          <table className="insumos__table">
+          <div className="table-responsive inventarios-productos__table-wrapper">
+          <table className="inventarios-productos__table table cabecera_estatica">
             <thead>
               <tr>
                 <th>Código</th>
@@ -124,10 +125,10 @@ function InventariosProductos(){
                   <td>{inv.ubicacion || '-'}</td>
                   <td>{inv.fecha_entrada || '-'}</td>
                   <td>{inv.estado}</td>
-                  <td className="insumos__desc">{inv.notas || '-'}</td>
+                  <td className="inventarios-productos__desc">{inv.notas || '-'}</td>
                   <td>
-                    <button onClick={() => openEdit(inv)} className="insumos__action insumos__action--edit btn">Editar</button>
-                    <button onClick={() => handleToggleEstado(inv)} className={`btn insumos__action ${inv.estado === 'activo' ? 'insumos__action--delete' : 'insumos__action--activate'}`} style={{ marginLeft: 8 }}>
+                    <button onClick={() => openEdit(inv)} className="inventarios-productos__action inventarios-productos__action--edit btn">Editar</button>
+                    <button onClick={() => handleToggleEstado(inv)} className={`btn inventarios-productos__action ${inv.estado === 'activo' ? 'inventarios-productos__action--delete' : 'inventarios-productos__action--activate'}`} style={{ marginLeft: 8 }}>
                       {inv.estado === 'activo' ? 'Desactivar' : 'Activar'}
                     </button>
                   </td>
@@ -135,6 +136,7 @@ function InventariosProductos(){
               ))}
             </tbody>
           </table>
+          </div>
         )}
       </section>
 

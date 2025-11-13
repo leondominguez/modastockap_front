@@ -3,7 +3,7 @@ import "./Clientes.css";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import swal from '../utils/swal';
 import ClienteModal from "../components/ClienteModal";
 
 function ClientesPage() {
@@ -55,11 +55,10 @@ function ClientesPage() {
       const resultado = response.data?.clientes ?? response.data ?? [];
       const lista = Array.isArray(resultado) ? resultado : resultado ? [resultado] : [];
       setClientes(lista);
-
-      if (isSearching && lista.length === 0) {
-        setError("No se encontraron clientes con los criterios de búsqueda.");
-      } else {
-        setError(null);
+        if (lista.length === 0 && isSearching) {
+          setError("No se encontraron clientes con los criterios de búsqueda.");
+        } else {
+          setError(null);
       }
     } catch (err) {
       console.error("Error al obtener clientes:", err);
@@ -72,13 +71,13 @@ function ClientesPage() {
         setError("No se encontraron clientes con los criterios de búsqueda.");
       } else {
         setClientes([]);
-        setError(message || "Error al cargar/buscar clientes.");
-        Swal.fire({
-          icon: "error",
-          title: "Error de conexión/búsqueda",
-          text: message || "Ocurrió un error inesperado. Intenta más tarde.",
-          confirmButtonColor: "#4F46E5",
-        });
+          setError(message || "Error al cargar/buscar clientes.");
+          swal({
+            icon: "error",
+            title: "Error de conexión/búsqueda",
+            text: message || "Ocurrió un error inesperado. Intenta más tarde.",
+            confirmButtonColor: "#4F46E5",
+          });
       }
     } finally {
       setLoading(false);
@@ -96,7 +95,7 @@ function ClientesPage() {
 
     if (searchCriteria === "documento") {
       if (!documentType || !documentNumber || !documentNumber.trim()) {
-        Swal.fire({
+        swal({
           icon: "warning",
           title: "Campos Requeridos",
           text: "Para buscar por documento, debe ingresar el Tipo y el Número.",
@@ -107,7 +106,7 @@ function ClientesPage() {
       params = { tipo_documento: documentType, numero_documento: documentNumber.trim() };
     } else if (searchCriteria === "nombre") {
       if (!name.trim()) {
-        Swal.fire({
+        swal({
           icon: "warning",
           title: "Campo Requerido",
           text: "Debe ingresar el Nombre para buscar.",
@@ -118,7 +117,7 @@ function ClientesPage() {
       params = { nombre: name.trim() };
     } else if (searchCriteria === "estado") {
       if (estadoFilter === "") {
-        Swal.fire({
+        swal({
           icon: "info",
           title: "Seleccione estado",
           text: "Seleccione Activo o Inactivo para filtrar por estado.",
@@ -153,7 +152,7 @@ function ClientesPage() {
 
   const handleToggleEstado = async (cliente) => {
     const accion = cliente.estado === 1 ? "Desactivar" : "Activar";
-    const confirm = await Swal.fire({
+    const confirm = await swal({
       title: `¿${accion} cliente?`,
       text: `El cliente "${cliente.nombre}" será ${accion.toLowerCase()}.`,
       icon: "warning",
@@ -174,7 +173,7 @@ function ClientesPage() {
 
       await axios.patch(url, {}, { headers: { Authorization: `Bearer ${token}` } });
 
-      Swal.fire({
+      swal({
         icon: "success",
         title: `Cliente ${nuevoEstado === "1" ? "activado" : "desactivado"}`,
         timer: 1400,
@@ -184,7 +183,7 @@ function ClientesPage() {
       fetchClientes();
     } catch (error) {
       console.error("Error al cambiar estado del cliente:", error);
-      Swal.fire({
+      swal({
         icon: "error",
         title: "Error al cambiar estado",
         text: error.response?.data?.message || "Ocurrió un error inesperado.",
@@ -198,15 +197,14 @@ function ClientesPage() {
   return (
     <div className="clientes">
       <Navbar />
-      <main className="clientes__main">
-        <div className="clientes__header">
-          <h1>Gestión de Clientes</h1>
-          <button className="btn btn--primary clientes__btn" onClick={handleAddCliente}>
-            + Nuevo Cliente
-          </button>
-        </div>
+      <div className="clientes__header">
+        <h1>Gestión de Clientes</h1>
+        <button className="btn btn--primary clientes__btn" onClick={handleAddCliente}>
+          + Nuevo Cliente
+        </button>
+      </div>
 
-        <form className="clientes__search-form" onSubmit={handleSearch}>
+      <form className="clientes__search-form" onSubmit={handleSearch}>
           <h2>Buscar Cliente</h2>
           <div className="clientes__search-controls">
             <div className="clientes__search-radio">
@@ -311,57 +309,61 @@ function ClientesPage() {
           </div>
         </form>
 
-        {clientes.length > 0 ? (
-          <table className="clientes__table">
-            <thead>
-              <tr>
-                <th>Tipo ID</th>
-                <th>Numero</th>
-                <th>Nombre</th>
-                <th>Email</th>
-                <th>Telefono</th>
-                <th>Ciudad</th>
-                <th>Direcccion</th>
-                <th>Notas</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {clientes.map((c) => (
-                <tr key={c.id_cliente || c.id}>
-                  <td>{c.tipo_documento || "-"}</td>
-                  <td>{c.numero_documento || "-"}</td>
-                  <td>{c.nombre || "-"}</td>
-                  <td>{c.email || "-"}</td>
-                  <td>{c.telefono || "-"}</td>
-                  <td>{c.ciudad || "-"}</td>
-                  <td>{c.direccion || "-"}</td>
-                  <td className="clientes__notas">{c.notas || "-"}</td>
-                  <td>
-                    <button
-                      type="button"
-                      className="clientes__action clientes__action--edit"
-                      onClick={() => handleEditCliente(c)}
-                      aria-label={`Editar cliente ${c.nombre}`}
-                    >
-                      Editar
-                    </button>
-                    <button
-                      type="button"
-                      className={`clientes__action ${Number(c.estado) === 1 ? "clientes__action--delete" : "clientes__action--activate"}`}
-                      onClick={() => handleToggleEstado(c)}
-                      aria-label={`${Number(c.estado) === 1 ? "Desactivar" : "Activar"} cliente ${c.nombre}`}
-                    >
-                      {Number(c.estado) === 1 ? "Desactivar" : "Activar"}
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <p className="clientes__empty">{error || "No hay clientes registrados que coincidan con la búsqueda."}</p>
-        )}
+        <section className="clientes__list">
+          {clientes.length > 0 ? (
+            <div className="table-responsive clientes__table-wrapper">
+              <table className="clientes__table table cabecera_estatica">
+                <thead>
+                  <tr>
+                    <th>Tipo ID</th>
+                    <th>Numero</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Telefono</th>
+                    <th>Ciudad</th>
+                    <th>Direcccion</th>
+                    <th>Notas</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {clientes.map((c) => (
+                    <tr key={c.id_cliente || c.id}>
+                      <td>{c.tipo_documento || "-"}</td>
+                      <td>{c.numero_documento || "-"}</td>
+                      <td>{c.nombre || "-"}</td>
+                      <td>{c.email || "-"}</td>
+                      <td>{c.telefono || "-"}</td>
+                      <td>{c.ciudad || "-"}</td>
+                      <td>{c.direccion || "-"}</td>
+                      <td className="clientes__notas">{c.notas || "-"}</td>
+                      <td>
+                        <button
+                          type="button"
+                          className="clientes__action clientes__action--edit"
+                          onClick={() => handleEditCliente(c)}
+                          aria-label={`Editar cliente ${c.nombre}`}
+                        >
+                          Editar
+                        </button>
+                        <button
+                          type="button"
+                          className={`clientes__action ${Number(c.estado) === 1 ? "clientes__action--delete" : "clientes__action--activate"}`}
+                          onClick={() => handleToggleEstado(c)}
+                          aria-label={`${Number(c.estado) === 1 ? "Desactivar" : "Activar"} cliente ${c.nombre}`}
+                        >
+                          {Number(c.estado) === 1 ? "Desactivar" : "Activar"}
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <p className="clientes__empty">{error || "No hay clientes registrados que coincidan con la búsqueda."}</p>
+          )}
+        </section>
 
         <ClienteModal
           show={showModal}
@@ -372,7 +374,6 @@ function ClientesPage() {
             fetchClientes();
           }}
         />
-      </main>
     </div>
   );
 }

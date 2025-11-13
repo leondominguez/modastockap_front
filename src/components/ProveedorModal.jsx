@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import "./ClienteModal.css"; // reutiliza estilos del modal de cliente
-import Swal from "sweetalert2";
+import "./ProveedorModal.css"; // estilos específicos para proveedor
+import swal from '../utils/swal';
 import axios from "axios";
 
 function ProveedorModal({ show, onClose, onSaved, selectedProveedor }) {
@@ -76,7 +76,7 @@ function ProveedorModal({ show, onClose, onSaved, selectedProveedor }) {
   const handleSubmit = async (ev) => {
     ev.preventDefault();
     if (!validate()) {
-      Swal.fire({ icon: "warning", title: "Campos requeridos", text: "Completa los campos obligatorios." });
+      swal({ icon: "warning", title: "Campos requeridos", text: "Completa los campos obligatorios." });
       return;
     }
     try {
@@ -86,26 +86,27 @@ function ProveedorModal({ show, onClose, onSaved, selectedProveedor }) {
       if (selectedProveedor && (selectedProveedor.id_proveedor || selectedProveedor.id)) {
         const id = selectedProveedor.id_proveedor || selectedProveedor.id;
         res = await axios.put(`${apiBase}proveedores/actualizar/${id}`, payload, { headers: { Authorization: `Bearer ${token}` } });
-        Swal.fire({ icon: "success", title: "Proveedor actualizado", timer: 1200, showConfirmButton: false });
+        swal({ icon: "success", title: "Proveedor actualizado", timer: 1200, showConfirmButton: false });
       } else {
         res = await axios.post(`${apiBase}proveedores/crear`, payload, { headers: { Authorization: `Bearer ${token}` } });
-        Swal.fire({ icon: "success", title: "Proveedor creado", timer: 1200, showConfirmButton: false });
+        swal({ icon: "success", title: "Proveedor creado", timer: 1200, showConfirmButton: false });
       }
       if (onSaved) onSaved(res.data);
       onClose();
     } catch (error) {
       console.error("ProveedorModal error:", error);
-      Swal.fire({ icon: "error", title: "Error", text: error.response?.data?.message || "Ocurrió un error al guardar el proveedor." });
+      swal({ icon: "error", title: "Error", text: error.response?.data?.message || "Ocurrió un error al guardar el proveedor." });
     }
   };
 
   return (
-    <div className="modal__overlay" role="dialog" aria-modal="true">
-      <div className="modal__content">
-        <h2>{selectedProveedor ? "Editar Proveedor" : "Nuevo Proveedor"}</h2>
-        <form className="modal__form" onSubmit={handleSubmit} noValidate>
-          <div className="modal__grid">
-            <div className="modal__group">
+    <div className="proveedor-modal__overlay" role="dialog" aria-modal="true">
+      <div className="proveedor-modal__content">
+        <h2 style={{ display: 'inline-block', marginRight: '8px' }}>{selectedProveedor ? "Editar Proveedor" : "Nuevo Proveedor"}</h2>
+        <button onClick={onClose} className="proveedor-modal__close modal-close" aria-label="Cerrar">×</button>
+        <form className="proveedor-modal__form" onSubmit={handleSubmit} noValidate>
+          <div className="proveedor-modal__grid">
+            <div className="proveedor-modal__group">
               <label>Tipo Documento</label>
               <select name="tipo_documento" value={form.tipo_documento} onChange={handleChange} className={errors.tipo_documento ? "input-error" : ""}>
                 <option value="">Seleccione...</option>
@@ -117,45 +118,45 @@ function ProveedorModal({ show, onClose, onSaved, selectedProveedor }) {
               {errors.tipo_documento && <span className="error-text">{errors.tipo_documento}</span>}
             </div>
 
-            <div className="modal__group">
+            <div className="proveedor-modal__group">
               <label>Número Documento</label>
               <input name="numero_documento" value={form.numero_documento} onChange={handleChange} className={errors.numero_documento ? "input-error" : ""} />
               {errors.numero_documento && <span className="error-text">{errors.numero_documento}</span>}
             </div>
 
-            <div className="modal__group">
+            <div className="proveedor-modal__group">
               <label>Razón Social</label>
               <input name="razon_social" value={form.razon_social} onChange={handleChange} className={errors.razon_social ? "input-error" : ""} />
               {errors.razon_social && <span className="error-text">{errors.razon_social}</span>}
             </div>
 
-            <div className="modal__group">
+            <div className="proveedor-modal__group">
               <label>Contacto</label>
               <input name="nombre_contacto" value={form.nombre_contacto} onChange={handleChange} />
             </div>
 
-            <div className="modal__group">
+            <div className="proveedor-modal__group">
               <label>Teléfono</label>
               <input name="telefono_contacto" value={form.telefono_contacto} onChange={handleChange} />
             </div>
 
-            <div className="modal__group">
+            <div className="proveedor-modal__group">
               <label>Email</label>
               <input name="email_contacto" value={form.email_contacto} onChange={handleChange} />
               {errors.email_contacto && <span className="error-text">{errors.email_contacto}</span>}
             </div>
 
-            <div className="modal__group">
+            <div className="proveedor-modal__group">
               <label>Dirección</label>
               <input name="direccion" value={form.direccion} onChange={handleChange} />
             </div>
 
-            <div className="modal__group">
+            <div className="proveedor-modal__group">
               <label>Ciudad</label>
               <input name="ciudad" value={form.ciudad} onChange={handleChange} />
             </div>
 
-            <div className="modal__group">
+            <div className="proveedor-modal__group">
               <label>Estado</label>
               <select name="estado" value={String(form.estado)} onChange={(e) => setForm((s) => ({ ...s, estado: Number(e.target.value) }))}>
                 <option value="1">Activo</option>
@@ -163,13 +164,13 @@ function ProveedorModal({ show, onClose, onSaved, selectedProveedor }) {
               </select>
             </div>
 
-            <div className="modal__group">
+            <div className="proveedor-modal__group">
               <label>Notas</label>
               <textarea name="notas" value={form.notas} onChange={handleChange} />
             </div>
           </div>
 
-          <div className="modal__actions">
+          <div className="proveedor-modal__actions">
             <button type="button" className="btn--cancel" onClick={onClose}>Cancelar</button>
             <button type="submit" className="btn--save">Guardar</button>
           </div>

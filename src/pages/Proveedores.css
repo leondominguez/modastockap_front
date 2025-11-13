@@ -1,32 +1,38 @@
-/* Estilos para la página Clientes (prefijo: clientes__) */
+/* Import del tema: tokens y utilidades globales */
+@import "../styles/theme.css";
 
-.clientes {
-  min-height: 100vh;
+.proveedores {
+  height: calc(100vh - var(--navbar-height));
+  overflow: hidden;
   background-color: var(--color-bg-page, #e8e9fd);
   display: flex;
   flex-direction: column;
 }
 
-.clientes__main {
+.proveedores__main {
   flex: 1;
   padding: 2rem 2rem;
-  overflow-x: auto;
+  min-height: 0; /* permite que los hijos flex puedan hacer shrink */
+  overflow: hidden; /* evitar scroll en el contenedor principal */
+  display: flex;
+  flex-direction: column;
+
 }
 
-.clientes__header {
+.proveedores__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
 }
 
-.clientes__header h1 {
+.proveedores__header h1 {
   color: var(--color-text, #1e1e2d);
   font-size: 1.6rem;
   font-weight: 700;
 }
 
-.clientes__btn {
+.proveedores__btn {
   background-color: var(--color-primary, #6b6ff5);
   color: var(--color-on-primary, #fff);
   border: none;
@@ -37,42 +43,42 @@
   transition: background-color 0.2s;
 }
 
-.clientes__btn:hover { background-color: var(--color-primary-dark, #5759d9); }
+.proveedores__btn:hover { background-color: var(--color-primary-dark, #5759d9); }
 
-/* Tabla */
-.clientes__table {
+/* Tabla: usar variables globales definidas en `src/styles/theme.css` */
+.proveedores__table {
   width: 100%;
   border-collapse: separate;
   table-layout: auto;
   margin-top: 1rem;
-  border-radius: 8px;
-  background: var(--color-card-bg, #fff);
-  box-shadow: var(--card-shadow, 0 2px 6px rgba(0,0,0,0.06));
+  border-radius: var(--table-radius);
+  background: var(--color-card-bg);
+  box-shadow: var(--card-shadow);
   overflow: visible;
 }
 
-.clientes__table thead th {
-  background-color: var(--color-surface-1, #f5f6fa);
-  color: var(--color-muted, #374151);
+.proveedores__table thead th {
+  background: var(--table-header-bg);
+  color: var(--table-header-color);
   font-weight: 600;
-  padding: 10px 12px;
+  padding: var(--table-cell-padding);
   text-align: left;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--table-border);
   font-size: 0.95rem;
 }
 
-.clientes__table th,
-.clientes__table td {
-  padding: 10px 12px;
+.proveedores__table th,
+.proveedores__table td {
+  padding: var(--table-cell-padding);
   text-align: left;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--table-border);
   font-size: 0.95rem;
   vertical-align: middle;
   white-space: normal;
 }
 
 /* Notas: truncado visual si es largo */
-.clientes__notas {
+.proveedores__notas {
   max-width: 220px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -80,7 +86,7 @@
 }
 
 /* Acciones: espacio y manejo responsivo */
-.clientes__table td:last-child {
+.proveedores__table td:last-child {
   display: flex;
   gap: 8px;
   align-items: center;
@@ -91,7 +97,7 @@
 }
 
 /* Botones de acción */
-.clientes__action {
+.proveedores__action {
   border: none;
   padding: 0.36rem 0.75rem;
   border-radius: 8px;
@@ -105,15 +111,15 @@
 }
 
 /* Colores */
-.clientes__action--edit { background-color: var(--color-primary); }
-.clientes__action--edit:hover { background-color: var(--color-primary-dark); }
-.clientes__action--delete { background-color: var(--color-danger); }
-.clientes__action--delete:hover { background-color: var(--color-danger-dark, #dc2626); }
-.clientes__action--activate { background-color: var(--color-success); }
-.clientes__action--activate:hover { background-color: var(--color-success-dark, #1eb355); }
+.proveedores__action--edit { background-color: var(--color-primary); }
+.proveedores__action--edit:hover { background-color: var(--color-primary-dark); }
+.proveedores__action--delete { background-color: var(--color-danger); }
+.proveedores__action--delete:hover { background-color: var(--color-danger-dark, #dc2626); }
+.proveedores__action--activate { background-color: var(--color-success); }
+.proveedores__action--activate:hover { background-color: var(--color-success-dark, #1eb355); }
 
 /* Formulario de búsqueda */
-.clientes__search-form {
+.proveedores__search-form {
   background-color: var(--color-surface-2, #f9fafb);
   padding: 18px;
   border-radius: 8px;
@@ -121,42 +127,53 @@
   margin-bottom: 22px;
 }
 
-.clientes__search-form h2 {
+.proveedores__search-form h2 {
   margin: 0 0 12px 0;
   font-size: 1.1rem;
   color: var(--color-text, #1f2937);
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--table-border);
   padding-bottom: 8px;
 }
 
-.clientes__search-controls { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
-.clientes__search-radio { display:flex; gap:16px; }
-.clientes__search-radio label { font-weight:500; color:var(--color-muted, #4b5563); }
-.clientes__search-group { display:flex; gap:10px; flex-grow:1; min-width:220px; }
-.clientes__search-group--name { min-width:260px; }
-.clientes__search-input { padding:9px; border:1px solid #d1d5db; border-radius:6px; font-size:0.98rem; flex-grow:1; }
-.clientes__search-input:focus { outline:none; border-color:var(--color-primary, #4f46e5); box-shadow:0 0 0 3px rgba(79,70,229,0.12); }
+.proveedores__search-controls { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+.proveedores__search-radio { display:flex; gap:16px; }
+.proveedores__search-radio label { font-weight:500; color:var(--color-muted, #07090c); }
+.proveedores__search-group { display:flex; gap:10px; flex-grow:1; min-width:220px; }
+.proveedores__search-group--name { min-width:260px; }
+.proveedores__search-input { padding:9px; border:1px solid #d1d5db; border-radius:6px; font-size:0.98rem; flex-grow:1; }
+.proveedores__search-input:focus { outline:none; border-color:var(--color-primary, #4f46e5); box-shadow:0 0 0 3px rgba(79,70,229,0.12); }
 
 /* Required visual */
-.clientes__search-input.input--required:not(:focus):empty,
-.clientes__search-input.input--required:not(:focus):placeholder-shown {
+.proveedores__search-input.input--required:not(:focus):empty,
+.proveedores__search-input.input--required:not(:focus):placeholder-shown {
   border-color:var(--color-danger, #ef4444);
   box-shadow:0 0 0 2px rgba(239,68,68,0.12);
 }
 
 /* Botones búsqueda */
-.clientes__btn--search { background-color: var(--color-primary, #4f46e5); color: var(--color-on-primary, white); padding:9px 14px; border-radius:6px; border:none; }
-.clientes__btn--search:hover { background-color: var(--color-primary-dark, #4338ca); }
-.clientes__btn--clear { background-color: var(--color-muted, #9ca3af); color: white; padding:9px 14px; border-radius:6px; border:none; }
-.clientes__btn--clear:hover { background-color: var(--color-muted-dark, #6b7280); }
+.proveedores__btn--search { background-color: var(--color-primary, #4f46e5); color: var(--color-on-primary, white); padding:9px 14px; border-radius:6px; border:none; }
+.proveedores__btn--search:hover { background-color: var(--color-primary-dark, #4338ca); }
+.proveedores__btn--clear { background-color: var(--color-muted, #9ca3af); color: white; padding:9px 14px; border-radius:6px; border:none; }
+.proveedores__btn--clear:hover { background-color: var(--color-muted-dark, #6b7280); }
 
 /* Mensajes */
-.clientes__empty, .clientes__loading { margin-top:1rem; color:var(--color-muted, #6b7280); font-size:0.95rem; }
+.proveedores__empty, .proveedores__loading { margin-top:1rem; color:var(--color-muted, #6b7280); font-size:0.95rem; }
 
 /* Responsive: permitir scroll horizontal y mejorar legibilidad en móvil */
 @media (max-width: 900px) {
-  .clientes__main { padding: 1rem; }
-  .clientes__table th, .clientes__table td { font-size: 0.9rem; padding: 8px 10px; }
-  .clientes__notas { max-width: 140px; }
-  .clientes__table td:last-child { gap:6px; }
+  .proveedores__main { padding: 1rem; }
+  .proveedores__table th, .proveedores__table td { font-size: 0.9rem; }
+  .proveedores__notas { max-width: 140px; }
+  .proveedores__table td:last-child { gap:6px; }
+}
+
+/* Wrapper específico para permitir scroll interno y sticky header en la página Proveedores */
+.proveedores__table-wrapper {
+  flex: 1 1 auto;
+  min-height: 0; /* necesario para que el flex-child pueda scrollear */
+  overflow: auto; /* enable internal scroll for results */
+}
+
+.proveedores__table-wrapper .proveedores__table {
+  margin: 0; /* evita espacio extra y gap que desplaza el header sticky */
 }

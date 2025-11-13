@@ -14,8 +14,9 @@
 
   --color-success: #25d465;         /* acciones positivas */
   --color-danger: #f83d3d;          /* acciones destructivas */
-  --color-muted: #6b7280;           /* texto secundario */
+  --color-muted: #5c6372;           /* texto secundario */
   --color-text: #111827;            /* texto principal */
+  --color-border-formularios: #9570dbb9;          /* bordes y separadores */
 
   /* Sombras y radios */
   --card-shadow: 0 2px 6px rgba(0,0,0,0.06);
@@ -52,6 +53,121 @@
   --navbar-title-font-size: 1.5rem;
   --navbar-padding-y: 1rem;
   --navbar-padding-x: 3rem;
+  --navbar-height: 64px;
+  /* SweetAlert2: variables para controlar colores y estilos desde el tema */
+  --swal-warning: #e49308;
+  --swal-success: var(--color-success);
+  --swal-error: var(--color-danger);
+  --swal-info: var(--color-accent);
+
+  --swal-popup-bg: var(--color-card-bg);
+  --swal-title-color: var(--color-text);
+  --swal-text-color: var(--color-text);
+
+  /* Botones (confirm / cancel) */
+  --swal-confirm-bg: var(--color-primary);
+  --swal-confirm-color: #ffffff;
+  --swal-cancel-bg: transparent;
+  --swal-cancel-color: var(--color-primary);
+
+  --swal-button-hover: rgba(0,0,0,0.06);
+  --swal-icon-scale: 1.06;
+  --swal-icon-shadow: 0 8px 22px rgba(0,0,0,0.12);
+
+  /* Variables específicas para tablas (se pueden sobrescribir por página) */
+  --table-border: #eaeef6;
+  --table-header-bg: var(--color-surface-1);
+  --table-header-color: var(--color-text); /*cabeceras de tablas*/
+  --table-row-hover: #0b64ffda;
+  --table-row-hover-shadow: 0 6px 14px rgba(17, 79, 202, 0.06);
+  --table-zebra: rgba(15,23,42,0.02);
+  --table-cell-padding: 10px 12px;
+  --table-radius: var(--radius-base);
+  
+  /* Variables para tablas con header fijo (fixed header pattern) */
+  --table-fixed-header-border-bottom: 2px solid var(--table-border);
+  --table-fixed-cell-padding: 12px;
+
+  /* Modal tokens: valores por defecto que pueden sobrescribirse por página */
+  --modal-width: 680px;
+  --modal-max-width: 95%;
+  --modal-padding: 24px;
+  --modal-inner-padding: 20px;
+  --modal-radius: var(--radius-base);
+  --modal-z-index: 2000;
+  --modal-gap: 12px;
+  --modal-input-border: var(--input-border, var(--color-border-formularios));
+  --modal-input-radius: 6px;
+  --modal-button-radius: 8px;
+  --modal-close-bg: #f04b4b;
+  --modal-close-color: #ffffff;
+  --modal-close-hover-bg: rgba(0,0,0,0.06);
+  --modal-close-hover-color: inherit;
+
+/* CSS para popups que utilicen la clase `my-swal-popup` (usada por el wrapper) */
+.my-swal-popup.swal2-popup {
+  background: var(--swal-popup-bg) !important;
+  color: var(--swal-text-color) !important;
+
+/*variables modales*/
+
+
+}
+
+/*
+  Design tokens & override guidance
+
+  - Tipografía y colores: La familia tipográfica y la paleta de colores
+    están definidas globalmente en las variables dentro de :root.
+    Ejemplos: `--font-sans`, `--color-text`, `--color-primary`.
+
+  - Regla de uso recomendada:
+    * Mantén la familia de fuentes y los colores (tokens) en `theme.css`
+      para asegurar consistencia visual en toda la aplicación.
+    * Los tamaños (p. ej. `font-size` en tablas o componentes) pueden
+      y deben ajustarse por página cuando sea necesario, porque algunos
+      listados pueden requerir compactación o más espacio por diseño.
+
+  - Cómo sobrescribir por página:
+    Dentro del CSS de la página, redefine las variables que quieras
+    ajustar (por ejemplo --table-cell-padding o --table-header-bg), o
+    aplica reglas directas para tamaños:
+
+      .proveedores { --table-header-bg: #fff2e6; }
+      .proveedores .table { font-size: 0.9rem; }
+
+  - Resumen: tokens globales = tipografías y colores; tamaños y layout =
+    control por página. Usa utilidades globales (`.cabecera_estatica`,
+    `.overflow-auto`, etc.) para coherencia y overrides locales cuando
+    el layout lo requiera.
+*/
+.my-swal-popup .swal2-title {
+  color: var(--swal-title-color) !important;
+}
+.my-swal-popup .swal2-html-container {
+  color: var(--swal-text-color) !important;
+}
+
+/* Iconos */
+.my-swal-popup .swal2-icon.swal2-warning { border-color: var(--swal-warning) !important; color: var(--swal-warning) !important; background: transparent !important; }
+.my-swal-popup .swal2-icon.swal2-success { background: var(--swal-success) !important; color: #fff !important; }
+.my-swal-popup .swal2-icon.swal2-error { background: var(--swal-error) !important; color: #fff !important; }
+.my-swal-popup .swal2-icon.swal2-info { background: var(--swal-info) !important; color: #fff !important; }
+
+/* Botones: preferimos custom properties si están presentes, si no caemos al tema */
+.my-swal-popup .swal2-actions .swal2-confirm.swal2-styled {
+  background: none !important;
+  background-color: var(--swal2-confirm-button-background-color, var(--swal-confirm-bg)) !important;
+  color: var(--swal2-confirm-button-color, var(--swal-confirm-color)) !important;
+  border: none !important;
+}
+.my-swal-popup .swal2-actions .swal2-cancel.swal2-styled {
+  background: none !important;
+  background-color: var(--swal2-cancel-button-background-color, var(--swal-cancel-bg)) !important;
+  color: var(--swal2-cancel-button-color, var(--swal-cancel-color)) !important;
+  border: 1px solid rgba(0,0,0,0.06) !important;
+}
+.my-swal-popup .swal2-actions .swal2-styled:hover { background-color: var(--swal-button-hover) !important; }
 }
 
 /* Importar la fuente (opcional): el desarrollador puede añadir un <link> en public/index.html o usar las fuentes del sistema */
@@ -62,6 +178,7 @@ body {
   font-family: var(--font-sans);
   color: var(--color-text);
   background: var(--color-bg-page);
+  padding-top: var(--navbar-height);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -126,24 +243,334 @@ body {
   border-color: var(--landing-primary);
   transform: translateY(-2px);
 }
-
 /* Helpers para módulos / layout */
 .module-layout { display:flex; gap: var(--container-gap); }
 .module-sidebar { width: 260px; background: var(--color-card-bg); border-right: 1px solid #e6e7f2; padding: 24px; }
 .module-main { flex:1; padding: 20px 28px; }
 
-/* Tabla base (usar .insumos__table / .table) */
-.table {
-  width:100%;
+/* Layout rules for specific pages were removed from theme.css.
+   The theme file contains only tokens (colors, typography, shadows, radii)
+   and global utilities. Page-specific layout (display, height, scroll
+   containers) must live in the page/component CSS files (e.g.
+   `src/pages/GestionCompras.css`, `src/pages/GestionInventario.css`). */
+
+/* Tablas: variables y estilos globales ------------------------------------------------- */
+/* Notas: usar la clase `table` como utilitario base. Las tablas existentes en la app
+  como `clientes__table`, `users__table`, `insumos__table` también se mapean aquí
+  para aplicar el mismo aspecto de manera centralizada. Para variantes locales usar
+  `table--striped`, `table--hover`, `table--compact`. */
+
+/* Las variables de tablas ya están definidas en el :root principal arriba.
+   Este bloque duplicado se eliminó para evitar sobrescrituras inesperadas.
+   Para overrides por página, añadir las variables dentro de la clase de la página
+   (ej. `.landing { --table-row-hover: ... }`) o en un archivo CSS de la página. */
+
+/* Aplicar estilo base a la clase utilitaria y a las tablas HTML.
+   Nota: no incluir selectores específicos de páginas aquí; las páginas
+   deben optar por usar la etiqueta `<table>` o la clase `.table` para
+   recibir estos estilos (migración recomendada abajo). */
+table, .table {
+  width: 100%;
   border-collapse: separate;
-  table-layout: auto;
+  border-spacing: 0;
   margin-top: 1rem;
-  border-radius: var(--radius-base);
   background: var(--color-card-bg);
+  border-radius: var(--table-radius);
+  overflow: visible; /* IMPORTANTE: overflow:hidden rompe position:sticky */
+  box-shadow: var(--card-shadow);
+  table-layout: auto;
+}
+
+/* Encabezados */
+table thead th, .table thead th {
+  background: var(--table-header-bg);
+  color: var(--table-header-color);
+  font-weight: 600;
+  padding: var(--table-cell-padding);
+  text-align: left;
+  border-bottom: 1px solid var(--table-border);
+  font-size: 0.95rem;
+}
+
+/* Celdas */
+table th, table td, .table th, .table td {
+  padding: var(--table-cell-padding);
+  border-bottom: 1px solid var(--table-border);
+  vertical-align: middle;
+  color: var(--color-text);
+}
+
+/* Varientes de utilidad */
+.table--striped tbody tr:nth-child(odd) {
+  background: var(--table-zebra);
+}
+
+.table--compact th, .table--compact td { padding: 6px 8px; }
+
+/* Hover: sombra + ligero lift */
+.table--hover tbody tr, table tbody tr, .table tbody tr {
+  transition: background-color 120ms ease, transform 120ms ease, box-shadow 120ms ease;
+}
+.table--hover tbody tr:hover, table tbody tr:hover, .table tbody tr:hover {
+  background: var(--table-row-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--table-row-hover-shadow);
+}
+
+/* Responsive wrapper */
+.table-responsive {
+  overflow: auto; /* permitir scroll vertical y horizontal */
+  width: 100%;
+  flex: 1 1 auto; /* permitir que el contenedor crezca dentro de un flex parent */
+  min-height: 0; /* permitir shrink en flex layouts */
+  -webkit-overflow-scrolling: touch; /* smoother scrolling on iOS */
+  padding: 0; /* avoid accidental offsets inside scroll container */
+  border-radius: var(--table-radius); /* aplicar radio consistente al contenedor */
+  scrollbar-gutter: stable; /* reservar espacio para la scrollbar y evitar reflows */
+}
+
+/* ===================================================================
+   UTILIDAD GLOBAL: TABLA CON HEADER STICKY (Cabecera Estática)
+   ===================================================================
+   Usar en la etiqueta <table class="cabecera_estatica"> para obtener un
+   encabezado que se mantiene fijo dentro de su contenedor scrollable.
+   
+   IMPORTANTE: NO usar transform ni will-change en ancestros, rompen position:sticky.
+   
+   Estructura requerida:
+   <div class="table-responsive" style="overflow:auto">
+     <table class="cabecera_estatica">
+       <thead><tr><th>...</th></tr></thead>
+       <tbody>...</tbody>
+     </table>
+   </div>
+*/
+
+/* Tabla base con sticky */
+.cabecera_estatica {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: auto;
+  margin: 0;
+  background: var(--color-card-bg);
+  border-radius: var(--table-radius);
   box-shadow: var(--card-shadow);
 }
-.table thead th { background: var(--color-surface-1); color: var(--color-muted); font-weight: 600; padding: 10px 12px; }
-.table th, .table td { padding: 10px 12px; border-bottom: 1px solid #eaeef6; color: var(--color-text); }
+
+/* Header sticky con todos los estilos */
+.cabecera_estatica thead th,
+.cabecera_estatica thead td {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--table-header-bg);
+  color: var(--table-header-color);
+  font-weight: 600;
+  padding: var(--table-cell-padding);
+  text-align: left;
+  border-bottom: 2px solid var(--table-border);
+  border-right: 1px solid rgba(255, 255, 255, 0.3); /* División vertical */
+  font-size: 0.95rem;
+  line-height: 1.25;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+/* Remover borde derecho de la última columna del header */
+.cabecera_estatica thead th:last-child,
+.cabecera_estatica thead td:last-child {
+  border-right: none;
+}
+
+/* Celdas del body con bordes */
+.cabecera_estatica th,
+.cabecera_estatica td {
+  padding: var(--table-cell-padding);
+  text-align: left;
+  border-bottom: 1px solid var(--table-border);
+  border-right: 1px solid var(--table-border); /* División vertical */
+  font-size: 0.95rem;
+  vertical-align: middle;
+  color: var(--color-text);
+}
+
+/* Remover borde derecho de la última columna del body */
+.cabecera_estatica td:last-child,
+.cabecera_estatica th:last-child {
+  border-right: none;
+}
+
+/* Hover en filas */
+.cabecera_estatica tbody tr {
+  transition: background-color 150ms ease;
+}
+
+.cabecera_estatica tbody tr:hover {
+  background: rgba(87, 89, 217, 0.05);
+}
+
+/* Example override pattern (copy into a page-specific CSS file):
+   .proveedores { --table-header-bg: #fff2e6; --table-header-color: #2b2b2b; }
+   This changes header background/color for tables inside `.proveedores` scope.
+*/
+
+/* Pequeñas utilidades para tablas: alineaciones y truncado */
+.text-truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.table-center td, .table-center th { text-align: center; }
+.table-right td, .table-right th { text-align: right; }
+
+/* ===================================================================
+   PATRÓN: TABLA CON HEADER FIJO (Fixed Header Table Pattern)
+   =================================================================== 
+   
+   Uso: Este patrón separa el header de la tabla del body para crear
+   un header completamente fijo mientras el body hace scroll.
+   
+   Estructura HTML requerida:
+   
+   <div class="table-fixed-container">
+     <div class="table-fixed-header">
+       <table>
+         <thead>
+           <tr>
+             <th style="width: Xpx">Columna 1</th>
+             <th style="width: Ypx">Columna 2</th>
+           </tr>
+         </thead>
+       </table>
+     </div>
+     <div class="table-fixed-body">
+       <table>
+         <colgroup>
+           <col style="width: Xpx" />
+           <col style="width: Ypx" />
+         </colgroup>
+         <tbody>
+           <tr><td>...</td><td>...</td></tr>
+         </tbody>
+       </table>
+     </div>
+   </div>
+   
+   IMPORTANTE: 
+   - Los anchos de columnas deben coincidir entre header y body
+   - Usar inline styles o CSS específico para anchos de columna
+   - El contenedor padre debe tener flex: 1 o altura definida
+*/
+
+/* Contenedor principal de la tabla */
+.table-fixed-container {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-card-bg);
+  border-radius: var(--table-radius);
+  box-shadow: var(--card-shadow);
+}
+
+/* Header fijo (no hace scroll) */
+.table-fixed-header {
+  flex-shrink: 0;
+  overflow: hidden;
+  border-bottom: var(--table-fixed-header-border-bottom);
+}
+
+.table-fixed-header table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  margin: 0;
+}
+
+.table-fixed-header thead {
+  display: table-header-group;
+}
+
+.table-fixed-header th {
+  background: var(--table-header-bg);
+  color: var(--table-header-color);
+  font-weight: 600;
+  padding: var(--table-fixed-cell-padding);
+  text-align: left;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+  border-bottom: none;
+  box-sizing: border-box;
+}
+
+.table-fixed-header th:last-child {
+  border-right: none;
+}
+
+/* Body con scroll */
+.table-fixed-body {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: auto;
+  scrollbar-gutter: stable;
+}
+
+.table-fixed-body table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  margin: 0;
+}
+
+.table-fixed-body tbody {
+  display: table-row-group;
+}
+
+.table-fixed-body tbody tr:first-child td {
+  border-top: none;
+}
+
+.table-fixed-body td {
+  padding: var(--table-fixed-cell-padding);
+  border-bottom: 1px solid var(--table-border);
+  border-right: 1px solid var(--table-border);
+  font-size: 0.95rem;
+  color: var(--color-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-sizing: border-box;
+}
+
+.table-fixed-body td:last-child {
+  border-right: none;
+}
+
+/* Fin patrón tabla header fijo ----------------------------------------- */
+
+/* Overflow utilities (reusable): aplicar estas clases a wrappers/elementos
+   para controlar el comportamiento de desplazamiento desde el CSS global.
+   - Uso: añadir `overflow-auto`, `overflow-hidden`, `overflow-scroll`,
+     `overflow-x-auto`, `overflow-y-auto` directamente al `div`/wrapper.
+   - `no-scrollbar` oculta barras visuales pero mantiene el scroll funcional.
+*/
+.overflow-auto { overflow: auto; }
+.overflow-scroll { overflow: scroll; }
+.overflow-hidden { overflow: hidden; }
+.overflow-x-auto { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.overflow-y-auto { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+
+/* Oculta barras de scroll (visual) en la mayoría de navegadores, mantiene el scroll funcional */
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Smooth scrolling utility */
+.scroll-smooth { scroll-behavior: smooth; }
+
+/* Fin tablas ------------------------------------------------------------------------- */
 
 /* Helpers de texto */
 .text-muted { color: var(--color-muted); }
@@ -158,3 +585,83 @@ body {
 @media (max-width: 900px) {
   .module-sidebar { width: 100%; }
 }
+
+/* App-shell rules removed from theme.css.
+   Layout rules for each module (display, height, scroll containers) should live
+   in the page/component CSS files (example: src/pages/GestionCompras.css).
+   theme.css keeps colors, typography, shadows, radii and utility tokens only. */
+
+/* Botón de cierre de modales: estilos unificados para varios prefijos usados
+   en componentes. Añadimos este bloque central para evitar inconsistencias
+   entre modales y mantener un diseño accesible y coherente. */
+.modal-close,
+.modal__close,
+.cliente-modal__close,
+.codificacion-productos__close,
+.insumos-catalogo__close,
+.insumos-proveedor__close,
+.inventarios-productos__close,
+.user-modal__close,
+.proveedor-modal__close {
+  position: absolute; /* positioned relative to modal content/container */
+  top: 8px;
+  right: 8px;
+  background: var(--modal-close-bg, default);
+  border: none;
+  font-size: 20px;
+  line-height: 1;
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--modal-close-color, var(--color-da));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 120ms ease, color 120ms ease, transform 120ms ease;
+}
+
+.modal-close:focus,
+.modal__close:focus,
+.cliente-modal__close:focus,
+.codificacion-productos__close:focus,
+.insumos-catalogo__close:focus,
+.insumos-proveedor__close:focus,
+.inventarios-productos__close:focus,
+.user-modal__close:focus,
+.proveedor-modal__close:focus {
+  outline: 3px solid rgba(79,70,229,0.12);
+  outline-offset: 2px;
+}
+
+.modal-close:hover,
+.modal__close:hover,
+.cliente-modal__close:hover,
+.codificacion-productos__close:hover,
+.insumos-catalogo__close:hover,
+.insumos-proveedor__close:hover,
+.inventarios-productos__close:hover,
+.user-modal__close:hover,
+.proveedor-modal__close:hover {
+  background: var(--modal-close-hover-bg, rgba(218, 18, 18, 0.06));
+  color: var(--modal-close-hover-color, var(--color-text));
+  transform: translateY(-1px);
+}
+
+/* Small variant for dense headers (if needed) */
+.modal-close--small,
+.modal__close--small { font-size:16px; padding:4px 6px; }
+
+/* Ensure common modal content/container selectors are positioned so the
+   absolute close button sits in the top-right. Adding these selectors here
+   keeps placement consistent without touching each component file. */
+.cliente-modal__content,
+.proveedor-modal__content,
+.codificacion-productos__container,
+.insumos-catalogo__container,
+.insumos-proveedor__container,
+.inventario-modal-card,
+.user-modal__content,
+.proveedor-modal__content {
+  position: relative;
+}
+

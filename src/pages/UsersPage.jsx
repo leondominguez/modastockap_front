@@ -6,7 +6,7 @@ import Navbar from "../components/Navbar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import UserModal from "../components/UserModal";
-import Swal from "sweetalert2";
+import swal from '../utils/swal';
 
 function UsersPage() {
   const [users, setUsers] = useState([]);
@@ -82,7 +82,7 @@ function UsersPage() {
       else {
         setUsers([]);
         setError(message || "Error al cargar/buscar usuarios.");
-        Swal.fire({
+        swal({
           icon: "error",
           title: "Error de conexión/búsqueda",
           text: message || "Ocurrió un error inesperado. Intenta más tarde.",
@@ -106,7 +106,7 @@ function UsersPage() {
 
     if (searchCriteria === "documento") {
       if (!documentType || !documentNumber || !documentNumber.trim()) {
-        Swal.fire({
+        swal({
           icon: "warning",
           title: "Campos Requeridos",
           text: "Para buscar por documento, debe ingresar el Tipo y el Número.",
@@ -120,7 +120,7 @@ function UsersPage() {
       };
     } else if (searchCriteria === "nombre") {
       if (!name.trim()) {
-        Swal.fire({
+        swal({
           icon: "warning",
           title: "Campo Requerido",
           text: "Debe ingresar el Nombre o Apellido para buscar.",
@@ -133,7 +133,7 @@ function UsersPage() {
     }
 
     if (Object.keys(searchParams).length === 0) {
-      Swal.fire({
+      swal({
         icon: "info",
         title: "Búsqueda vacía",
         text: "Ingrese un criterio para iniciar la búsqueda o use 'Limpiar'.",
@@ -169,7 +169,7 @@ function UsersPage() {
   };
 
   const handleDeleteUser = async (user) => {
-    const confirm = await Swal.fire({
+    const confirm = await swal({
       title: `¿${Number(user.estado) === 1 ? "Desactivar" : "Activar"} usuario?`,
       text: `El usuario "${user.usuario}" será ${Number(user.estado) === 1 ? "desactivado" : "activado"}.`,
       icon: "warning",
@@ -189,7 +189,7 @@ function UsersPage() {
 
       await axios.patch(url, {}, { headers: { Authorization: `Bearer ${token}` } });
 
-      Swal.fire({
+      swal({
         icon: "success",
         title: "Usuario " + (estadoActual === "1" ? "activado" : "desactivado"),
         text: `El usuario "${user.usuario}" fue ${estadoActual === "1" ? "activado" : "desactivado"} correctamente.`,
@@ -200,7 +200,7 @@ function UsersPage() {
       fetchUsers();
     } catch (error) {
       console.error("Error al cambiar estado del usuario:", error);
-      Swal.fire({
+      swal({
         icon: "error",
         title: "Error al cambiar estado del usuario",
         text: error.response?.data?.message || "Ocurrió un error inesperado.",
@@ -307,58 +307,49 @@ function UsersPage() {
         {/* ------------------------------------- */}
 
         {/* --- TABLA DE RESULTADOS --- */}
-        {users.length > 0 ? (
-          <table className="users__table">
-            <thead>
-              <tr>
-                <th>Tipo Id</th>
-                <th>Documento</th>
-                <th>Nombre</th>
-                <th>Correo</th>
-                <th>Rol</th>
-                <th>Descripción del Rol</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((u) => (
-                <tr key={u.id_usuario || u.id}>
-                  <td>{u.tipo_documento}</td>
-                  <td>{u.numero_documento}</td>
-                  <td>
-                    {u.primer_nombre} {u.primer_apellido}
-                  </td>
-                  <td>{u.correo}</td>
-                  <td>{u.rol?.nombre || "-"}</td>
-                  <td>{u.rol?.descripcion || "-"}</td>
-                              <td>{Number(u.estado) === 0 ? "Inactivo" : "Activo"}</td>
-                  <td>
-                    <button
-                      className="users__action users__action--edit"
-                      onClick={() => handleEditUser(u)}
-                    >
-                      Editar
-                    </button>
-                    <button
-                      className={`users__action ${Number(u.estado) === 1
-                          ? "users__action--delete"
-                          : "users__action--activate"
-                        }`}
-                      onClick={() => handleDeleteUser(u)}
-                    >
-                      {Number(u.estado) === 1 ? "Desactivar" : "Activar"}
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <p className="users__empty">
-            {error || "No hay usuarios registrados que coincidan con la búsqueda."}
-          </p>
-        )}
+        <section className="users__list">
+          {users.length > 0 ? (
+            <div className="table-responsive users__table-wrapper">
+              <table className="users__table table cabecera_estatica">
+                <thead>
+                  <tr>
+                    <th>Tipo Id</th>
+                    <th>Documento</th>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Rol</th>
+                    <th>Descripción del Rol</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {users.map((u) => (
+                    <tr key={u.id_usuario || u.id}>
+                      <td>{u.tipo_documento}</td>
+                      <td>{u.numero_documento}</td>
+                      <td>{u.primer_nombre} {u.primer_apellido}</td>
+                      <td>{u.correo}</td>
+                      <td>{u.rol?.nombre || "-"}</td>
+                      <td>{u.rol?.descripcion || "-"}</td>
+                      <td>{Number(u.estado) === 0 ? "Inactivo" : "Activo"}</td>
+                      <td>
+                        <button className="users__action users__action--edit" onClick={() => handleEditUser(u)}>Editar</button>
+                        <button className={`users__action ${Number(u.estado) === 1 ? "users__action--delete" : "users__action--activate"}`} onClick={() => handleDeleteUser(u)}>
+                          {Number(u.estado) === 1 ? "Desactivar" : "Activar"}
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <p className="users__empty">
+              {error || "No hay usuarios registrados que coincidan con la búsqueda."}
+            </p>
+          )}
+        </section>
         {showModal && (
           <UserModal
             show={showModal}

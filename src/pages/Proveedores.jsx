@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import "./Clientes.css"; // reutiliza estilos de clientes
+import "./Proveedores.css"; // reutiliza estilos de clientes
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import swal from '../utils/swal';
 import ProveedorModal from "../components/ProveedorModal";
 
 function ProveedoresPage() {
@@ -70,7 +70,7 @@ function ProveedoresPage() {
       } else {
         setProveedores([]);
         setError(message || "Error al cargar/buscar proveedores.");
-        Swal.fire({ icon: "error", title: "Error", text: message || "Ocurrió un error." });
+        swal({ icon: "error", title: "Error", text: message || "Ocurrió un error." });
       }
     } finally {
       setLoading(false);
@@ -87,19 +87,19 @@ function ProveedoresPage() {
     let params = {};
     if (searchCriteria === "documento") {
       if (!documentType || !documentNumber || !documentNumber.trim()) {
-        Swal.fire({ icon: "warning", title: "Campos Requeridos", text: "Ingrese Tipo y Número de documento." });
+        swal({ icon: "warning", title: "Campos Requeridos", text: "Ingrese Tipo y Número de documento." });
         return;
       }
       params = { tipo_documento: documentType, numero_documento: documentNumber.trim() };
     } else if (searchCriteria === "razon_social") {
       if (!razonSocial.trim()) {
-        Swal.fire({ icon: "warning", title: "Campo Requerido", text: "Ingrese la razón social." });
+        swal({ icon: "warning", title: "Campo Requerido", text: "Ingrese la razón social." });
         return;
       }
       params = { razon_social: razonSocial.trim() };
     } else if (searchCriteria === "estado") {
       if (estadoFilter === "") {
-        Swal.fire({ icon: "info", title: "Seleccione estado", text: "Seleccione Activo o Inactivo." });
+        swal({ icon: "info", title: "Seleccione estado", text: "Seleccione Activo o Inactivo." });
         return;
       }
       params = { estado: estadoFilter };
@@ -128,7 +128,7 @@ function ProveedoresPage() {
 
   const handleToggleEstado = async (proveedor) => {
     const accion = proveedor.estado === 1 ? "Desactivar" : "Activar";
-    const confirm = await Swal.fire({
+    const confirm = await swal({
       title: `¿${accion} proveedor?`,
       text: `El proveedor "${proveedor.razon_social || proveedor.nombre_contacto}" será ${accion.toLowerCase()}.`,
       icon: "warning",
@@ -143,31 +143,31 @@ function ProveedoresPage() {
       const id = proveedor.id_proveedor || proveedor.id;
       const url = `${apiBase}proveedores/cambiarEstado/${id}?estado=${nuevoEstado}`;
       await axios.patch(url, {}, { headers: { Authorization: `Bearer ${token}` } });
-      Swal.fire({ icon: "success", title: `Proveedor ${nuevoEstado === "1" ? "activado" : "desactivado"}`, timer: 1200, showConfirmButton: false });
+      swal({ icon: "success", title: `Proveedor ${nuevoEstado === "1" ? "activado" : "desactivado"}`, timer: 1200, showConfirmButton: false });
       fetchProveedores();
     } catch (err) {
       console.error("Error cambiar estado proveedor:", err);
-      Swal.fire({ icon: "error", title: "Error", text: err.response?.data?.message || "Ocurrió un error." });
+      swal({ icon: "error", title: "Error", text: err.response?.data?.message || "Ocurrió un error." });
     }
   };
 
-  if (loading) return <p className="clientes__loading">Cargando proveedores...</p>;
+  if (loading) return <p className="proveedores__loading">Cargando proveedores...</p>;
 
   return (
-    <div className="clientes">
+    <div className="proveedores">
       <Navbar />
-      <main className="clientes__main">
-        <div className="clientes__header">
+      <main className="proveedores__main">
+        <div className="proveedores__header">
           <h1>Gestión de Proveedores</h1>
-          <button aria-label="Agregar nuevo proveedor" className="btn btn--primary clientes__btn clientes__btn--add" onClick={handleAddProveedor}>
+          <button aria-label="Agregar nuevo proveedor" className="btn btn--primary proveedores__btn proveedores__btn--add" onClick={handleAddProveedor}>
             + Nuevo Proveedor
           </button>
         </div>
 
-        <form className="clientes__search-form" onSubmit={handleSearch}>
+        <form className="proveedores__search-form" onSubmit={handleSearch}>
           <h2>Buscar Proveedor</h2>
-          <div className="clientes__search-controls">
-            <div className="clientes__search-radio">
+          <div className="proveedores__search-controls">
+            <div className="proveedores__search-radio">
               <label>
                 <input type="radio" value="documento" checked={searchCriteria === "documento"} onChange={() => { setSearchCriteria("documento"); setRazonSocial(""); setEstadoFilter(""); }} />
                 Por Documento
@@ -183,27 +183,27 @@ function ProveedoresPage() {
             </div>
 
                 {searchCriteria === "documento" && (
-              <div className="clientes__search-group">
-                <select aria-label="Tipo de documento" className={`clientes__search-input ${!documentType ? "input--required" : ""}`} value={documentType} onChange={(e) => setDocumentType(e.target.value)}>
+              <div className="proveedores__search-group">
+                <select aria-label="Tipo de documento" className={`proveedores__search-input ${!documentType ? "input--required" : ""}`} value={documentType} onChange={(e) => setDocumentType(e.target.value)}>
                   <option value="">Tipo Documento</option>
                   <option value="CC">CC</option>
                   <option value="NIT">NIT</option>
                   <option value="PAS">PAS</option>
                   <option value="CE">CE</option>
                 </select>
-                <input aria-label="Número de documento" type="text" className={`clientes__search-input ${!documentNumber ? "input--required" : ""}`} placeholder="Número de Documento" value={documentNumber} onChange={(e) => setDocumentNumber(e.target.value)} />
+                <input aria-label="Número de documento" type="text" className={`proveedores__search-input ${!documentNumber ? "input--required" : ""}`} placeholder="Número de Documento" value={documentNumber} onChange={(e) => setDocumentNumber(e.target.value)} />
               </div>
             )}
 
             {searchCriteria === "razon_social" && (
-              <div className="clientes__search-group clientes__search-group--name">
-                <input aria-label="Razón social" type="text" className={`clientes__search-input ${!razonSocial ? "input--required" : ""}`} placeholder="Razon Social" value={razonSocial} onChange={(e) => setRazonSocial(e.target.value)} />
+              <div className="proveedores__search-group proveedores__search-group--name">
+                <input aria-label="Razón social" type="text" className={`proveedores__search-input ${!razonSocial ? "input--required" : ""}`} placeholder="Razon Social" value={razonSocial} onChange={(e) => setRazonSocial(e.target.value)} />
               </div>
             )}
 
             {searchCriteria === "estado" && (
-              <div className="clientes__search-group">
-                <select aria-label="Filtrar por estado" className={`clientes__search-input ${estadoFilter === "" ? "input--required" : ""}`} value={estadoFilter} onChange={(e) => setEstadoFilter(e.target.value)}>
+              <div className="proveedores__search-group">
+                <select aria-label="Filtrar por estado" className={`proveedores__search-input ${estadoFilter === "" ? "input--required" : ""}`} value={estadoFilter} onChange={(e) => setEstadoFilter(e.target.value)}>
                   <option value="">Seleccione Estado</option>
                   <option value="1">Activo</option>
                   <option value="0">Inactivo</option>
@@ -211,13 +211,14 @@ function ProveedoresPage() {
               </div>
             )}
 
-            <button type="submit" aria-label="Buscar proveedores" className="btn btn--primary clientes__btn--search clientes__btn">Buscar</button>
-            <button type="button" aria-label="Limpiar búsqueda" className="btn clientes__btn--clear clientes__btn" onClick={handleClearSearch}>Limpiar</button>
+            <button type="submit" aria-label="Buscar proveedores" className="btn btn--primary proveedores__btn--search proveedores__btn">Buscar</button>
+            <button type="button" aria-label="Limpiar búsqueda" className="btn proveedores__btn--clear proveedores__btn" onClick={handleClearSearch}>Limpiar</button>
           </div>
         </form>
 
         {proveedores.length > 0 ? (
-          <table className="clientes__table">
+          <div className="table-responsive proveedores__table-wrapper">
+          <table className="proveedores__table table cabecera_estatica">
             <thead>
               <tr>
                 <th>Tipo ID</th>
@@ -243,8 +244,8 @@ function ProveedoresPage() {
                   <td>{p.ciudad || "-"}</td>
                   <td>{p.direccion || "-"}</td>
                   <td>
-                    <button type="button" className="clientes__action clientes__action--edit" onClick={() => handleEditProveedor(p)}>Editar</button>
-                    <button type="button" className={`clientes__action ${Number(p.estado) === 1 ? "clientes__action--delete" : "clientes__action--activate"}`} onClick={() => handleToggleEstado(p)}>
+                    <button type="button" className="proveedores__action proveedores__action--edit" onClick={() => handleEditProveedor(p)}>Editar</button>
+                    <button type="button" className={`proveedores__action ${Number(p.estado) === 1 ? "proveedores__action--delete" : "proveedores__action--activate"}`} onClick={() => handleToggleEstado(p)}>
                       {Number(p.estado) === 1 ? "Desactivar" : "Activar"}
                     </button>
                   </td>
@@ -252,8 +253,9 @@ function ProveedoresPage() {
               ))}
             </tbody>
           </table>
+          </div>
         ) : (
-          <p className="clientes__empty">{error || "No hay proveedores que coincidan con la búsqueda."}</p>
+          <p className="proveedores__empty">{error || "No hay proveedores que coincidan con la búsqueda."}</p>
         )}
 
         <ProveedorModal

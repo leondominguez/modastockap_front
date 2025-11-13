@@ -1,7 +1,9 @@
+@import "../styles/theme.css";
 /* src/pages/UsersPage.css - ahora usa variables del tema para colores y fondos */
 
 .users {
-  min-height: 100vh;
+  height: calc(100vh - var(--navbar-height));
+  overflow: hidden;
   background-color: var(--color-bg-page);
   display: flex;
   flex-direction: column;
@@ -11,6 +13,10 @@
 .users__main {
   flex: 1;
   padding: 2rem 4rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* permite que los hijos flex puedan hacer shrink */
+  overflow: hidden; /* evitar scroll en el contenedor principal */
 }
 
 .users__header {
@@ -42,54 +48,24 @@
   background-color: var(--color-primary-dark);
 }
 
-.users__table {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
-  margin-top: 1rem;
-  border-radius: 10px;
+/* CONTENEDOR DE TABLA */
+.users__list {
+  flex: 1;
+  min-height: 0;
   overflow: hidden;
-  background: var(--color-card-bg);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
 }
 
-.users__table th,
-.users__table td {
-  padding: 12px 14px;
-  text-align: left;
-  border-bottom: 1px solid #e5e7eb;
-  font-size: 1.05rem;
-  word-wrap: break-word;
-  color: var(--color-text);
+.users__table-wrapper {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
 }
 
-/* Encabezado */
-.users__table thead th {
-  background-color: var(--color-surface-1);
-  color: var(--color-text);
-  font-weight: 600;
-}
+/* La tabla usa .cabecera_estatica del theme.css para el sticky header */
+/* Solo agregamos estilos específicos de esta página si es necesario */
 
-/* Ajuste proporcional del ancho de columnas */
-.users__table th:nth-child(1),
-.users__table td:nth-child(1) { width: 12%; }
-.users__table th:nth-child(2),
-.users__table td:nth-child(2) { width: 15%; }
-.users__table th:nth-child(3),
-.users__table td:nth-child(3) { width: 15%; }
-.users__table th:nth-child(4),
-.users__table td:nth-child(4) { width: 15%; }
-.users__table th:nth-child(5),
-.users__table td:nth-child(5) { width: 10%; }
-.users__table th:nth-child(6),
-.users__table td:nth-child(6) { width: 20%; }
-.users__table th:nth-child(7),
-.users__table td:nth-child(7) { width: 10%; }
-.users__table th:nth-child(8),
-.users__table td:nth-child(8) { width: 15%; }
-
-/* Filas hover */
-.users__table tbody tr:hover { background-color: var(--color-surface-1); }
 
 /* Botones de acción */
 .users__action {
@@ -144,3 +120,12 @@
 
 .users__btn--clear { background-color: var(--color-muted); color: white; padding: 10px 15px; border: none; border-radius: 6px; cursor: pointer; transition: background-color 0.2s; }
 .users__btn--clear:hover { background-color: #6b7280; }
+
+/* Mensajes */
+.users__empty,
+.users__loading {
+  padding: 2rem;
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.95rem;
+}
