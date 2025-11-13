@@ -1,6 +1,6 @@
 import './InventariosProductosModal.css';
 import { useEffect, useState } from 'react';
-import Swal from 'sweetalert2';
+import swal from '../utils/swal';
 
 function InventariosProductosModal({ show, onClose, onSaved, selected, productos = [] }){
   const apiBase = process.env.REACT_APP_API_URL || '';
@@ -35,19 +35,20 @@ function InventariosProductosModal({ show, onClose, onSaved, selected, productos
       const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json', Authorization: token ? `Bearer ${token}` : undefined }, body: JSON.stringify(form) });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Error');
-      Swal.fire({ icon: 'success', title: 'Guardado', text: 'Inventario guardado correctamente', timer:1200, showConfirmButton:false });
+      swal({ icon: 'success', title: 'Guardado', text: 'Inventario guardado correctamente', timer:1200, showConfirmButton:false });
       onSaved && onSaved(data);
+      onClose && onClose();
     }catch(err){
       console.error('Error guardando inventario', err);
-      Swal.fire({ icon: 'error', title: 'Error', text: err.message || 'No se pudo guardar' });
+      swal({ icon: 'error', title: 'Error', text: err.message || 'No se pudo guardar' });
     }
   };
 
   return (
-    <div className="inventario-modal-backdrop">
-      <div className="inventario-modal-card">
-        <button className="inventario-modal-close" onClick={onClose}>×</button>
-        <h3>{selected ? 'Editar inventario' : 'Nuevo inventario'}</h3>
+    <div className="inventario-modal-backdrop" role="dialog" aria-modal="true">
+      <div className="inventario-modal-card" aria-labelledby="inventario-modal-title">
+      <button className="inventario-modal-close modal-close" onClick={onClose} aria-label="Cerrar">×</button>
+        <h3 id="inventario-modal-title">{selected ? 'Editar inventario' : 'Nuevo inventario'}</h3>
         <form onSubmit={handleSubmit}>
           <label>Código producto</label>
           <select required value={form.codigo_producto} onChange={e=>handleChange('codigo_producto', e.target.value)}>

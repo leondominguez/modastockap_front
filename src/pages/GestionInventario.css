@@ -1,24 +1,25 @@
 .gestion-inventario-page {
  	display: flex;
  	flex-direction: column;
- 	min-height: 100vh;
+ 	height: calc(100vh - var(--navbar-height));
+ 	overflow: hidden;
  	background: var(--color-bg-page);
 }
 
-.gi__content {
+.gestion-inventario__content {
 	display: flex;
 	flex: 1;
 }
 
-.gi__sidebar {
+.gestion-inventario__sidebar {
  	width: 260px;
  	background: var(--color-card-bg);
  	border-right: 1px solid #e6e7f2;
  	padding: 24px;
 }
 
-.gi__nav { display:flex; flex-direction: column; gap:8px; }
-.gi__nav-btn {
+.gestion-inventario__nav { display:flex; flex-direction: column; gap:8px; }
+.gestion-inventario__nav-btn {
 	text-align: left;
 	background: transparent;
 	border: none;
@@ -27,14 +28,14 @@
 	cursor: pointer;
 	color: #374151;
 }
-.gi__nav-btn.is-active { background: var(--color-primary); color: #fff; }
+.gestion-inventario__nav-btn.is-active { background: var(--color-primary); color: #fff; }
 
-.gi__main {
+.gestion-inventario__main {
 	flex: 1;
 	padding: 20px 28px;
 }
 
 @media (max-width: 900px) {
 	.gestion-inventario-page { flex-direction: column; }
-	.gi__sidebar { width: 100%; display:flex; gap:12px; }
+	.gestion-inventario__sidebar { width: 100%; display:flex; gap:12px; }
 }

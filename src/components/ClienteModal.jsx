@@ -1,7 +1,7 @@
 // ...existing code...
 import React, { useEffect, useState } from "react";
 import "./ClienteModal.css";
-import Swal from "sweetalert2";
+import swal from '../utils/swal';
 import axios from "axios";
 
 function ClienteModal({ show, onClose, onSaved, selectedCliente }) {
@@ -74,7 +74,7 @@ function ClienteModal({ show, onClose, onSaved, selectedCliente }) {
   const handleSubmit = async (ev) => {
     ev.preventDefault();
     if (!validate()) {
-      Swal.fire({ icon: "warning", title: "Campos requeridos", text: "Completa los campos obligatorios." });
+      swal({ icon: "warning", title: "Campos requeridos", text: "Completa los campos obligatorios." });
       return;
     }
 
@@ -88,12 +88,12 @@ function ClienteModal({ show, onClose, onSaved, selectedCliente }) {
         res = await axios.put(`${apiBase}clientes/actualizar/${id}`, payload, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        Swal.fire({ icon: "success", title: "Cliente actualizado", timer: 1200, showConfirmButton: false });
+        swal({ icon: "success", title: "Cliente actualizado", timer: 1200, showConfirmButton: false });
       } else {
         res = await axios.post(`${apiBase}clientes/crear`, payload, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        Swal.fire({ icon: "success", title: "Cliente creado", timer: 1200, showConfirmButton: false });
+        swal({ icon: "success", title: "Cliente creado", timer: 1200, showConfirmButton: false });
       }
 
       // onSaved recibe el cliente creado/actualizado (según backend)
@@ -101,7 +101,7 @@ function ClienteModal({ show, onClose, onSaved, selectedCliente }) {
       onClose();
     } catch (error) {
       console.error("ClienteModal error:", error);
-      Swal.fire({
+      swal({
         icon: "error",
         title: "Error",
         text: error.response?.data?.message || "Ocurrió un error al guardar el cliente.",
@@ -110,12 +110,13 @@ function ClienteModal({ show, onClose, onSaved, selectedCliente }) {
   };
 
   return (
-    <div className="modal__overlay" role="dialog" aria-modal="true">
-      <div className="modal__content">
-        <h2>{selectedCliente ? "Editar Cliente" : "Nuevo Cliente"}</h2>
-        <form className="modal__form" onSubmit={handleSubmit} noValidate>
-          <div className="modal__grid">
-            <div className="modal__group">
+    <div className="cliente-modal__overlay" role="dialog" aria-modal="true">
+      <div className="cliente-modal__content">
+        <h2 style={{ display: 'inline-block', marginRight: '8px' }}>{selectedCliente ? "Editar Cliente" : "Nuevo Cliente"}</h2>
+        <button onClick={onClose} className="cliente-modal__close modal-close" aria-label="Cerrar">×</button>
+        <form className="cliente-modal__form" onSubmit={handleSubmit} noValidate>
+          <div className="cliente-modal__grid">
+            <div className="cliente-modal__group">
               <label>Tipo Documento</label>
               <select
                 name="tipo_documento"
@@ -132,7 +133,7 @@ function ClienteModal({ show, onClose, onSaved, selectedCliente }) {
               {errors.tipo_documento && <span className="error-text">{errors.tipo_documento}</span>}
             </div>
 
-            <div className="modal__group">
+            <div className="cliente-modal__group">
               <label>Número Documento</label>
               <input
                 name="numero_documento"
@@ -143,44 +144,44 @@ function ClienteModal({ show, onClose, onSaved, selectedCliente }) {
               {errors.numero_documento && <span className="error-text">{errors.numero_documento}</span>}
             </div>
 
-            <div className="modal__group">
+            <div className="cliente-modal__group">
               <label>Nombre</label>
               <input name="nombre" value={form.nombre} onChange={handleChange} className={errors.nombre ? "input-error" : ""} />
               {errors.nombre && <span className="error-text">{errors.nombre}</span>}
             </div>
 
-            <div className="modal__group">
+            <div className="cliente-modal__group">
               <label>Email</label>
               <input name="email" value={form.email} onChange={handleChange} />
               {errors.email && <span className="error-text">{errors.email}</span>}
             </div>
 
-            <div className="modal__group">
+            <div className="cliente-modal__group">
               <label>Teléfono</label>
               <input name="telefono" value={form.telefono} onChange={handleChange} />
             </div>
 
-            <div className="modal__group">
+            <div className="cliente-modal__group">
               <label>Dirección</label>
               <input name="direccion" value={form.direccion} onChange={handleChange} />
             </div>
 
-            <div className="modal__group">
+            <div className="cliente-modal__group">
               <label>Ciudad</label>
               <input name="ciudad" value={form.ciudad} onChange={handleChange} />
             </div>
 
-            <div className="modal__group">
+            <div className="cliente-modal__group">
               <label>Departamento</label>
               <input name="departamento" value={form.departamento} onChange={handleChange} />
             </div>
 
-            <div className="modal__group">
+            <div className="cliente-modal__group">
               <label>País</label>
               <input name="pais" value={form.pais} onChange={handleChange} />
             </div>
 
-            <div className="modal__group">
+            <div className="cliente-modal__group">
               <label>Estado</label>
               <select
                 name="estado"
@@ -192,13 +193,13 @@ function ClienteModal({ show, onClose, onSaved, selectedCliente }) {
               </select>
             </div>
 
-            <div className="modal__group">
+            <div className="cliente-modal__group">
               <label>Notas</label>
               <textarea name="notas" value={form.notas} onChange={handleChange} />
             </div>
           </div>
 
-          <div className="modal__actions">
+          <div className="cliente-modal__actions">
             <button type="button" className="btn--cancel" onClick={onClose}>
               Cancelar
             </button>

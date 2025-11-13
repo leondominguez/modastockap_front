@@ -1,4 +1,4 @@
-.ventas-page { min-height: 100vh; background: var(--color-bg-page); }
+.ventas-page { height: calc(100vh - var(--navbar-height)); overflow: hidden; background: var(--color-bg-page); }
 .ventas__content { display:flex; gap:16px; padding:20px; }
 .ventas__sidebar { width:260px; border-right:1px solid var(--color-surface-1); padding-right:16px; background: var(--color-card-bg); }
 .ventas__title { font-size:1.4rem; margin-bottom:12px; color: var(--color-text); }

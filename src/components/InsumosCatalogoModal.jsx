@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "../styles/theme.css";
 import "./InsumosCatalogoModal.css";
 
 function InsumosCatalogoModal({ show, onClose, onSaved, selected }) {
@@ -60,14 +61,15 @@ function InsumosCatalogoModal({ show, onClose, onSaved, selected }) {
 				headers: { 'Content-Type':'application/json', Authorization: `Bearer ${token}` },
 				body: JSON.stringify(form)
 			});
-			if (!res.ok) {
+					if (!res.ok) {
 				let errBody = {};
 				try { errBody = await res.json(); } catch(e) { errBody = { text: await res.text().catch(()=>'') }; }
 				console.debug('Respuesta fallida', { status: res.status, body: errBody });
 				const serverMsg = errBody.message || errBody.error || errBody.text || JSON.stringify(errBody);
 				throw new Error(`(${res.status}) ${serverMsg}`);
 			}
-			onSaved();
+					onSaved && onSaved();
+					onClose && onClose();
 		} catch (err) {
 			console.error('Error guardando insumo:', err);
 			if (err.message === 'NO_TOKEN') {
@@ -79,50 +81,50 @@ function InsumosCatalogoModal({ show, onClose, onSaved, selected }) {
 	};
 
 	return (
-		<div className="modal__backdrop">
-			<div className="modal__container">
-				<header className="modal__header">
-					<h3>{selected ? 'Editar insumo' : 'Nuevo insumo'}</h3>
-					<button onClick={onClose} className="modal__close">×</button>
+		<div className="insumos-catalogo__backdrop" role="dialog" aria-modal="true">
+			<div className="insumos-catalogo__container" aria-labelledby="insumos-catalogo-title">
+				<header className="insumos-catalogo__header">
+						<h3 id="insumos-catalogo-title">{selected ? 'Editar insumo' : 'Nuevo insumo'}</h3>
+						<button onClick={onClose} aria-label="Cerrar" className="insumos-catalogo__close modal-close">×</button>
 				</header>
 
-				<form className="modal__body" onSubmit={handleSubmit}>
-					<div className="modal__group">
+				<form className="insumos-catalogo__body" onSubmit={handleSubmit}>
+					<div className="insumos-catalogo__group">
 						<label>Código</label>
 						<input name="codigo_insumo" value={form.codigo_insumo} onChange={handleChange} />
-						{errors.codigo_insumo && <small className="field-error">{errors.codigo_insumo}</small>}
+						{errors.codigo_insumo && <small className="insumos-catalogo__field-error">{errors.codigo_insumo}</small>}
 					</div>
 
-					<div className="modal__group">
+					<div className="insumos-catalogo__group">
 						<label>Nombre</label>
 						<input name="nombre_insumo" value={form.nombre_insumo} onChange={handleChange} />
-						{errors.nombre_insumo && <small className="field-error">{errors.nombre_insumo}</small>}
+						{errors.nombre_insumo && <small className="insumos-catalogo__field-error">{errors.nombre_insumo}</small>}
 					</div>
 
-					<div className="modal__row">
-						<div className="modal__group">
+					<div className="insumos-catalogo__row">
+						<div className="insumos-catalogo__group">
 							<label>Tipo</label>
 							<input name="tipo_insumo" value={form.tipo_insumo} onChange={handleChange} />
 						</div>
-						<div className="modal__group">
+						<div className="insumos-catalogo__group">
 							<label>Unidad</label>
 							<input name="unidad_medida" value={form.unidad_medida} onChange={handleChange} />
 						</div>
 					</div>
 
-					<div className="modal__group">
+					<div className="insumos-catalogo__group">
 						<label>Descripción</label>
 						<textarea name="descripcion" value={form.descripcion} onChange={handleChange} />
 					</div>
 
-					<div className="modal__group">
+					<div className="insumos-catalogo__group">
 						<label>Notas</label>
 						<textarea name="notas" value={form.notas} onChange={handleChange} />
 					</div>
 
-					<footer className="modal__footer">
-						<button type="button" onClick={onClose} className="modal__btn modal__btn--muted">Cancelar</button>
-						<button type="submit" className="modal__btn modal__btn--primary">Guardar</button>
+					<footer className="insumos-catalogo__footer">
+						<button type="button" onClick={onClose} className="insumos-catalogo__btn insumos-catalogo__btn--muted">Cancelar</button>
+						<button type="submit" className="insumos-catalogo__btn insumos-catalogo__btn--primary">Guardar</button>
 					</footer>
 				</form>
 			</div>

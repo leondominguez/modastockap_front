@@ -2,13 +2,19 @@
 
 .navbar {
   width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--navbar-height, 64px);
   background-color: var(--navbar-bg, var(--color-bg, #fff));
   color: var(--navbar-text, var(--color-text, #111));
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--navbar-padding-y, 0.6rem) var(--navbar-padding-x, 1rem);
+  padding: 0 var(--navbar-padding-x, 1rem);
   box-shadow: var(--navbar-shadow, 0 4px 10px rgba(0, 0, 0, 0.15));
+  z-index: 1100;
 }
 
 .navbar__brand {

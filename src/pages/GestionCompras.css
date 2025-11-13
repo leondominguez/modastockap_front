@@ -1,7 +1,8 @@
 .gestion-compras {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: calc(100vh - var(--navbar-height));
+  overflow: hidden;
   background: var(--color-bg-page);
 }
 
@@ -33,6 +34,34 @@
 .gestion-compras__main {
   flex: 1;
   padding: 20px 28px;
+}
+
+/* Layout: configurar la zona de scroll interno aquí (antes estaba en theme.css)
+   - El wrapper `.gestion-compras` controla la altura global de la página.
+   - `.gc__content > .gestion-compras__main` contiene la zona principal; dentro
+     de ésta el bloque `.insumos-catalogo__list` es el contenedor desplazable.
+   - Evitamos !important aquí para que las reglas de la página tengan prioridad
+     sobre reglas globales; si necesitas forzar algo específico, añadir un
+     comentario y usar !important sólo cuando sea imprescindible. */
+.gc__content > .gestion-compras__main {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0; /* importante para permitir shrink en flex */
+  overflow: visible;
+}
+
+.gc__content > .gestion-compras__main .insumos-catalogo {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.gc__content > .gestion-compras__main .insumos-catalogo__list {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* responsive */

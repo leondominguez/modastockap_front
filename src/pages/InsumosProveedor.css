@@ -1,35 +1,116 @@
-.insumos-proveedor__header { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px; }
-.insumos-proveedor__header h1 { margin:0; }
-.insumos-proveedor__controls { display:flex; gap:8px; align-items:center; }
-.insumos-proveedor__controls input { padding:8px 10px; border:1px solid #e5e7eb; border-radius:6px; }
-/* layout-only: visual appearance comes from global .btn */
-.insumos-proveedor__btn { margin:0; }
+/* Import del tema: tokens y utilidades globales */
+@import "../styles/theme.css";
 
-/* same table styles as catalog */
-.insumos__table { width: 100%; border-collapse: separate; table-layout: auto; margin-top: 1rem; border-radius: 8px; background: var(--color-card-bg); box-shadow: var(--card-shadow); overflow: visible; }
+/* CONTENEDOR PRINCIPAL */
+.insumos-proveedor {
+  height: calc(100vh - var(--navbar-height));
+  overflow: hidden;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: transparent;
+}
 
-.insumos__table thead th { background-color: var(--color-surface-1); color: var(--color-text); font-weight: 600; padding: 10px 12px; text-align: left; border-bottom: 1px solid #e5e7eb; font-size: 0.95rem; }
-.insumos__table th, .insumos__table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #e5e7eb; font-size: 0.95rem; vertical-align: middle; white-space: normal; color: var(--color-text); }
-.insumos__action { border: none; padding: 0.36rem 0.75rem; border-radius: 8px; font-size: 0.88rem; font-weight: 600; cursor: pointer; color: var(--color-on-primary, #fff); display: inline-flex; align-items: center; justify-content: center; }
+/* HEADER */
+.insumos-proveedor__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
 
-/* Acciones: espacio y manejo responsivo (similares a clientes) */
-.insumos__table td:last-child { display:flex; gap:8px; align-items:center; justify-content:flex-start; min-width:160px; white-space:nowrap; flex-wrap:wrap; }
+.insumos-proveedor__header h1 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #111827;
+  font-weight: 700;
+}
 
-/* Variantes */
-.insumos__action--edit { background-color: var(--color-primary); }
-.insumos__action--edit:hover { background-color: var(--color-primary-dark); }
-.insumos__action--delete { background-color: var(--color-danger); }
-.insumos__action--delete:hover { background-color: var(--color-danger-dark, #dc2626); }
-.insumos__action--activate { background-color: var(--color-success); }
-.insumos__action--activate:hover { background-color: var(--color-success-dark, #1eb355); }
+.insumos-proveedor__controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
 
-/* espacio entre botones de acción cuando hay más de uno */
-.insumos__action + .insumos__action { margin-left: 8px; }
+.insumos-proveedor__controls input {
+  padding: 8px 10px;
+  border: 1px solid var(--table-border);
+  border-radius: 6px;
+}
 
-/* also include catalog classes so pages can share styles independently */
-.insumos-catalogo__header { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px; }
-.insumos-catalogo__header h1 { margin:0; }
-.insumos-catalogo__controls { display:flex; gap:8px; align-items:center; }
-.insumos-catalogo__controls input { padding:8px 10px; border:1px solid #e5e7eb; border-radius:6px; }
-/* layout-only: visual appearance comes from global .btn */
-.insumos-catalogo__btn { margin:0; }
+.insumos-proveedor__btn {
+  margin: 0;
+}
+
+/* CONTENEDOR DE TABLA */
+.insumos-proveedor__list {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+}
+
+.insumos-proveedor__table-wrapper {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  max-height: calc(100vh - var(--navbar-height) - 140px);
+  padding: 0;
+  margin: 0;
+}
+
+.insumos-proveedor__table {
+  margin: 0;
+  width: 100%;
+  padding: 0;
+}
+
+/* La tabla usa .cabecera_estatica del theme.css para el sticky header */
+
+/* Botones de acción */
+.insumos-proveedor__action {
+  border: none;
+  padding: 0.36rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.insumos-proveedor__action--edit {
+  background-color: var(--color-primary);
+}
+
+.insumos-proveedor__action--edit:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.insumos-proveedor__action--delete {
+  background-color: var(--color-danger);
+}
+
+.insumos-proveedor__action--delete:hover {
+  background-color: #dc2626;
+}
+
+.insumos-proveedor__action--activate {
+  background-color: var(--color-success);
+}
+
+.insumos-proveedor__action--activate:hover {
+  background-color: #1eb355;
+}
+
+/* Espacio entre botones de acción */
+.insumos-proveedor__action + .insumos-proveedor__action {
+  margin-left: 8px;
+}

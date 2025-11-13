@@ -12,7 +12,8 @@
   --color-text: var(--login-text, #1e1e2d);
   --login-link-color: var(--login-link-color, var(--color-primary));
 
-  min-height: 100vh;
+  height: calc(100vh - var(--navbar-height));
+  overflow: hidden;
   background-color: var(--color-bg-page);
   display: flex;
   flex-direction: column;

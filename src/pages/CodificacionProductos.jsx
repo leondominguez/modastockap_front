@@ -1,7 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
-import Swal from 'sweetalert2';
+import swal from '../utils/swal';
 import './CodificacionProductos.css';
-import './InsumosCatalogo.css';
 import CodificacionProductosModal from '../components/CodificacionProductosModal';
 
 function CodificacionProductos(){
@@ -34,7 +33,7 @@ function CodificacionProductos(){
 
   const handleToggleEstado = async (p)=>{
     const accion = p.estado === 'activo' ? 'Desactivar' : 'Activar';
-    const confirmResult = await Swal.fire({
+    const confirmResult = await swal({
       title: `¿${accion} producto?`,
       text: `El producto "${p.nombre_producto || p.id_producto}" será ${accion.toLowerCase()}.`,
       icon: 'warning',
@@ -50,9 +49,9 @@ function CodificacionProductos(){
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
       const res = await fetch(`${apiBase}productos/cambiarEstado/${p.id_producto}?estado=${nuevoEstado}`, { method: 'PATCH', headers });
       if (!res.ok) throw new Error((await res.json().catch(()=>({}))).message || 'Error cambiando estado');
-      Swal.fire({ icon: 'success', title: `Producto ${nuevoEstado === 'activo' ? 'activado' : 'desactivado'}`, timer: 1400, showConfirmButton: false });
+      swal({ icon: 'success', title: `Producto ${nuevoEstado === 'activo' ? 'activado' : 'desactivado'}`, timer: 1400, showConfirmButton: false });
       fetchList();
-    }catch(err){ console.error('Error cambiar estado producto', err); Swal.fire({ icon: 'error', title: 'Error', text: err.message || 'Ocurrió un error' }); }
+    }catch(err){ console.error('Error cambiar estado producto', err); swal({ icon: 'error', title: 'Error', text: err.message || 'Ocurrió un error' }); }
   };
 
   const filtered = productos.filter(it => {
@@ -62,20 +61,21 @@ function CodificacionProductos(){
   });
 
   return (
-    <div className="insumos-catalogo">
-      <header className="insumos-catalogo__header">
+    <div className="codificacion-productos">
+      <header className="codificacion-productos__header">
         <h1>Codificación de productos</h1>
-        <div className="insumos-catalogo__controls">
+        <div className="codificacion-productos__controls">
           <input aria-label="Buscar productos" placeholder="Buscar por código o descripción" value={q} onChange={e=>setQ(e.target.value)} />
-          <button onClick={openNew} className="btn btn--primary insumos-catalogo__btn">Nuevo producto</button>
+          <button onClick={openNew} className="btn btn--primary codificacion-productos__btn">Nuevo producto</button>
         </div>
       </header>
 
-      <section className="insumos-catalogo__list">
+      <section className="codificacion-productos__list">
         {loading && <div>Cargando...</div>}
         {!loading && filtered.length === 0 && <div>No hay productos.</div>}
         {!loading && filtered.length > 0 && (
-          <table className="insumos__table">
+          <div className="codificacion-productos__table-wrapper">
+            <table className="codificacion-productos__table table cabecera_estatica">
             <thead>
               <tr>
                   <th>Código</th>
@@ -103,15 +103,16 @@ function CodificacionProductos(){
                   <td>{p.precio_unitario}</td>
                   <td>{p.estado}</td>
                   <td>
-                    <button aria-label={`Editar producto ${p.id_producto || p.id}`} onClick={() => openEdit(p)} className="btn insumos__action insumos__action--edit">Editar</button>
-                    <button aria-label={`${p.estado === 'activo' ? 'Desactivar' : 'Activar'} producto ${p.id_producto || p.id}`} onClick={() => handleToggleEstado(p)} className={`btn insumos__action ${p.estado === 'activo' ? 'insumos__action--delete' : 'insumos__action--activate'}`}>
+                    <button aria-label={`Editar producto ${p.id_producto || p.id}`} onClick={() => openEdit(p)} className="btn codificacion-productos__action codificacion-productos__action--edit">Editar</button>
+                    <button aria-label={`${p.estado === 'activo' ? 'Desactivar' : 'Activar'} producto ${p.id_producto || p.id}`} onClick={() => handleToggleEstado(p)} className={`btn codificacion-productos__action ${p.estado === 'activo' ? 'codificacion-productos__action--delete' : 'codificacion-productos__action--activate'}`}>
                       {p.estado === 'activo' ? 'Desactivar' : 'Activar'}
                     </button>
                   </td>
                 </tr>
               ))}
             </tbody>
-          </table>
+            </table>
+          </div>
         )}
       </section>
 

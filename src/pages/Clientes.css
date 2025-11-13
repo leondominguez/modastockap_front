@@ -1,18 +1,15 @@
-/* Estilos para la página Clientes (prefijo: clientes__) */
+@import "../styles/theme.css";
 
+/* CONTENEDOR PRINCIPAL */
 .clientes {
-  min-height: 100vh;
-  background-color: var(--color-bg-page);
   display: flex;
   flex-direction: column;
+  height: calc(100vh - var(--navbar-height));
+  padding: 2rem;
+  background-color: var(--color-bg-page);
 }
 
-.clientes__main {
-  flex: 1;
-  padding: 2rem 2rem;
-  overflow-x: auto;
-}
-
+/* HEADER */
 .clientes__header {
   display: flex;
   justify-content: space-between;
@@ -34,129 +31,169 @@
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s;
 }
 
-.clientes__btn:hover { background-color: var(--color-primary-dark); }
-
-/* Tabla */
-.clientes__table {
-  width: 100%;
-  border-collapse: separate;
-  table-layout: auto;
-  margin-top: 1rem;
-  border-radius: 8px;
-  background: var(--color-card-bg);
-  box-shadow: var(--card-shadow);
-  overflow: visible;
+.clientes__btn:hover {
+  background-color: var(--color-primary-dark);
 }
 
-.clientes__table thead th {
-  background-color: var(--color-surface-1);
-  color: var(--color-muted);
-  font-weight: 600;
-  padding: 10px 12px;
-  text-align: left;
-  border-bottom: 1px solid #e5e7eb;
-  font-size: 0.95rem;
-}
-
-.clientes__table th,
-.clientes__table td {
-  padding: 10px 12px;
-  text-align: left;
-  border-bottom: 1px solid #e5e7eb;
-  font-size: 0.95rem;
-  vertical-align: middle;
-  white-space: normal;
-}
-
-/* Notas: truncado visual si es largo */
-.clientes__notas {
-  max-width: 220px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* Acciones: espacio y manejo responsivo */
-.clientes__table td:last-child {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  justify-content: flex-start;
-  min-width: 160px;
-  white-space: nowrap;
-  flex-wrap: wrap;
-}
-
-/* Botones de acción */
-.clientes__action {
-  border: none;
-  padding: 0.36rem 0.75rem;
-  border-radius: 8px;
-  font-size: 0.88rem;
-  font-weight: 600;
-  cursor: pointer;
-  color: #fff;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Colores */
-.clientes__action--edit { background-color: var(--color-primary); }
-.clientes__action--edit:hover { background-color: var(--color-primary-dark); }
-.clientes__action--delete { background-color: var(--color-danger); }
-.clientes__action--delete:hover { background-color: #dc2626; }
-.clientes__action--activate { background-color: var(--color-success); }
-.clientes__action--activate:hover { background-color: #1eb355; }
-
-/* Formulario de búsqueda */
+/* FORMULARIO BÚSQUEDA */
 .clientes__search-form {
   background-color: var(--color-surface-1);
   padding: 18px;
   border-radius: 8px;
   box-shadow: var(--card-shadow);
-  margin-bottom: 22px;
+  margin-bottom: 1rem;
 }
 
 .clientes__search-form h2 {
   margin: 0 0 12px 0;
   font-size: 1.1rem;
   color: var(--color-text);
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--table-border);
   padding-bottom: 8px;
 }
 
-.clientes__search-controls { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
-.clientes__search-radio { display:flex; gap:16px; }
-.clientes__search-radio label { font-weight:500; color:var(--color-muted); }
-.clientes__search-group { display:flex; gap:10px; flex-grow:1; min-width:220px; }
-.clientes__search-group--name { min-width:260px; }
-.clientes__search-input { padding:9px; border:1px solid #d1d5db; border-radius:6px; font-size:0.98rem; flex-grow:1; }
-.clientes__search-input:focus { outline:none; border-color: var(--color-primary); box-shadow:0 0 0 3px rgba(79,70,229,0.12); }
-
-/* Required visual */
-.clientes__search-input.input--required:not(:focus):empty,
-.clientes__search-input.input--required:not(:focus):placeholder-shown {
-  border-color:#ef4444;
-  box-shadow:0 0 0 2px rgba(239,68,68,0.12);
+.clientes__search-controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
-/* Botones búsqueda */
-.clientes__btn--search { background-color: var(--color-primary); color:white; padding:9px 14px; border-radius:6px; border:none; }
-.clientes__btn--search:hover { background-color: var(--color-primary-dark); }
-.clientes__btn--clear { background-color: var(--color-muted); color:white; padding:9px 14px; border-radius:6px; border:none; }
-.clientes__btn--clear:hover { background-color: #6b7280; }
+.clientes__search-radio {
+  display: flex;
+  gap: 16px;
+}
 
-/* Mensajes */
-.clientes__empty, .clientes__loading { margin-top:1rem; color:#6b7280; font-size:0.95rem; }
+.clientes__search-radio label {
+  font-weight: 500;
+  color: var(--color-muted);
+}
 
-/* Responsive: permitir scroll horizontal y mejorar legibilidad en móvil */
-@media (max-width: 900px) {
-  .clientes__main { padding: 1rem; }
-  .clientes__table th, .clientes__table td { font-size: 0.9rem; padding: 8px 10px; }
-  .clientes__notas { max-width: 140px; }
-  .clientes__table td:last-child { gap:6px; }
+.clientes__search-group {
+  display: flex;
+  gap: 10px;
+  flex-grow: 1;
+  min-width: 220px;
+}
+
+.clientes__search-group--name {
+  min-width: 260px;
+}
+
+.clientes__search-input {
+  padding: 9px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.98rem;
+  flex-grow: 1;
+}
+
+.clientes__search-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+}
+
+.clientes__search-input.input--required:not(:focus):empty,
+.clientes__search-input.input--required:not(:focus):placeholder-shown {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.12);
+}
+
+.clientes__btn--search {
+  background-color: var(--color-primary);
+  color: white;
+  padding: 9px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.clientes__btn--search:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.clientes__btn--clear {
+  background-color: var(--color-muted);
+  color: white;
+  padding: 9px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.clientes__btn--clear:hover {
+  background-color: #6b7280;
+}
+
+/* CONTENEDOR DE TABLA */
+.clientes__list {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.clientes__table-wrapper {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
+/* La tabla usa .cabecera_estatica del theme.css para el sticky header */
+/* Solo agregamos estilos específicos de esta página si es necesario */
+
+.clientes__notas {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* BOTONES ACCIÓN */
+.clientes__action {
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: #fff;
+  margin-right: 6px;
+}
+
+.clientes__action--edit {
+  background-color: var(--color-primary);
+}
+
+.clientes__action--edit:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.clientes__action--delete {
+  background-color: var(--color-danger);
+}
+
+.clientes__action--delete:hover {
+  background-color: #dc2626;
+}
+
+.clientes__action--activate {
+  background-color: var(--color-success);
+}
+
+.clientes__action--activate:hover {
+  background-color: #1eb355;
+}
+
+/* MENSAJES */
+.clientes__empty,
+.clientes__loading {
+  padding: 2rem;
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.95rem;
 }
