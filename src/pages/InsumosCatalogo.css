@@ -124,6 +124,7 @@
   white-space: nowrap;
 }
 
+
 @media (max-width: 900px) {
   .insumos-catalogo__desc {
     max-width: 140px;

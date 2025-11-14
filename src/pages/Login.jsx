@@ -14,8 +14,14 @@ function Login() {
     let message = "";
 
     if (field === "usuario") {
-      if (!value.trim()) message = "El usuario es obligatorio";
-      else if (value.length < 3) message = "Debe tener al menos 3 caracteres";
+      if (!value.trim()) {
+        message = "El usuario o correo es obligatorio";
+      } else if (
+        !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) &&
+        value.length < 3
+      ) {
+        message = "Debe ser un correo válido o tener al menos 3 caracteres";
+      }
     }
 
     if (field === "password") {
@@ -111,7 +117,7 @@ function Login() {
               name="usuario"
               value={form.usuario}
               onChange={handleChange}
-              placeholder="usuario123"
+              placeholder="usuario123 o correo@example.com"
               required
               className={errors.usuario ? "input-error" : ""}
             />

@@ -10,12 +10,13 @@ function GestionCompras() {
   return (
     <div className="gestion-compras">
       <Navbar />
-      <div className="gc__content">
+      <div className="gestion-compras__content">
         <aside className="gestion-compras__sidebar">
-          <h2 className="gc__title">Gestión de compras</h2>
-          <nav className="gc__nav">
-            <button className={"gc__nav-btn btn " + (active === 'catalogo' ? 'is-active' : '')} onClick={() => setActive('catalogo')}>Catálogo de insumos</button>
-            <button className={"gc__nav-btn btn " + (active === 'proveedor' ? 'is-active' : '')} onClick={() => setActive('proveedor')}>Insumos por proveedor</button>
+          <h2 className="gestion-compras__title">Gestión de compras</h2>
+          <nav className="gestion-compras__nav">
+            <button className={"gestion-compras__nav-btn btn " + (active === 'catalogo' ? 'is-active' : '')} onClick={() => setActive('catalogo')}>Catálogo de insumos</button>
+            <button className={"gestion-compras__nav-btn btn " + (active === 'proveedor' ? 'is-active' : '')} onClick={() => setActive('proveedor')}>Insumos por proveedor</button>
+             <button className={"gestion-compras__nav-btn btn " + (active === 'inventarios' ? 'is-active' : '')} onClick={() => setActive('inventarios')}>Inventario de insumos</button>
           </nav>
         </aside>
 
