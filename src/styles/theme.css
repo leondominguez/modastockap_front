@@ -19,14 +19,13 @@
   --color-border-formularios: #9570dbb9;          /* bordes y separadores */
 
   /* Sombras y radios */
-  --card-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  --card-shadow: 0 2px 6px rgba(26, 2, 2, 0.06);
   --radius-base: 8px;
 
   /* Botones */
   --btn-padding-y: 0.36rem;
   --btn-padding-x: 0.75rem;
   --btn-radius: 8px;
-
   /* Tamaños */
   --container-gap: 16px;
 
@@ -75,11 +74,11 @@
   --swal-icon-shadow: 0 8px 22px rgba(0,0,0,0.12);
 
   /* Variables específicas para tablas (se pueden sobrescribir por página) */
-  --table-border: #eaeef6;
+  --table-border: #dcdfe6;
   --table-header-bg: var(--color-surface-1);
   --table-header-color: var(--color-text); /*cabeceras de tablas*/
-  --table-row-hover: #0b64ffda;
-  --table-row-hover-shadow: 0 6px 14px rgba(17, 79, 202, 0.06);
+  --table-row-hover: #1f1e1e34;
+  --table-row-hover-shadow: 0 4px 9px #0bff348f;
   --table-zebra: rgba(15,23,42,0.02);
   --table-cell-padding: 10px 12px;
   --table-radius: var(--radius-base);
@@ -311,7 +310,7 @@ table th, table td, .table th, .table td {
 .table--hover tbody tr, table tbody tr, .table tbody tr {
   transition: background-color 120ms ease, transform 120ms ease, box-shadow 120ms ease;
 }
-.table--hover tbody tr:hover, table tbody tr:hover, .table tbody tr:hover {
+.table--hover tbody tr:hover, table:hover tbody tr:hover, .table tbody tr:hover {
   background: var(--table-row-hover);
   transform: translateY(-2px);
   box-shadow: var(--table-row-hover-shadow);

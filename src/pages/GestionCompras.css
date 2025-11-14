@@ -6,7 +6,7 @@
   background: var(--color-bg-page);
 }
 
-.gc__content {
+.gestion-compras__content {
   display: flex;
   flex: 1;
 }
@@ -18,18 +18,18 @@
   padding: 24px;
 }
 
-.gc__title { font-size: 1.1rem; font-weight:700; margin-bottom: 12px; color: var(--color-text); }
-.gc__nav { display:flex; flex-direction: column; gap:8px; }
-.gc__nav-btn {
+.gestion-compras__title { font-size: 1.1rem; font-weight:700; margin-bottom: 12px; color: var(--color-text); }
+.gestion-compras__nav { display:flex; flex-direction: column; gap:8px; }
+.gestion-compras__nav-btn {
   text-align: left;
-  background: transparent;
+  background: var(--color-surface-1);
   border: none;
   padding: 10px 12px;
   border-radius: 8px;
   cursor: pointer;
   color: var(--color-muted);
 }
-.gc__nav-btn.is-active { background: var(--color-primary); color: #fff; }
+.gestion-compras__nav-btn.is-active { background: var(--color-primary); color: #fff; }
 
 .gestion-compras__main {
   flex: 1;
@@ -38,12 +38,12 @@
 
 /* Layout: configurar la zona de scroll interno aquí (antes estaba en theme.css)
    - El wrapper `.gestion-compras` controla la altura global de la página.
-   - `.gc__content > .gestion-compras__main` contiene la zona principal; dentro
+   - `.gestion-compras__content > .gestion-compras__main` contiene la zona principal; dentro
      de ésta el bloque `.insumos-catalogo__list` es el contenedor desplazable.
    - Evitamos !important aquí para que las reglas de la página tengan prioridad
      sobre reglas globales; si necesitas forzar algo específico, añadir un
      comentario y usar !important sólo cuando sea imprescindible. */
-.gc__content > .gestion-compras__main {
+.gestion-compras__content > .gestion-compras__main {
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
@@ -51,13 +51,13 @@
   overflow: visible;
 }
 
-.gc__content > .gestion-compras__main .insumos-catalogo {
+.gestion-compras__content > .gestion-compras__main .insumos-catalogo {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
-.gc__content > .gestion-compras__main .insumos-catalogo__list {
+.gestion-compras__content > .gestion-compras__main .insumos-catalogo__list {
   flex: 1 1 auto;
   min-height: 0;
   overflow: auto;
@@ -67,5 +67,5 @@
 /* responsive */
 @media (max-width: 900px) {
   .gestion-compras { flex-direction: column; }
-  .gestion-compras__sidebar { width: 100%; display:flex; gap:12px; }
+  .gestion-compras__sidebar { width: 100%; display:flex; gap:12px; align-items: flex-start; }
 }
