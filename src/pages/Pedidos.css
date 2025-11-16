@@ -1,18 +1,354 @@
-.pedidos-page { padding: 8px; }
-/* Use global .btn utilities; keep legacy selector for backward compatibility */
-.pedidos-page .btn-primary, .pedidos-page .btn--primary { background: var(--color-primary); color: var(--color-on-primary, #fff); padding: 8px 12px; border-radius: 6px; border: none; cursor: pointer; }
+/* Contenido del theme.css proporcionado por el usuario */
+:root {
+    /* Tipografía */
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    --font-monospace: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', 'Courier New', monospace;
 
-.pedidos-page .btn--secondary { background: var(--color-surface-1); color: var(--color-text); padding: 8px 12px; border-radius: 6px; border: none; cursor: pointer; }
+    /* Paleta */
+    --color-bg-page: #f3f4ff;
+    --color-card-bg: #ffffff;
+    --color-surface-1: #dedfe6;
+    --color-primary: #5759d9;
+    --color-primary-dark: #4346da;
+    --color-accent: #0b63ff;
+    --color-success: #25d465;
+    --color-danger: #f83d3d;
+    --color-muted: #5c6372;
+    --color-text: #111827;
+    --color-border-formularios: #9570dbb9;
 
-.pedidos-grid { display:flex; gap:20px; }
-.pedidos-form { flex:1; max-width:720px; }
-.pedidos-form label { display:block; margin-top:8px; font-weight:600; }
-.pedidos-form input, .pedidos-form select, .pedidos-form textarea { width:100%; padding:8px; margin-top:6px; box-sizing:border-box; }
-.pedido-item { display:flex; gap:8px; align-items:center; margin-top:8px; }
-.pedido-item select { flex:1; }
-.pedido-item input { width:100px; }
-.item-subtotal { width:90px; text-align:right; }
-.pedido-total { margin-top:12px; font-size:1.05rem; }
-.pedidos-current { width:360px; border-left:1px solid #eee; padding-left:16px; }
-.created-pedido { margin-top:12px; background: var(--color-surface-2, #f6f8ff); padding:8px; border-radius:6px; }
-.error { color: var(--color-danger); margin-top:8px; }
+    /* Sombras y radios */
+    --card-shadow: 0 2px 6px rgba(26, 2, 2, 0.06);
+    --radius-base: 8px;
+
+    /* Botones */
+    --btn-padding-y: 0.36rem;
+    --btn-padding-x: 0.75rem;
+    --btn-radius: 8px;
+
+    /* Tamaños */
+    --container-gap: 16px;
+    --navbar-height: 64px;
+    --table-border: #dcdfe6;
+}
+
+html,
+body,
+#root {
+    height: 100%;
+}
+
+body {
+    font-family: var(--font-sans);
+    color: var(--color-text);
+    background: var(--color-bg-page);
+    padding-top: var(--navbar-height);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--btn-padding-y) var(--btn-padding-x);
+    border-radius: var(--btn-radius);
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 120ms ease;
+}
+
+.btn--primary {
+    background: var(--color-primary);
+    color: white;
+}
+
+.btn--primary:hover {
+    background: var(--color-primary-dark);
+}
+
+.btn--secondary {
+    background: transparent;
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+}
+
+.btn--secondary:hover {
+    background: rgba(87, 89, 217, 0.05);
+}
+
+.btn--danger {
+    background: transparent;
+    color: var(--color-danger);
+    border: 1px solid var(--color-danger);
+}
+
+.btn--danger:hover {
+    background: rgba(248, 61, 61, 0.05);
+}
+
+.btn--success {
+    background-color: var(--color-success);
+    color: white;
+}
+
+
+.error {
+    color: var(--color-danger);
+}
+
+.created-pedido {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border-radius: var(--radius-base);
+    background: var(--color-bg-page);
+    border: 1px solid var(--table-border);
+}
+
+.created-pedido h4 {
+    margin-top: 0;
+}
+
+/* Estilos para la página de Pedidos */
+.pedidos-page {
+    padding: 2rem;
+}
+
+.pedido-card {
+    max-width: 1200px;
+    margin: 2rem auto;
+    background: white;
+    border-radius: var(--radius-base);
+    box-shadow: var(--card-shadow);
+    padding: 2rem;
+    border: 1px solid #e0e0e0;
+}
+
+/* Cabecera del pedido */
+.pedido-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--table-border);
+    margin-bottom: 1.5rem;
+}
+
+.pedido-header .datos-pedido {
+    flex-grow: 1;
+    max-width: 400px;
+}
+
+.pedido-header .total-container {
+    text-align: center;
+}
+
+.pedido-header .total-display {
+    background-color: #e0f2fe;
+    color: #0c5460;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    min-width: 180px;
+}
+
+.pedido-header label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.pedido-header select {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: var(--btn-radius);
+    border: 1px solid var(--color-border-formularios);
+}
+
+/* Cuerpo del pedido (lista de items) */
+.pedido-body {
+    margin-bottom: 1.5rem;
+}
+
+.add-item-container {
+    margin-bottom: 1.5rem;
+}
+
+/* Tabla de items */
+.items-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.items-table th,
+.items-table td {
+    padding: 0.75rem;
+    text-align: left;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--table-border);
+}
+
+.items-table th {
+    font-weight: 600;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+}
+
+.items-table td {
+    font-size: 0.95rem;
+}
+
+.items-table input,
+.items-table select,
+.items-table textarea {
+    width: 100%;
+    padding: 0.6rem;
+    border-radius: 6px;
+    border: 1px solid var(--color-border-formularios);
+    font-size: 0.95rem;
+    box-sizing: border-box;
+}
+
+.items-table textarea {
+    resize: vertical;
+    min-height: 40px;
+}
+
+.items-table .subtotal-cell {
+    font-weight: 700;
+    min-width: 120px;
+}
+
+.items-table .action-cell {
+    text-align: center;
+}
+
+/* Celda del selector de producto */
+.product-selector-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.product-display {
+    flex-grow: 1;
+    padding: 0.6rem;
+    background: #f4f4f7;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    min-height: 38px;
+    display: flex;
+    align-items: center;
+}
+
+.product-display.placeholder {
+    color: #777;
+}
+
+/* Pie de página del pedido */
+.pedido-footer {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--table-border);
+}
+
+.pedido-footer .notas-container {
+    margin-bottom: 1.5rem;
+}
+
+.pedido-footer label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.pedido-footer textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 0.75rem;
+    border-radius: var(--btn-radius);
+    border: 1px solid var(--color-border-formularios);
+    resize: vertical;
+}
+
+.pedido-footer .actions {
+    text-align: right;
+}
+
+/* Estilos del Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--radius-base);
+    width: 90%;
+    max-width: 800px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--table-border);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.modal-header h4 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.modal-body {
+    overflow-y: auto;
+}
+
+.search-bar {
+    margin-bottom: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.search-bar label {
+    font-weight: 600;
+}
+
+.search-bar input {
+    flex-grow: 1;
+    padding: 0.75rem;
+    border-radius: var(--btn-radius);
+    border: 1px solid var(--color-border-formularios);
+}
+
+/* Agrega esto al final de tu archivo Pedidos.css */
+
+.no-results-cell {
+    padding: 1.5rem 2rem !important;
+    text-align: center;
+}
+
+.no-results-cell span {
+    display: block;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: var(--color-muted);
+}
