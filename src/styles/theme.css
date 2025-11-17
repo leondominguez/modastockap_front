@@ -77,7 +77,7 @@
   --table-border: #dcdfe6;
   --table-header-bg: var(--color-surface-1);
   --table-header-color: var(--color-text); /*cabeceras de tablas*/
-  --table-row-hover: #1f1e1e34;
+  --table-row-hover: #c2151534;
   --table-row-hover-shadow: 0 4px 9px #0bff348f;
   --table-zebra: rgba(15,23,42,0.02);
   --table-cell-padding: 10px 12px;

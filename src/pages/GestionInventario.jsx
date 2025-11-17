@@ -15,13 +15,13 @@ function GestionInventario(){
           <h2>Gestión de Inventario</h2>
           <nav className="gestion-inventario__nav">
             <button className={"gestion-inventario__nav-btn btn " + (active==='codificacion' ? 'is-active' : '')} onClick={()=>setActive('codificacion')}>Codificación de productos</button>
-            <button className={"gestion-inventario__nav-btn btn " + (active==='inventario' ? 'is-active' : '')} onClick={()=>setActive('inventario')}>Inventario</button>
+            <button className={"gestion-inventario__nav-btn btn " + (active==='inventariosProductos' ? 'is-active' : '')} onClick={()=>setActive('inventariosProductos')}>Inventario de produccion</button>
           </nav>
         </aside>
 
         <main className="gestion-inventario__main">
           {active==='codificacion' && <CodificacionProductos />}
-          {active==='inventario' && <InventariosProductos />}
+          {active==='inventariosProductos' && <InventariosProductos />}
         </main>
       </div>
     </div>
