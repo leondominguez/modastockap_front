@@ -310,6 +310,7 @@ function UsersPage() {
         <section className="users__list">
           {users.length > 0 ? (
             <div className="table-responsive users__table-wrapper">
+              {/* El color de esto cambia, no con cabecera_estatica, sino con  --table-row-hover */}
               <table className="users__table table cabecera_estatica">
                 <thead>
                   <tr>

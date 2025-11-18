@@ -30,6 +30,7 @@
 
 .landing__title {
   color: var(--landing-text);
+  font-family: var(--font-sans);
   font-size: 2.5rem;
   font-weight: 800;
   margin-bottom: 1.5rem;
