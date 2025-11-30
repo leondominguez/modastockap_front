@@ -1,0 +1,20 @@
+.tabla-scroll {
+  max-height: 350px;      /* Ajusta a la altura que quieras */
+  overflow-y: auto;       /* Scroll vertical */
+  overflow-x: auto;       /* Scroll horizontal */
+  border: 1px solid #ddd;
+}
+
+.tabla-scroll::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+.tabla-scroll::-webkit-scrollbar-thumb {
+  background: #b4a8ff;
+  border-radius: 4px;
+}
+
+.tabla-scroll::-webkit-scrollbar-track {
+  background: #f0f0f0;
+}

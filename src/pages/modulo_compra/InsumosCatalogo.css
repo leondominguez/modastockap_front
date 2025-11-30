@@ -1,8 +1,8 @@
 /* Import del tema: tokens y utilidades globales */
-@import "../styles/theme.css";
+@import "../../styles/theme.css";
 
 /* CONTENEDOR PRINCIPAL */
-.insumos-proveedor {
+.insumos-catalogo {
   height: calc(100vh - var(--navbar-height));
   overflow: hidden;
   padding: 16px;
@@ -13,7 +13,7 @@
 }
 
 /* HEADER */
-.insumos-proveedor__header {
+.insumos-catalogo__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -21,31 +21,31 @@
   margin-bottom: 12px;
 }
 
-.insumos-proveedor__header h1 {
+.insumos-catalogo__header h1 {
   margin: 0;
   font-size: 1.1rem;
   color: #111827;
   font-weight: 700;
 }
 
-.insumos-proveedor__controls {
+.insumos-catalogo__controls {
   display: flex;
   gap: 8px;
   align-items: center;
 }
 
-.insumos-proveedor__controls input {
+.insumos-catalogo__controls input {
   padding: 8px 10px;
   border: 1px solid var(--table-border);
   border-radius: 6px;
 }
 
-.insumos-proveedor__btn {
+.insumos-catalogo__btn {
   margin: 0;
 }
 
 /* CONTENEDOR DE TABLA */
-.insumos-proveedor__list {
+.insumos-catalogo__list {
   flex: 1;
   min-height: 0;
   overflow: hidden;
@@ -55,7 +55,7 @@
   margin: 0;
 }
 
-.insumos-proveedor__table-wrapper {
+.insumos-catalogo__table-wrapper {
   flex: 1;
   min-height: 0;
   overflow: auto;
@@ -64,16 +64,17 @@
   margin: 0;
 }
 
-.insumos-proveedor__table {
+.insumos-catalogo__table {
   margin: 0;
   width: 100%;
   padding: 0;
 }
 
 /* La tabla usa .cabecera_estatica del theme.css para el sticky header */
+/* Solo agregamos estilos específicos de esta página si es necesario */
 
 /* Botones de acción */
-.insumos-proveedor__action {
+.insumos-catalogo__action {
   border: none;
   padding: 0.36rem 0.75rem;
   border-radius: 8px;
@@ -86,31 +87,46 @@
   justify-content: center;
 }
 
-.insumos-proveedor__action--edit {
+.insumos-catalogo__action--edit {
   background-color: var(--color-primary);
 }
 
-.insumos-proveedor__action--edit:hover {
+.insumos-catalogo__action--edit:hover {
   background-color: var(--color-primary-dark);
 }
 
-.insumos-proveedor__action--delete {
+.insumos-catalogo__action--delete {
   background-color: var(--color-danger);
 }
 
-.insumos-proveedor__action--delete:hover {
+.insumos-catalogo__action--delete:hover {
   background-color: #dc2626;
 }
 
-.insumos-proveedor__action--activate {
+.insumos-catalogo__action--activate {
   background-color: var(--color-success);
 }
 
-.insumos-proveedor__action--activate:hover {
+.insumos-catalogo__action--activate:hover {
   background-color: #1eb355;
 }
 
 /* Espacio entre botones de acción */
-.insumos-proveedor__action + .insumos-proveedor__action {
+.insumos-catalogo__action + .insumos-catalogo__action {
   margin-left: 8px;
+}
+
+/* Descripción truncada para columnas largas */
+.insumos-catalogo__desc {
+  max-width: 360px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+@media (max-width: 900px) {
+  .insumos-catalogo__desc {
+    max-width: 140px;
+  }
 }

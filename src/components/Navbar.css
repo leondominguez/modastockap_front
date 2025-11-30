@@ -107,3 +107,18 @@
   background-color: var(--navbar-dropdown-hover-bg, #eee);
   color: var(--navbar-dropdown-hover-color, var(--color-text, #111));
 }
+
+.navbar__admin {
+  position: relative;
+}
+
+.navbar__dropdown-link {
+  display: block;
+  padding: 8px 12px;
+  color: #333;
+  text-decoration: none;
+}
+
+.navbar__dropdown-link:hover {
+  background: #f0f0f0;
+}

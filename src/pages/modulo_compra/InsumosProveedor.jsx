@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
-import InsumosProveedorModal from "../components/InsumosProveedorModal";
+import InsumosProveedorModal from "../../components/InsumosProveedorModal";
 import "./InsumosProveedor.css";
-import swal from '../utils/swal';
+import swal from '../../utils/swal';
 
 function InsumosProveedor(){
   const [vinculos, setVinculos] = useState([]);

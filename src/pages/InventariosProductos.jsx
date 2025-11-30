@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import './InventariosProductos.css';
-import './InsumosCatalogo.css';
+// import './modulo_compra/InsumosCatalogo.css';
 import InventariosProductosModal from '../components/InventariosProductosModal';
 import swal from '../utils/swal';
 
