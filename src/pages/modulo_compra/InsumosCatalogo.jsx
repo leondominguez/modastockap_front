@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
-import InsumosCatalogoModal from "../components/InsumosCatalogoModal";
-import swal from '../utils/swal';
+import InsumosCatalogoModal from "../../components/InsumosCatalogoModal";
+import swal from '../../utils/swal';
 import "./InsumosCatalogo.css";
 
 function InsumosCatalogo() {

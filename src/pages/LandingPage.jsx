@@ -13,8 +13,10 @@ function LandingPage() {
   // Añadir clase al <body> para permitir overrides por página (p.ej. variables CSS
   // específicas para SweetAlert2 que se aplican al popup insertado en <body>).
   useEffect(() => {
-    document.body.classList.add('landing-page');
-    return () => { document.body.classList.remove('landing-page'); };
+    document.body.classList.add("landing-page");
+    return () => {
+      document.body.classList.remove("landing-page");
+    };
   }, []);
 
   return (
@@ -43,20 +45,39 @@ function LandingPage() {
                   Gestión Clientes
                 </Link>
 
-                <Link to="/proveedores" className="btn btn--primary landing__btn">
+                <Link
+                  to="/proveedores"
+                  className="btn btn--primary landing__btn"
+                >
                   Gestión Proveedores
                 </Link>
 
-                <Link to="/gestion-compras" className="btn btn--primary landing__btn">
+                <Link
+                  to="/gestion-compras"
+                  className="btn btn--primary landing__btn"
+                >
                   Gestión Compras
                 </Link>
-            <Link to="/gestion-ventas" className="btn btn--primary landing__btn">
-              Gestión Ventas
-            </Link>
+                <Link
+                  to="/gestion-ventas"
+                  className="btn btn--primary landing__btn"
+                >
+                  Gestión Ventas
+                </Link>
 
-            <Link to="/gestion-inventario" className="btn btn--primary landing__btn">
-              Gestión Inventario
-            </Link>
+                <Link
+                  to="/gestion-inventario"
+                  className="btn btn--primary landing__btn"
+                >
+                  Gestión Inventario
+                </Link>
+
+                {/* <Link
+                  to="/gestion-ordenes"
+                  className="btn btn--primary landing__btn"
+                >
+                  Gestión de Órdenes de Producción
+                </Link> */}
               </>
             )}
 
@@ -66,21 +87,18 @@ function LandingPage() {
                   Gestión Clientes
                 </Link>
 
-                <Link to="/operaciones" className="btn btn--primary landing__btn">
+                <Link
+                  to="/operaciones"
+                  className="btn btn--primary landing__btn"
+                >
                   Ir a Operaciones
                 </Link>
-
               </>
-
             )}
 
             {/* Enlaces rápidos visibles en el landing */}
 
-
-            <a
-              href="#contacto"
-              className="btn btn--secondary landing__btn"
-            >
+            <a href="#contacto" className="btn btn--secondary landing__btn">
               Saber más
             </a>
           </div>

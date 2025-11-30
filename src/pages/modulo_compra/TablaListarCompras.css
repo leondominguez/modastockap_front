@@ -1,0 +1,27 @@
+.tabla-scroll {
+  max-height: 420px; /* Ajusta según tu diseño */
+  overflow-y: auto;
+  overflow-x: auto;
+  border: 1px solid #ddd;
+  background: white;
+}
+
+/* Scroll */
+.tabla-scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.tabla-scroll::-webkit-scrollbar-thumb {
+  background: #b4a8ff;
+  border-radius: 4px;
+}
+
+.tabla-scroll::-webkit-scrollbar-track {
+  background: #f2f2f2;
+}
+
+/* Ajustar celdas de acciones */
+.acciones-col {
+  white-space: nowrap;
+}
